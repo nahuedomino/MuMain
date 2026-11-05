@@ -2151,6 +2151,11 @@ void ReceiveMoveCharacter(std::span<const BYTE> ReceiveBuffer)
         return;
     }
 
+    // OpenMU corrects a player's start position with an instant move (ReceiveMovePosition) right before
+    // the walk. Its glide heads for TargetX/TargetY, which now is the walk target, so the character would
+    // fly there. The walk takes over from where the character is drawn instead.
+    c->JumpTime = 0;
+
     if (c->Appear == 0)
     {
         int iDefaultWall = TW_CHARACTER;
