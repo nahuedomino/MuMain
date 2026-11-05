@@ -3618,6 +3618,7 @@ BOOL ConnectForLogin(const wchar_t* IpAddr, unsigned short Port);
 void ResetClientToLoginScene();
 
 void ReceiveMovePosition(const BYTE* ReceiveBuffer);
+void ReceiveMoveCharacter(std::span<const BYTE> ReceiveBuffer);
 
 struct PacketInfo
 {
