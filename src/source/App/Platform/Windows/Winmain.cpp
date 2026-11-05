@@ -1410,6 +1410,17 @@ SDL_WindowID ActionWindowId(const SDL_Event& event)
     }
 }
 
+// A right click consumed by the UI still reaches the game when it targets a party card (casting a
+// support skill on that member), and a right release always does so a held button can't stick.
+bool PassesRightButtonToGame(const SDL_Event& event)
+{
+    if (event.button.button != SDL_BUTTON_RIGHT)
+        return false;
+    if (event.type == SDL_EVENT_MOUSE_BUTTON_UP)
+        return MouseRButton;
+    return g_pNewUISystem && g_pPartyListWindow && g_pPartyListWindow->IsCardHoveredForMemberSkill();
+}
+
 // Physical and scripted input share UI-first routing. Scripted input owns its
 // own legacy held state; it never acquires the OS pointer or replays SDL events.
 bool RouteActionInput(SDL_Event& event, bool synthetic, bool& propagates)
@@ -1430,7 +1441,7 @@ bool RouteActionInput(SDL_Event& event, bool synthetic, bool& propagates)
         if (!synthetic && event.type == SDL_EVENT_MOUSE_BUTTON_DOWN)
             Core::Input::Synthetic::CancelForPhysicalButton(event.button.button);
         propagates = Core::Input::RouteToUi(event, g_sdlWindow);
-        if (propagates && !synthetic)
+        if (!synthetic && (propagates || PassesRightButtonToGame(event)))
             HandleMouseButton(event);
         return true;
     case SDL_EVENT_TEXT_INPUT:
