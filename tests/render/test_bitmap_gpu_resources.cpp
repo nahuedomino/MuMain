@@ -247,7 +247,7 @@ TEST_CASE("bitmap owner uses only three uncycled slots for repeated uploads")
             shared = result.sampler;
         CHECK(result.sampler == shared);
         CHECK(fake.source.offset == 0);
-        CHECK(fake.source.pixels_per_row == 128);
+        CHECK(fake.source.pixels_per_row == (65u * 4u + Owner::kRowAlignment - 1) / Owner::kRowAlignment * Owner::kRowAlignment / 4u);
         CHECK(fake.source.rows_per_layer == 2);
         CHECK(fake.destination.w == 65);
         CHECK(fake.destination.h == 2);
@@ -261,6 +261,28 @@ TEST_CASE("bitmap owner uses only three uncycled slots for repeated uploads")
     CHECK_FALSE(fake.cycled);
     CHECK(owner.Shutdown());
     CHECK(fake.fences == 0);
+}
+
+TEST_CASE("bitmap owner packs rows tightly on Apple, where Metal ignores the row stride")
+{
+#if defined(__APPLE__)
+    CHECK(Owner::kRowAlignment == Owner::kBytesPerPixel);
+#else
+    CHECK(Owner::kRowAlignment == 256u);
+#endif
+    Fake fake;
+    Owner owner(fake.Calls());
+    REQUIRE(owner.Initialize(Device()));
+    std::vector<std::uint8_t> pixels(std::size_t{65} * 2u * 4u, 0x5a);
+    auto result = owner.Upload(pixels, 65, 2, filter, wrap);
+    REQUIRE(result);
+#if defined(__APPLE__)
+    CHECK(fake.source.pixels_per_row == 65);
+#else
+    CHECK(fake.source.pixels_per_row == 128);
+#endif
+    fake.Calls().releaseTexture(Device(), result.texture);
+    CHECK(owner.Shutdown());
 }
 
 TEST_CASE("bitmap owner checks dimensions and copies exact rows")
