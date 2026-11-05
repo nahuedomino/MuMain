@@ -300,6 +300,22 @@ void CPartyListWindow::ClosingProcess()
 
 bool CPartyListWindow::SelectCharacterInPartyList(PARTY_t* pMember)
 {
+    if (IsMemberSkillSelected())
+    {
+        SelectedCharacter = pMember->index;
+        return true;
+    }
+
+    return false;
+}
+
+bool CPartyListWindow::IsCardHoveredForMemberSkill() const
+{
+    return m_bActive && m_HoveredCard >= 0 && m_HoveredCard < PartyNumber && IsMemberSkillSelected();
+}
+
+bool CPartyListWindow::IsMemberSkillSelected()
+{
     auto HeroClass = gCharacterManager.GetBaseClass(Hero->Class);
 
     if (HeroClass == CLASS_ELF
@@ -325,7 +341,6 @@ bool CPartyListWindow::SelectCharacterInPartyList(PARTY_t* pMember)
             || Skill == AT_SKILL_RECOVER
             )
         {
-            SelectedCharacter = pMember->index;
             return true;
         }
     }
