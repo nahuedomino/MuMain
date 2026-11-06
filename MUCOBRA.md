@@ -6,6 +6,7 @@ The `mucobra` branch is an upstream MuMain release tag plus the MuCobra patches,
 - `fix(party)`: right click on a party card casts support skills (sven-n/MuMain#993).
 - `fix(movement)`: a walk cancels the glide of OpenMU's walk-start position correction, so other players no longer fly to their walk target.
 - `fix(effects)`: Greater Damage shows only its red weapon sparkles; the swirling aura is for Greater Defense.
+- `fix(skills)`: holding the right button keeps casting direction skills (Evil Spirit, Triple Shot, Power Slash...) toward the cursor anywhere on the map, aimed at the edge of the skill range.
 
 ## Release
 
