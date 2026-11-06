@@ -734,7 +734,7 @@ bool CInventoryActionController::TryConsumeItem(CInventoryCtrl* targetControl, I
         const int characterClass = gCharacterManager.GetBaseClass(Hero->Class);
         point[attributeType] -= nStat[characterClass][attributeType];
 
-        if (point[attributeType] < (pItem->Durability * 10))
+        if (point[attributeType] < GameLogic::Items::ResetFruitPoints)
         {
             g_pMyInventory->SetStandbyItemKey(pItem->Key);
 
