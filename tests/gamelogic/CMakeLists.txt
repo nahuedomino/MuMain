@@ -173,3 +173,12 @@ mu_add_test(
     SOURCES
         test_skill_hotkey_configuration.cpp
 )
+
+# MuCobra: a held right button aims direction skills at ground points beyond their range.
+mu_add_test(
+    NAME test_skill_aim
+    SOURCES
+        test_skill_aim.cpp
+    LINK_LIBS
+        MuClient
+)
