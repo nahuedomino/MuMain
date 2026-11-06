@@ -143,3 +143,12 @@ mu_add_test(
         ${CMAKE_SOURCE_DIR}/src/source/App/Platform/Windows/Winmain.cpp
     LINK_LIBS MuClient
 )
+
+# MuCobra: a held right button aims direction skills at ground points beyond their range.
+mu_add_test(
+    NAME test_skill_aim
+    SOURCES
+        test_skill_aim.cpp
+    LINK_LIBS
+        MuClient
+)
