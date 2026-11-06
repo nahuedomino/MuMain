@@ -3,9 +3,9 @@
 namespace Render::Effects
 {
 
-[[nodiscard]] constexpr bool ShouldKeepAuraJointAlive(bool hasAttack, bool hasDefense, bool hasHelpNpc)
+[[nodiscard]] constexpr bool ShouldKeepAuraJointAlive(bool hasDefense, bool hasHelpNpc)
 {
-    return hasAttack || hasDefense || hasHelpNpc;
+    return hasDefense || hasHelpNpc;
 }
 
 } // namespace Render::Effects
