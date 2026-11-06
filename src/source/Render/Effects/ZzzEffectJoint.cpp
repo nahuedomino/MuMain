@@ -4475,10 +4475,9 @@ void MoveJoint(JOINT* o, int iIndex)
 
             if (o->SubType == 4 || o->SubType == 9)
             {
-                const bool hasAttack = g_isCharacterBuff(o->Target, eBuff_Attack);
                 const bool hasDefense = g_isCharacterBuff(o->Target, eBuff_Defense);
                 const bool hasHelpNpc = g_isCharacterBuff(o->Target, eBuff_HelpNpc);
-                if (Render::Effects::ShouldKeepAuraJointAlive(hasAttack, hasDefense, hasHelpNpc))
+                if (Render::Effects::ShouldKeepAuraJointAlive(hasDefense, hasHelpNpc))
                 {
                     o->LifeTime = 100;
                 }

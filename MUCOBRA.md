@@ -5,6 +5,7 @@ The `mucobra` branch is an upstream MuMain release tag plus the MuCobra patches,
 - `fix(render)`: 4-byte row alignment for Metal bitmap uploads on macOS.
 - `fix(party)`: right click on a party card casts support skills (sven-n/MuMain#993).
 - `fix(movement)`: a walk cancels the glide of OpenMU's walk-start position correction, so other players no longer fly to their walk target.
+- `fix(effects)`: Greater Damage shows only its red weapon sparkles; the swirling aura is for Greater Defense.
 
 ## Release
 

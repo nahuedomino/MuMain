@@ -10962,17 +10962,11 @@ void UpdatePlayerEffects(CHARACTER* c, OBJECT* o, BMD* b)
                 b->TransformPosition(o->BoneTransform[c->Weapon[i].LinkBone - 7], p, Position, true);
                 CreateSprite(BITMAP_SHINY + 1, Position, 1.5f, Light, o);
             }
-            if (!SearchJoint(MODEL_SPEARSKILL, o, 4) && !SearchJoint(MODEL_SPEARSKILL, o, 9))
-            {
-                for (int i = 0; i < 5; i++)
-                {
-                    CreateJoint(MODEL_SPEARSKILL, o->Position, o->Position, o->Angle, 4, o, 20.0f, -1, 0, 0,
-                                c->TargetCharacter);
-                }
-            }
         }
     }
-    else if (g_isCharacterBuff(o, eBuff_Defense))
+
+    // The swirling aura belongs to Greater Defense; Greater Damage only shows the red weapon sparkles.
+    if (g_isCharacterBuff(o, eBuff_Defense) || g_isCharacterBuff(o, eBuff_HelpNpc))
     {
         if (!g_isCharacterBuff(o, eBuff_Cloaking))
         {
