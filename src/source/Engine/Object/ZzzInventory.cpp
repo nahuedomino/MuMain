@@ -1928,8 +1928,7 @@ static ItemTooltipBuild BuildItemTooltipText(const ITEM* ip, bool Sell, int Inve
     // the signs still needed); the others' lines are their descriptions.
     if (GameLogic::Items::IsResetFruit(ip))
     {
-        DWORD statpoint = 0;
-        statpoint = ip->Durability * 10;
+        const DWORD statpoint = GameLogic::Items::ResetFruitPoints;
 
         mu_swprintf(TextList[TextNum], I18N::Game::ResetPointD, statpoint);
         TextListColor[TextNum] = TEXT_COLOR_BLUE;
