@@ -383,6 +383,8 @@ void mu::ui::window::COptionWindow::BindRmlModel(Rml::DataModelConstructor& c, O
     c.Bind("whisper_sound_label", &model.whisperSoundLabel);
     c.Bind("slide_help", &model.slideHelp);
     c.Bind("slide_help_label", &model.slideHelpLabel);
+    c.Bind("allow_party_kill", &model.allowPartyKill);
+    c.Bind("allow_party_kill_label", &model.allowPartyKillLabel);
     c.Bind("render_all_effects", &model.renderAllEffects);
     c.Bind("render_all_effects_label", &model.renderAllEffectsLabel);
     c.Bind("windowed_mode", &model.windowedMode);
@@ -527,6 +529,8 @@ void mu::ui::window::COptionWindow::BindRmlModel(Rml::DataModelConstructor& c, O
         [this](Rml::DataModelHandle, Rml::Event&, const Rml::VariantList&) { RmlToggleWhisperSound(); });
     c.BindEventCallback("option_toggle_slide_help",
         [this](Rml::DataModelHandle, Rml::Event&, const Rml::VariantList&) { RmlToggleSlideHelp(); });
+    c.BindEventCallback("option_toggle_allow_party_kill",
+        [this](Rml::DataModelHandle, Rml::Event&, const Rml::VariantList&) { RmlToggleAllowPartyKill(); });
     c.BindEventCallback("option_toggle_render_all_effects",
         [this](Rml::DataModelHandle, Rml::Event&, const Rml::VariantList&) { RmlToggleRenderAllEffects(); });
     c.BindEventCallback("option_toggle_windowed_mode",
@@ -905,6 +909,13 @@ void mu::ui::window::COptionWindow::RmlToggleWhisperSound()
 void mu::ui::window::COptionWindow::RmlToggleSlideHelp()
 {
     m_bSlideHelp = !m_bSlideHelp;
+}
+
+void mu::ui::window::COptionWindow::RmlToggleAllowPartyKill()
+{
+    auto& config = GameConfig::GetInstance();
+    config.SetAllowPartyKill(!config.GetAllowPartyKill());
+    config.Save();
 }
 
 void mu::ui::window::COptionWindow::RmlToggleRenderAllEffects()
@@ -1738,6 +1749,7 @@ void mu::ui::window::COptionWindow::SyncRmlModel()
     SyncLabel(model.autoAttackLabel, "auto_attack_label", I18N::Game::AutomaticAttack);
     SyncLabel(model.whisperSoundLabel, "whisper_sound_label", I18N::Game::BeepSoundForWhispering);
     SyncLabel(model.slideHelpLabel, "slide_help_label", I18N::Game::SlideHelp);
+    SyncLabel(model.allowPartyKillLabel, "allow_party_kill_label", I18N::Game::AllowKillingPartyMembers);
     SyncLabel(model.renderAllEffectsLabel, "render_all_effects_label", I18N::Game::RenderFullEffects);
     SyncLabel(model.windowedModeLabel, "windowed_mode_label", I18N::Game::WindowedMode);
     SyncLabel(model.soundVolumeLabel, "sound_volume_label", I18N::Game::SoundVolume);
@@ -1777,6 +1789,7 @@ void mu::ui::window::COptionWindow::SyncRmlModel()
     if (model.autoAttack != m_bAutoAttack) { model.autoAttack = m_bAutoAttack; m_RmlView.MarkDirty("auto_attack"); }
     if (model.whisperSound != m_bWhisperSound) { model.whisperSound = m_bWhisperSound; m_RmlView.MarkDirty("whisper_sound"); }
     if (model.slideHelp != m_bSlideHelp) { model.slideHelp = m_bSlideHelp; m_RmlView.MarkDirty("slide_help"); }
+    if (const bool allowPartyKill = GameConfig::GetInstance().GetAllowPartyKill(); model.allowPartyKill != allowPartyKill) { model.allowPartyKill = allowPartyKill; m_RmlView.MarkDirty("allow_party_kill"); }
     if (model.renderAllEffects != m_bRenderAllEffects) { model.renderAllEffects = m_bRenderAllEffects; m_RmlView.MarkDirty("render_all_effects"); }
     if (model.windowedMode != m_bWindowedMode) { model.windowedMode = m_bWindowedMode; m_RmlView.MarkDirty("windowed_mode"); }
 
