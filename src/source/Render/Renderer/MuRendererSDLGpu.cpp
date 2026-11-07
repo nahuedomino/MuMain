@@ -736,6 +736,9 @@ static std::uint64_t s_submittedFrames = 0u;
 // Per-frame packed float4 bone rows. Three rows represent one affine 3x4 bone transform.
 static SDL_GPUTransferBuffer* s_boneTransferBuf = nullptr;
 static SDL_GPUBuffer* s_boneGpuBuf = nullptr;
+// Never read: bound just before the real storage buffers so SDL's Metal backend sees a changed handle (see
+// ReplayDrawCommand).
+static SDL_GPUBuffer* s_storageRebindDummyBuf = nullptr;
 static Uint32 s_boneCapacity = 0u;
 static std::vector<float> s_boneRowScratch;
 static const float* s_lastBonePalette = nullptr;
@@ -1122,7 +1125,15 @@ static void ReplayDrawCommand(const RenderCmd& command, SDL_GPUGraphicsPipeline*
         SDL_GPUBuffer* const storageBuffers[] = {s_boneGpuBuf, s_terrainHeightGpuBuf};
         const std::span<SDL_GPUBuffer* const> bound{storageBuffers, shadow ? 2u : 1u};
         if (state.SelectVertexStorageBuffers(bound))
+        {
+            // SDL's Metal backend places vertex storage buffers after the pipeline's uniform buffers, but only
+            // rebinds them when a handle changes or the uniform-buffer count differs from the previous pipeline.
+            // After a body-shadow draw (two uniform buffers) and a plain draw (one, no storage), a skinned draw
+            // would keep the same bone buffer handle and read its bones from the stale shadow uniform buffer,
+            // stretching monsters across the void. Binding a different buffer first forces the rebind.
+            SDL_BindGPUVertexStorageBuffers(s_renderPass, 0, &s_storageRebindDummyBuf, 1);
             SDL_BindGPUVertexStorageBuffers(s_renderPass, 0, bound.data(), static_cast<Uint32>(bound.size()));
+        }
     }
 
     Uint32 firstIndex = 0u;
@@ -7009,6 +7020,18 @@ private:
             return true;
         }
 
+        if (!s_storageRebindDummyBuf)
+        {
+            SDL_GPUBufferCreateInfo dummyInfo{};
+            dummyInfo.usage = SDL_GPU_BUFFERUSAGE_GRAPHICS_STORAGE_READ;
+            dummyInfo.size = 16u;
+            s_storageRebindDummyBuf = SDL_CreateGPUBuffer(s_device, &dummyInfo);
+            if (!s_storageRebindDummyBuf)
+            {
+                return false;
+            }
+        }
+
         Uint32 newCapacity = s_boneCapacity > 0u ? s_boneCapacity : k_InitialBoneBufferSize;
         while (newCapacity < requiredSize)
         {
@@ -7086,6 +7109,11 @@ private:
         {
             SDL_ReleaseGPUBuffer(s_device, s_boneGpuBuf);
             s_boneGpuBuf = nullptr;
+        }
+        if (s_storageRebindDummyBuf)
+        {
+            SDL_ReleaseGPUBuffer(s_device, s_storageRebindDummyBuf);
+            s_storageRebindDummyBuf = nullptr;
         }
         if (s_boneTransferBuf)
         {
