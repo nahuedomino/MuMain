@@ -453,6 +453,10 @@
 						<span class="opt-label">{{slide_help_label}}</span>
 						<div class="opt-control"><div class="opt-toggle" data-class-checked="slide_help"><div class="opt-toggle-knob"></div></div></div>
 					</div>
+					<div class="opt-row opt-toggle-row" data-event-click="option_toggle_allow_party_kill">
+						<span class="opt-label">{{allow_party_kill_label}}</span>
+						<div class="opt-control"><div class="opt-toggle" data-class-checked="allow_party_kill"><div class="opt-toggle-knob"></div></div></div>
+					</div>
 				</div>
 
 				<div class="opt-page" data-class-hidden="active_tab != 4">
