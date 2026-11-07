@@ -1402,6 +1402,20 @@ static void FinishJoinMapServer(CHARACTER* c, const PRECEIVE_JOIN_MAP_SERVER_EXT
     g_ConsoleDebug->Write(MCD_RECEIVE, L"0x03 [ReceiveJoinMapServer]");
 }
 
+// OpenMU 0.10.1 sends no duel end (AA 03) after a duel that finished on score; it only warps the
+// duelists out. Leaving the arena therefore has to close the duel on the client.
+static void EndDuelWhenLeftArena()
+{
+    if (gMapManager.WorldActive == WD_64DUELARENA || !g_DuelMgr.IsDuelEnabled())
+    {
+        return;
+    }
+
+    UI::Windows::Hide(mu::ui::window::INTERFACE_DUEL_WINDOW);
+    g_DuelMgr.EnableDuel(FALSE);
+    g_DuelMgr.EnablePetDuel(FALSE);
+}
+
 static void RevivalAfterMapLoad(CHARACTER* c, int OldWorld);
 static void FinishRevival(CHARACTER* c);
 
@@ -1542,6 +1556,7 @@ void ReceiveRevival(const BYTE* ReceiveBuffer)
 static void RevivalAfterMapLoad(CHARACTER* c, int OldWorld)
 {
     OBJECT* o = &c->Object;
+    EndDuelWhenLeftArena();
     if ((gMapManager.InChaosCastle(OldWorld) == true && OldWorld != gMapManager.WorldActive) ||
         gMapManager.InChaosCastle() == true)
     {
@@ -2390,6 +2405,7 @@ BOOL ReceiveTeleport(const BYTE* ReceiveBuffer, BOOL bEncrypted)
 // ReceiveTeleport to another map, once that map is ready.
 static void TeleportAfterMapLoad(OBJECT* o, int OldWorld)
 {
+    EndDuelWhenLeftArena();
     if (gMapManager.WorldActive == WD_34CRYWOLF_1ST)
     {
         SocketClient->ToGameServer()->SendCrywolfInfoRequest();
