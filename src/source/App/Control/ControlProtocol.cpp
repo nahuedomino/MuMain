@@ -217,6 +217,7 @@ const std::vector<std::string>& CommandNames()
         "equip",
         "say",
         "whisper",
+        "duel",
         "party",
         "halt",
         "hotkey",
