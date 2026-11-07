@@ -1529,7 +1529,7 @@
     <value>If you want to leave your guild,</value>
   </data>
   <data name="Please enter your WEBZEN.COM password." xml:space="preserve">
-    <value>Please enter your WEBZEN.COM password.</value>
+    <value>Please enter your account password.</value>
   </data>
   <data name="You have received an offer to join a guild." xml:space="preserve">
     <value>You have received an offer to join a guild.</value>
@@ -2266,7 +2266,7 @@
     <value>Password Verification</value>
   </data>
   <data name="Enter your WEBZEN.COM password." xml:space="preserve">
-    <value>Enter your WEBZEN.COM password.</value>
+    <value>Enter your account password.</value>
   </data>
   <data name="Unlock Vault" xml:space="preserve">
     <value>Unlock Vault</value>
@@ -2284,7 +2284,7 @@
     <value>Enter password again</value>
   </data>
   <data name="EnterYourWEBZENCOMPassword697" xml:space="preserve">
-    <value>Enter your WEBZEN.COM password</value>
+    <value>Enter your account password</value>
   </data>
   <data name="Charisma Requirement: %d" xml:space="preserve">
     <value>Charisma Requirement: %d</value>
