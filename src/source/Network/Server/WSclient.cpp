@@ -9970,7 +9970,8 @@ void ReceiveOption(const BYTE* ReceiveBuffer)
         }
     }
 
-    UI::Options::ApplySaved((Data->GameOption & AUTOATTACK_ON) == AUTOATTACK_ON,
+    // OpenMU seeds new characters with GameOption = 0 (neither ON nor OFF); only an explicit OFF disables auto attack.
+    UI::Options::ApplySaved((Data->GameOption & AUTOATTACK_OFF) != AUTOATTACK_OFF,
                             (Data->GameOption & WHISPER_SOUND_ON) == WHISPER_SOUND_ON,
                             (Data->GameOption & SLIDE_HELP_OFF) != SLIDE_HELP_OFF);
 
