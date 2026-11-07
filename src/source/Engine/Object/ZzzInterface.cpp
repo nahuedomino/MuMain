@@ -68,6 +68,7 @@
 #include "Camera/CameraProjection.h"
 #include "Scenes/SceneCommon.h"
 #include "Render/Text/CUIRenderText.h"
+#include "GameLogic/Social/PartyHealthBar.h"
 
 #include <iterator>
 
@@ -3860,50 +3861,92 @@ void MoveBattleSoccerEffect(CHARACTER* c)
     }
 }
 
+namespace
+{
+// The visible character of a party member other than the Hero, found by name: the cached
+// Party[].index is only resolved on some input paths and reset every frame by the party list.
+const CHARACTER* FindVisiblePartyMember(const PARTY_t& member)
+{
+    if (member.Name[0] == 0 || (Hero != nullptr && wcsncmp(member.Name, Hero->ID, MAX_USERNAME_SIZE) == 0))
+        return nullptr;
+
+    for (int i = 0; i < MAX_CHARACTERS_CLIENT; ++i)
+    {
+        const CHARACTER* c = &CharactersClient[i];
+        const OBJECT* o = &c->Object;
+        if (o->Live && o->Visible && o->Kind == KIND_PLAYER && o->Type == MODEL_PLAYER
+            && wcsncmp(member.Name, c->ID, MAX_USERNAME_SIZE) == 0)
+        {
+            return c;
+        }
+    }
+    return nullptr;
+}
+} // namespace
+
 void RenderPartyHP()
 {
+    namespace Bar = GameLogic::PartyHealthBar;
+
+    static float shownFractions[MAX_PARTYS] = {};
+    static wchar_t shownNames[MAX_PARTYS][MAX_USERNAME_SIZE + 1] = {};
+    static uint64_t lastTick = 0;
+
+    const uint64_t now = GetTickCount64();
+    const float elapsedSeconds = lastTick == 0 ? 0.f : std::min(0.25f, (now - lastTick) / 1000.f);
+    lastTick = now;
+
     if (PartyNumber <= 0) return;
 
-    float   Width = 38.f;
-    wchar_t    Text[100];
+    constexpr float Width = 50.f;
+    constexpr float Height = 6.f;
 
-    for (int j = 0; j < PartyNumber; ++j)
+    for (int j = 0; j < PartyNumber && j < MAX_PARTYS; ++j)
     {
-        PARTY_t* p = &Party[j];
+        const PARTY_t* p = &Party[j];
+        const float reported = Bar::HealthFractionFromSteps(p->stepHP);
+        if (wcsncmp(shownNames[j], p->Name, MAX_USERNAME_SIZE) != 0)
+        {
+            wcsncpy(shownNames[j], p->Name, MAX_USERNAME_SIZE);
+            shownNames[j][MAX_USERNAME_SIZE] = 0;
+            shownFractions[j] = reported;
+        }
+        shownFractions[j] = Bar::EaseToward(shownFractions[j], reported, elapsedSeconds);
 
-        if (p->index <= -1) continue;
+        const CHARACTER* c = FindVisiblePartyMember(*p);
+        if (c == nullptr) continue;
 
-        const CHARACTER* c = &CharactersClient[p->index];
         const OBJECT* o = &c->Object;
         vec3_t      Position;
         int         ScreenX, ScreenY;
 
         Vector(o->Position[0], o->Position[1], o->Position[2] + o->BoundingBoxMax[2] + 100.f, Position);
         CameraProjection::WorldToScreen(g_Camera, Position, &ScreenX, &ScreenY);
-        ScreenX -= (int)(Width / 2);
+        const float x = static_cast<float>(ScreenX) - Width / 2.f;
+        const float y = static_cast<float>(ScreenY);
 
-        if ((MouseX >= ScreenX && MouseX < ScreenX + Width && MouseY >= ScreenY - 2 && MouseY < ScreenY + 6))
+        if (MouseX >= x && MouseX < x + Width && MouseY >= y - 2 && MouseY < y + Height + 2)
         {
-            mu_swprintf(Text, L"HP : %d0%%", p->stepHP);
+            wchar_t Text[100];
+            mu_swprintf(Text, L"%ls  %d%%", p->Name, static_cast<int>(reported * 100.f + 0.5f));
             g_pRenderText->SetTextColor(255, 230, 210, 255);
-            g_pRenderText->RenderText(ScreenX, ScreenY - 6, Text);
+            g_pRenderText->RenderText(static_cast<int>(x), ScreenY - 12, Text);
         }
 
+        const float fill = shownFractions[j];
+        const uint32_t color = Bar::FillColor(fill);
+        const float innerWidth = Width - 2.f;
+        const float fillWidth = innerWidth * fill;
+
+        // Normal alpha blending: EnableAlphaBlend() is additive and would wash the dark frame out.
         EnableAlphaTest();
-        RenderColorQuadARGB(static_cast<float>(ScreenX + 1), static_cast<float>(ScreenY + 1), Width + 4.f, 5.f,
-            0x80000000u);
-
-        EnableAlphaBlend();
-        RenderColorQuadARGB(static_cast<float>(ScreenX), static_cast<float>(ScreenY), Width + 4.f, 5.f, 0xFF330000u);
-        RenderColorQuadARGB(static_cast<float>(ScreenX + 2), static_cast<float>(ScreenY + 2), Width, 1.f,
-            0xFF320A00u);
-
-        int stepHP = std::min<int>(10, p->stepHP);
-
-        for (int k = 0; k < stepHP; ++k)
+        RenderColorQuadARGB(x + 1.f, y + 1.f, Width, Height, 0x60000000u);     // drop shadow
+        RenderColorQuadARGB(x, y, Width, Height, 0xE0101010u);                 // frame
+        RenderColorQuadARGB(x + 1.f, y + 1.f, innerWidth, Height - 2.f, 0xFF3A2A22u); // empty track
+        if (fillWidth > 0.f)
         {
-            RenderColorQuadARGB(static_cast<float>(ScreenX + 2 + (k * 4)), static_cast<float>(ScreenY + 2), 3.f, 2.f,
-                0xFFFA0A00u);
+            RenderColorQuadARGB(x + 1.f, y + 1.f, fillWidth, Height - 2.f, color);
+            RenderColorQuadARGB(x + 1.f, y + 1.f, fillWidth, 1.f, Bar::Highlight(color, 0.45f));
         }
         DisableAlphaBlend();
     }
