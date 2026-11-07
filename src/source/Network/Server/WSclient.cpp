@@ -1375,6 +1375,20 @@ BOOL ReceiveJoinMapServer(std::span<const BYTE> ReceiveBuffer)
     return (TRUE);
 }
 
+// OpenMU 0.10.1 sends no duel end (AA 03) after a duel that finished on score; it only warps the
+// duelists out. Leaving the arena therefore has to close the duel on the client.
+static void EndDuelWhenLeftArena()
+{
+    if (gMapManager.WorldActive == WD_64DUELARENA || !g_DuelMgr.IsDuelEnabled())
+    {
+        return;
+    }
+
+    UI::Windows::Hide(mu::ui::window::INTERFACE_DUEL_WINDOW);
+    g_DuelMgr.EnableDuel(FALSE);
+    g_DuelMgr.EnablePetDuel(FALSE);
+}
+
 void ReceiveRevival(const BYTE* ReceiveBuffer)
 {
     MouseLButton = false;
@@ -1497,6 +1511,7 @@ void ReceiveRevival(const BYTE* ReceiveBuffer)
 
         gMapManager.WorldActive = Data->Map;
         gMapManager.LoadWorld(gMapManager.WorldActive);
+        EndDuelWhenLeftArena();
 
         if ((gMapManager.InChaosCastle(OldWorld) == true && OldWorld != gMapManager.WorldActive) ||
             gMapManager.InChaosCastle() == true)
@@ -2315,6 +2330,7 @@ BOOL ReceiveTeleport(const BYTE* ReceiveBuffer, BOOL bEncrypted)
 
             gMapManager.WorldActive = Data->Map;
             gMapManager.LoadWorld(gMapManager.WorldActive);
+            EndDuelWhenLeftArena();
 
             if (gMapManager.WorldActive == WD_34CRYWOLF_1ST)
             {
