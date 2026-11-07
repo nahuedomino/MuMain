@@ -232,3 +232,12 @@ mu_add_test(
         test_key_configuration_gate.cpp
         ${CMAKE_SOURCE_DIR}/src/source/GameLogic/KeyConfiguration/KeyConfigurationGate.cpp
 )
+
+# MuCobra: the health bar over party members' heads.
+mu_add_test(
+    NAME test_party_health_bar
+    SOURCES
+        test_party_health_bar.cpp
+    LINK_LIBS
+        MuClient
+)
