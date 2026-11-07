@@ -128,3 +128,12 @@ mu_add_test(
     LINK_LIBS
         MuClient
 )
+
+# MuCobra: the health bar over party members' heads.
+mu_add_test(
+    NAME test_party_health_bar
+    SOURCES
+        test_party_health_bar.cpp
+    LINK_LIBS
+        MuClient
+)
