@@ -1009,6 +1009,9 @@
   <data name="Automatic Attack" xml:space="preserve">
     <value>Ataque automático</value>
   </data>
+  <data name="Allow Killing Party Members" xml:space="preserve">
+    <value>Permitir matar a miembros del grupo</value>
+  </data>
   <data name="Beep sound for whispering" xml:space="preserve">
     <value>Sonido de pitido para susurrar</value>
   </data>
