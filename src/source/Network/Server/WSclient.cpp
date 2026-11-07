@@ -9997,8 +9997,15 @@ void ReceiveLetter(const BYTE* ReceiveBuffer)
     CMultiLanguage::ConvertFromUtf8(szSubject, Data->Subject, MAX_USERNAME_SIZE);
     szSubject[MAX_USERNAME_SIZE] = '\0';
 
+    // OpenMU's AddLetter (C6) is 79 bytes with a 32-byte subject, so the state is the packet's
+    // last byte, not FS_LETTER_ALERT::Read (which assumes a 60-byte subject).
+    const std::size_t packetSize = Data->Header.Size;
+    const BYTE readState = packetSize >= sizeof(FS_LETTER_ALERT) || packetSize == 0
+        ? Data->Read
+        : ReceiveBuffer[packetSize - 1];
+
     const UI::Social::LetterSummary letter{ Data->Index, szName, szSubject, szDate, szTime };
-    switch (Data->Read)
+    switch (readState)
     {
     case 0x02: // just arrived
         PlayBuffer(SOUND_FRIEND_MAIL_ALERT);
