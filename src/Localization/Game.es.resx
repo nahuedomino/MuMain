@@ -1148,7 +1148,7 @@
     <value>Si quieres dejar tu gremio,</value>
   </data>
   <data name="Please enter your WEBZEN.COM password." xml:space="preserve">
-    <value>Por favor ingrese su contraseña de WEBZEN.COM.</value>
+    <value>Por favor ingrese su contraseña de la cuenta.</value>
   </data>
   <data name="You have received an offer to join a guild." xml:space="preserve">
     <value>Has recibido una oferta para unirte a un gremio.</value>
@@ -1865,7 +1865,7 @@
     <value>Verificación de contraseña</value>
   </data>
   <data name="Enter your WEBZEN.COM password." xml:space="preserve">
-    <value>Ingrese su contraseña de WEBZEN.COM.</value>
+    <value>Ingrese su contraseña de la cuenta.</value>
   </data>
   <data name="Unlock Vault" xml:space="preserve">
     <value>Desbloquear bóveda</value>
@@ -1883,7 +1883,7 @@
     <value>Ingrese la contraseña nuevamente</value>
   </data>
   <data name="EnterYourWEBZENCOMPassword697" xml:space="preserve">
-    <value>Introduce tu contraseña de WEBZEN.COM</value>
+    <value>Introduce tu contraseña de la cuenta</value>
   </data>
   <data name="Charisma Requirement: %d" xml:space="preserve">
     <value>Requisito de carisma: %d</value>
