@@ -1154,7 +1154,7 @@
     <value>Se você quiser sair da sua guilda,</value>
   </data>
   <data name="Please enter your WEBZEN.COM password." xml:space="preserve">
-    <value>Por favor, digite sua senha WEBZEN.COM.</value>
+    <value>Por favor, digite sua senha da conta.</value>
   </data>
   <data name="You have received an offer to join a guild." xml:space="preserve">
     <value>Você recebeu uma oferta para ingressar em uma guilda.</value>
@@ -1871,7 +1871,7 @@
     <value>Verificação de senha</value>
   </data>
   <data name="Enter your WEBZEN.COM password." xml:space="preserve">
-    <value>Digite sua senha WEBZEN.COM.</value>
+    <value>Digite sua senha da conta.</value>
   </data>
   <data name="Unlock Vault" xml:space="preserve">
     <value>Desbloquear cofre</value>
@@ -1889,7 +1889,7 @@
     <value>Digite a senha novamente</value>
   </data>
   <data name="EnterYourWEBZENCOMPassword697" xml:space="preserve">
-    <value>Digite sua senha WEBZEN.COM</value>
+    <value>Digite sua senha da conta</value>
   </data>
   <data name="Charisma Requirement: %d" xml:space="preserve">
     <value>Requisito de Carisma: %d</value>
