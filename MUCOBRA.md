@@ -7,6 +7,12 @@ The `mucobra` branch is an upstream MuMain release tag plus the MuCobra patches,
 - `fix(movement)`: a walk cancels the glide of OpenMU's walk-start position correction, so other players no longer fly to their walk target.
 - `fix(effects)`: Greater Damage shows only its red weapon sparkles; the swirling aura is for Greater Defense.
 - `fix(skills)`: holding the right button keeps casting direction skills (Evil Spirit, Triple Shot, Power Slash...) toward the cursor anywhere on the map, aimed at the edge of the skill range.
+- `fix(text)`: the leave-guild prompt no longer mentions a WEBZEN.COM password.
+- `feat(options)`: Gameplay option "Allow Killing Party Members" (off by default); while off, normal and Ctrl-forced attacks skip party members (duels, guild wars and the Cursed Temple keep their rules). Area damage is decided by the server.
+- `fix(letters)`: receiving a letter shows a system message again.
+- `fix(guild)`: the alliance/hostility request (0xE5) uses byte fields, as the OpenMU server expects; alliances and hostility now work.
+- `fix(duel)`: the duel answer swaps the player id bytes, because the 0.11 packets library writes it big-endian and the 0.10.1 server reads it little-endian. Remove it once the server runs 0.11 or newer.
+- `fix(options)`: Automatic Attack defaults to on when the server sends no explicit choice (OpenMU seeds new characters with a zeroed key configuration).
 
 ## Release
 
