@@ -79,6 +79,7 @@ std::string UseItem(const Request& request, std::unique_ptr<Act>& act);
 std::string EquipItem(const Request& request, std::unique_ptr<Act>& act);
 std::string Say(const Request& request, std::unique_ptr<Act>& act);
 std::string Whisper(const Request& request, std::unique_ptr<Act>& act);
+std::string Duel(const Request& request, std::unique_ptr<Act>& act);
 std::string Party(const Request& request, std::unique_ptr<Act>& act);
 std::string Halt(const Request& request, std::unique_ptr<Act>& act);
 
