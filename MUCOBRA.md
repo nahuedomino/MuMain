@@ -11,7 +11,7 @@ The `mucobra` branch is an upstream MuMain release tag plus the MuCobra patches,
 - `feat(options)`: Gameplay option "Allow Killing Party Members" (off by default); while off, normal and Ctrl-forced attacks skip party members (duels, guild wars and the Cursed Temple keep their rules). Area damage is decided by the server.
 - `fix(letters)`: receiving a letter shows a system message again.
 - `fix(guild)`: the alliance/hostility request (0xE5) uses byte fields, as the OpenMU server expects; alliances and hostility now work.
-- `fix(duel)`: the duel answer swaps the player id bytes, because the 0.11 packets library writes it big-endian and the 0.10.1 server reads it little-endian. Remove it once the server runs 0.11 or newer.
+- `fix(duel)`: the duel answer swaps the player id bytes, because the 0.11 packets library writes it big-endian and the 0.10.1 server reads it little-endian. Remove it once the server runs 0.11 or newer. Leaving the arena also closes the duel score window, because 0.10.1 sends no duel end after a duel won on score.
 - `fix(options)`: Automatic Attack defaults to on when the server sends no explicit choice (OpenMU seeds new characters with a zeroed key configuration).
 
 ## Release
