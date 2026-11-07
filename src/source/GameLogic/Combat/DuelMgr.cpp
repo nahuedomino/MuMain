@@ -137,7 +137,11 @@ BOOL CDuelMgr::IsDuelPlayer(WORD wIndex, int iPlayerNum)
 
 void CDuelMgr::SendDuelRequestAnswer(int iPlayerNum, BOOL bOK)
 {
-    SocketClient->ToGameServer()->SendDuelStartResponse(bOK, m_DuelPlayer[iPlayerNum].m_sIndex, MU_C16(m_DuelPlayer[iPlayerNum].m_szID));
+    // The packets library (0.11) writes PlayerId big-endian, but the OpenMU 0.10.1 server reads it
+    // little-endian; pre-swapping puts the id on the wire in the order the server expects.
+    const auto playerId = static_cast<uint16_t>(m_DuelPlayer[iPlayerNum].m_sIndex);
+    const auto serverOrderId = static_cast<uint16_t>((playerId >> 8) | (playerId << 8));
+    SocketClient->ToGameServer()->SendDuelStartResponse(bOK, serverOrderId, MU_C16(m_DuelPlayer[iPlayerNum].m_szID));
 }
 
 void CDuelMgr::SetDuelChannel(int iChannelIndex, BOOL bEnable, BOOL bJoinable, const wchar_t* pszID1, const wchar_t* pszID2)
