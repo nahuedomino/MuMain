@@ -1122,6 +1122,28 @@ std::string Whisper(const Request& request, std::unique_ptr<Act>&)
     return EncodeResult(request.EncodedId(), result.dump());
 }
 
+std::string Duel(const Request& request, std::unique_ptr<Act>&)
+{
+    int targetKey = -1;
+    const std::string targetFailure = TargetError(request, ResolveTarget(request, targetKey), "duel", true);
+    if (!targetFailure.empty())
+    {
+        return targetFailure;
+    }
+
+    const int index = FindCharacterIndex(targetKey);
+    if (index == MAX_CHARACTERS_CLIENT)
+    {
+        return EncodeError(request.EncodedId(), ErrorCode::NotInView, "the duel target is not in view");
+    }
+
+    SocketClient->ToGameServer()->SendDuelStartRequest(static_cast<uint16_t>(targetKey),
+                                                       MU_C16(CharactersClient[index].ID));
+    json result;
+    result["target"] = targetKey;
+    return EncodeResult(request.EncodedId(), result.dump());
+}
+
 std::string Party(const Request& request, std::unique_ptr<Act>&)
 {
     std::string action;
