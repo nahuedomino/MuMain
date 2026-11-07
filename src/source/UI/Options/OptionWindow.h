@@ -166,6 +166,7 @@ namespace mu::ui::window
         void RmlToggleAutoAttack();
         void RmlToggleWhisperSound();
         void RmlToggleSlideHelp();
+        void RmlToggleAllowPartyKill();
         void RmlToggleRenderAllEffects();
         void RmlSoundVolumeChanged(int value);
         void RmlMusicVolumeChanged(int value);
@@ -298,6 +299,8 @@ namespace mu::ui::window
             Rml::String whisperSoundLabel;
             bool slideHelp = true;
             Rml::String slideHelpLabel;
+            bool allowPartyKill = false;
+            Rml::String allowPartyKillLabel;
             bool renderAllEffects = true;
             Rml::String renderAllEffectsLabel;
 

@@ -21,6 +21,7 @@
 #include "Render/Textures/ZzzTexture.h"
 #include "Engine/AI/ZzzAI.h"
 #include "Engine/Object/ZzzInterface.h"
+#include "Data/GameConfig/GameConfig.h"
 #include "UI/Chat/ChatInput.h"
 #include "GameLogic/Combat/ClassAttack.h"
 #include "GameLogic/Combat/SkillCast.h"
@@ -682,6 +683,10 @@ bool CheckAttack_Fenrir(CHARACTER* c)
                 return false;
             }
         }
+        else if (!GameConfig::GetInstance().GetAllowPartyKill() && g_pPartyManager->IsPartyMemberChar(c))
+        {
+            return false;
+        }
         else if (c->PK >= PVP_MURDERER2 || (Core::Input::IsKeyDown(VK_CONTROL) && c != Hero))
         {
             return true;
@@ -920,6 +925,10 @@ bool CheckAttack()
             {
                 return false;
             }
+        }
+        else if (!GameConfig::GetInstance().GetAllowPartyKill() && g_pPartyManager->IsPartyMemberChar(c))
+        {
+            return false;
         }
         else if (c->PK >= PVP_MURDERER2 || (Core::Input::IsKeyDown(VK_CONTROL) && c != Hero))
         {
