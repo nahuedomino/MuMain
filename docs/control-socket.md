@@ -109,6 +109,7 @@ Error codes: `bad_request`, `unknown_command`, `wrong_scene`, `busy`,
 | `pickup` (`item`) | walk to a drop and take it, by the id `nearby` reports for it |
 | `use` (`slot`), `equip` (`slot`, `target_slot`) | inventory actions |
 | `say` (`text`), `whisper` (`name`, `text`) | chat, including `/` commands |
+| `duel` (`target`) | sends a duel request to the player (id or name); the opponent answers in its dialog |
 | `party` (`action`, `target`) | `invite`, `accept`, `decline`, `leave` |
 | `trade` (`action`, `target`) | `request` a trade with another player at most one tile away (`not_allowed` otherwise), or `cancel` the open one; the partner accepts with the Enter key, and items go in with `click-ui` |
 | `halt` | stop the walk or repeated attack in progress |
