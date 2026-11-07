@@ -87,6 +87,7 @@ void GameConfig::Load()
 
     m_uiLocale = ReadString(CfgSectionUI, CfgKeyUILocale, CfgDefaultUILocale);
     m_translateItemNames = ReadBool(CfgSectionUI, CfgKeyTranslateItemNames, CfgDefaultTranslateItemNames);
+    m_allowPartyKill = ReadBool(CfgSectionUI, CfgKeyAllowPartyKill, CfgDefaultAllowPartyKill);
     m_fontSelection = ReadString(CfgSectionUI, CfgKeyFont, CfgDefaultFont);
     m_rmlTheme = ReadString(CfgSectionUI, CfgKeyRmlTheme, CfgDefaultRmlTheme);
     m_uiScalePercent = std::clamp(ReadInt(CfgSectionUI, CfgKeyUIScalePercent, CfgDefaultUIScalePercent),
@@ -162,6 +163,7 @@ void GameConfig::Save()
 
     WriteString(CfgSectionUI, CfgKeyUILocale, m_uiLocale);
     WriteBool(CfgSectionUI, CfgKeyTranslateItemNames, m_translateItemNames);
+    WriteBool(CfgSectionUI, CfgKeyAllowPartyKill, m_allowPartyKill);
     WriteString(CfgSectionUI, CfgKeyFont, m_fontSelection);
     WriteString(CfgSectionUI, CfgKeyRmlTheme, m_rmlTheme);
     WriteInt(CfgSectionUI, CfgKeyUIScalePercent, m_uiScalePercent);
@@ -345,6 +347,11 @@ void GameConfig::SetUILocale(const std::wstring& locale)
 void GameConfig::SetTranslateItemNames(bool translate)
 {
     m_translateItemNames = translate;
+}
+
+void GameConfig::SetAllowPartyKill(bool allow)
+{
+    m_allowPartyKill = allow;
 }
 
 void GameConfig::SetFontSelection(const std::wstring& font)
