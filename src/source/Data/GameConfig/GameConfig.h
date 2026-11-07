@@ -80,6 +80,10 @@ public:
     }
     void SetTranslateItemNames(bool translate);
 
+    // MuCobra: when off (default), party members are never valid attack targets, even with Ctrl.
+    bool GetAllowPartyKill() const { return m_allowPartyKill; }
+    void SetAllowPartyKill(bool allow);
+
     // UI font family name (GDI face name). Empty = platform default.
     std::wstring GetFontSelection() const { return m_fontSelection; }
     void SetFontSelection(const std::wstring& font);
@@ -232,6 +236,7 @@ private:
 
     std::wstring m_uiLocale;
     bool m_translateItemNames;
+    bool m_allowPartyKill;
     std::wstring m_fontSelection;
     std::wstring m_rmlTheme;
     int m_uiScalePercent;
