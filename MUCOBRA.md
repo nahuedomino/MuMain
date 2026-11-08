@@ -1,6 +1,6 @@
-# MuCobra fork
+# MU Volta fork
 
-The `mucobra` branch is an upstream MuMain release tag plus the MuCobra patches, one commit each:
+The `mucobra` branch is an upstream MuMain release tag plus the MU Volta patches, one commit each:
 
 - `fix(render)`: 4-byte row alignment for Metal bitmap uploads on macOS.
 - `fix(party)`: right click on a party card casts support skills (sven-n/MuMain#993).
@@ -26,7 +26,7 @@ The `mucobra` branch is an upstream MuMain release tag plus the MuCobra patches,
 git tag mucobra-v1.36.0 && git push origin mucobra mucobra-v1.36.0
 ```
 
-The `MuCobra Release` workflow builds the Windows runtime (about 35 minutes) and attaches it to the
+The `MU Volta Release` workflow builds the Windows runtime (about 35 minutes) and attaches it to the
 `mucobra-v1.36.0` release. Build the macOS runtime locally and upload it to the same release with
 `gh release upload mucobra-v1.36.0 MuMain-macos-native-arm64-release-editor-off-no-data.tar.gz`.
 The game data still comes from the upstream release.
@@ -38,8 +38,8 @@ from them:
 
 ```sh
 git tag mucobra-v1.36.1 && git push origin mucobra mucobra-v1.36.1
-gh release create mucobra-v1.36.1 --verify-tag --title "MuCobra v1.36.1" \
-  --notes "Upstream v1.36.0 with the MuCobra patches of the mucobra branch. Game data: the upstream release v1.36.0."
+gh release create mucobra-v1.36.1 --verify-tag --title "MU Volta v1.36.1" \
+  --notes "Upstream v1.36.0 with the MU Volta patches of the mucobra branch. Game data: the upstream release v1.36.0."
 ```
 
 When syncing with a new upstream release, rebase from the upstream tag (not the patch version).
