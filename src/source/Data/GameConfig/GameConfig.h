@@ -80,7 +80,7 @@ public:
     }
     void SetTranslateItemNames(bool translate);
 
-    // MuCobra: when off (default), party members are never valid attack targets, even with Ctrl.
+    // MU Volta: when off (default), party members are never valid attack targets, even with Ctrl.
     bool GetAllowPartyKill() const { return m_allowPartyKill; }
     void SetAllowPartyKill(bool allow);
 

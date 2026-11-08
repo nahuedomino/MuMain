@@ -122,7 +122,7 @@ namespace GameLogic::Items
     bool IsWingMixCharm(const ITEM* pItem);
     bool IsWingMixCharmType(int itemType);
     bool IsWingMixCharmModel(int modelType);
-    // MuCobra: every reset fruit takes back this many points (the server's ResetFruitConsumeHandlerPlugIn).
+    // MU Volta: every reset fruit takes back this many points (the server's ResetFruitConsumeHandlerPlugIn).
     inline constexpr int ResetFruitPoints = 500;
     bool IsResetFruit(const ITEM* pItem);
     bool IsResetFruitType(int itemType);
