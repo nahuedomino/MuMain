@@ -174,7 +174,7 @@ mu_add_test(
         test_skill_hotkey_configuration.cpp
 )
 
-# MuCobra: a held right button aims direction skills at ground points beyond their range.
+# MU Volta: a held right button aims direction skills at ground points beyond their range.
 mu_add_test(
     NAME test_skill_aim
     SOURCES
@@ -183,7 +183,7 @@ mu_add_test(
         MuClient
 )
 
-# MuCobra: the health bar over party members' heads.
+# MU Volta: the health bar over party members' heads.
 mu_add_test(
     NAME test_party_health_bar
     SOURCES
