@@ -19,7 +19,7 @@ jobs:
     # By name, as upstream's ci.yml: another image brings another MSVC, and GitHub warns in every job while it moves
     # windows-latest to a new one.
     runs-on: windows-2025-vs2026
-    timeout-minutes: 90
+    timeout-minutes: 120
 
     steps:
       - name: Checkout repository
@@ -93,7 +93,7 @@ jobs:
             out/build/windows-ci-x64-release/_deps/*-src
             out/build/windows-ci-x64-release/_deps/*-subbuild
             .nuget
-          key: windows-x64-release-dep-sources-${{ steps.dotnet.outputs.dotnet-version }}-${{ hashFiles('CMakeLists.txt', 'cmake/patches/**', 'cmake/ApplyGitPatch.cmake', 'ClientLibrary/**/*.csproj', 'ClientLibrary/**/*.props') }}
+          key: windows-x64-release-dep-sources-${{ steps.dotnet.outputs.dotnet-version }}-${{ hashFiles('CMakeLists.txt', 'cmake/patches/**', 'cmake/ApplyGitPatch.cmake', 'cmake/UnpackArchive.cmake', 'ClientLibrary/**/*.csproj', 'ClientLibrary/**/*.props') }}
           restore-keys: windows-x64-release-dep-sources-
 
       - name: Identify vcpkg toolchain
