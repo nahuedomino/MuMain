@@ -19,6 +19,7 @@ The `mucobra` branch is an upstream MuMain release tag plus the MU Volta patches
 - `feat(party)`: a compact health bar over every visible party member (not yourself): dark frame, fill green/amber/red by health, eased between the server's 10% steps; hovering shows name and percent. Members are found by name each frame, because the cached party index was only resolved on some input paths and the bars rarely showed.
 - `fix(options)`: Automatic Attack defaults to on when the server sends no explicit choice (OpenMU seeds new characters with a zeroed key configuration).
 - `fix(render)`: skinned draws force SDL to rebind their vertex storage buffers, because SDL's Metal backend can skip the rebind after a GPU body-shadow draw and the bones are then read from the stale shadow uniform buffer (huge stretched grey/orange monster meshes over the void near map edges, e.g. Aida).
+- `fix(models)`: always load the original S6 player bodies and hide the "S6 player models" option, because the improved bodies break unequipping a set after switching characters.
 
 ## Release
 
