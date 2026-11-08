@@ -6166,10 +6166,10 @@
     <value>Połączenie ze stroną dostępne tylko w trybie okienkowym.</value>
   </data>
   <data name="W Coin" xml:space="preserve">
-    <value>WCoin</value>
+    <value>VCoin</value>
   </data>
   <data name="Buy W Coin" xml:space="preserve">
-    <value>Kup WCoin</value>
+    <value>Kup VCoin</value>
   </data>
   <data name="Price :" xml:space="preserve">
     <value>Cena :</value>
@@ -7222,7 +7222,7 @@
     <value>Srebrna szkatuła</value>
   </data>
   <data name="My W Coin : %s" xml:space="preserve">
-    <value>Moje WCoin: %s</value>
+    <value>Moje VCoin: %s</value>
   </data>
   <data name="Goblin Points : %s" xml:space="preserve">
     <value>Goblin Points: %s</value>
@@ -7264,7 +7264,7 @@
     <value>Zakup nie powiódł się</value>
   </data>
   <data name="You do not have enough W Coin or points." xml:space="preserve">
-    <value>Nie masz wystarczająco WCoin lub punktów.</value>
+    <value>Nie masz wystarczająco VCoin lub punktów.</value>
   </data>
   <data name="You do not have enough space in storage." xml:space="preserve">
     <value>Nie masz wystarczającej ilości miejsca w magazynie.</value>
@@ -7366,10 +7366,10 @@
     <value>Ta funkcja nie jest dostępna w MU Item Shop.##Skorzystaj ze strony internetowej MU Online.</value>
   </data>
   <data name="Send W Coin" xml:space="preserve">
-    <value>Wyślij WCoin</value>
+    <value>Wyślij VCoin</value>
   </data>
   <data name="Recharge W Coin" xml:space="preserve">
-    <value>Doładuj WCoin</value>
+    <value>Doładuj VCoin</value>
   </data>
   <data name="Update Information" xml:space="preserve">
     <value>Aktualizuj informacje</value>
@@ -7627,10 +7627,10 @@
     <value>%d szt.</value>
   </data>
   <data name="%s W Coin" xml:space="preserve">
-    <value>%s WCoin</value>
+    <value>%s VCoin</value>
   </data>
   <data name="%d W Coin" xml:space="preserve">
-    <value>%d WCoin</value>
+    <value>%d VCoin</value>
   </data>
   <data name="Quantity: %d / Duration: %s" xml:space="preserve">
     <value>Ilość: %d / Czas trwania: %s</value>
@@ -7648,7 +7648,7 @@
     <value>Okno informacji o przedmiocie</value>
   </data>
   <data name="W Coin: %s Coins" xml:space="preserve">
-    <value>WCoin: %s</value>
+    <value>VCoin: %s</value>
   </data>
   <data name="You can only open MU Item Shop in a town or safe zone." xml:space="preserve">
     <value>MU Item Shop można otworzyć tylko w mieście lub w strefie bezpiecznej.</value>
@@ -7861,10 +7861,10 @@
     <value>(w użyciu)</value>
   </data>
   <data name="W Coin(P)" xml:space="preserve">
-    <value>WCoin (P)</value>
+    <value>VCoin (P)</value>
   </data>
   <data name="My W Coin(P) : %s" xml:space="preserve">
-    <value>Moje WCoin (P): %s</value>
+    <value>Moje VCoin (P): %s</value>
   </data>
   <data name="You need more %%s to purchase this item." xml:space="preserve">
     <value>Potrzebujesz więcej %%s, aby kupić ten przedmiot.</value>
@@ -7945,7 +7945,7 @@
     <value>%s pkt/s</value>
   </data>
   <data name="You have selected an incorrect W Coin type. Please select again." xml:space="preserve">
-    <value>Wybrano nieprawidłowy rodzaj WCoin. Wybierz ponownie.</value>
+    <value>Wybrano nieprawidłowy rodzaj VCoin. Wybierz ponownie.</value>
   </data>
   <data name="Click the item to see the quest information again." xml:space="preserve">
     <value>Kliknij przedmiot, aby ponownie wyświetlić informacje o zadaniu.</value>
@@ -8110,7 +8110,7 @@
     <value>Rozszerzony ekwipunek</value>
   </data>
   <data name="You can't buy W coin while in full screen mode." xml:space="preserve">
-    <value>W trybie pełnoekranowym nie można kupić WCoin.</value>
+    <value>W trybie pełnoekranowym nie można kupić VCoin.</value>
   </data>
   <data name="You lack %d points." xml:space="preserve">
     <value>Brakuje ci %d pkt.</value>
@@ -9430,7 +9430,7 @@
     <value>Bonus: %ls</value>
   </data>
   <data name="W Coin(C)" xml:space="preserve">
-    <value>WCoin (C)</value>
+    <value>VCoin (C)</value>
   </data>
   <data name="Goblin Points" xml:space="preserve">
     <value>Goblin Points</value>
