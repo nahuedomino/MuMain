@@ -80,7 +80,9 @@ void OpenPlayers()
         Core::Platform::ShowFatalError(L"Error", L"Player.bmd file error!!!");
     }
 
-    const bool useS6 = GameConfig::GetInstance().GetUseS6PlayerModels();
+    // MU Volta: always the original S6 bodies. The improved bodies break taking off a set after
+    // switching characters, so the option is hidden and a saved UseS6PlayerModels=0 is ignored.
+    const bool useS6 = true;
     for (int i = 0; i < MAX_CLASS; ++i)
     {
         Engine::Object::OpenPlayerClassBodyParts(i, useS6);
