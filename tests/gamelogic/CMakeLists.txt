@@ -161,3 +161,12 @@ mu_add_test(
     LINK_LIBS
         MuClient
 )
+
+# MU Volta: reading the skill hotkeys the server stores per character.
+mu_add_test(
+    NAME test_skill_hotkey_configuration
+    SOURCES
+        test_skill_hotkey_configuration.cpp
+    LINK_LIBS
+        MuClient
+)

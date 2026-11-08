@@ -20,6 +20,7 @@ The `mucobra` branch is an upstream MuMain release tag plus the MU Volta patches
 - `fix(options)`: Automatic Attack defaults to on when the server sends no explicit choice (OpenMU seeds new characters with a zeroed key configuration).
 - `fix(render)`: skinned draws force SDL to rebind their vertex storage buffers, because SDL's Metal backend can skip the rebind after a GPU body-shadow draw and the bones are then read from the stale shadow uniform buffer (huge stretched grey/orange monster meshes over the void near map edges, e.g. Aida).
 - `fix(models)`: always load the original S6 player bodies and hide the "S6 player models" option, because the improved bodies break unequipping a set after switching characters.
+- `fix(hotkeys)`: the skill hotkeys are sent to the server as soon as one is assigned (they were only sent when leaving through the menu, so closing the window, a crash or a disconnect brought back an older layout), and the zeroed key configuration OpenMU gives new characters no longer binds key 0 to an empty skill slot that then shows the next learned skill.
 
 ## Release
 
