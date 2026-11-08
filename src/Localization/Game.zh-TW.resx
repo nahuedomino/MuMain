@@ -5870,10 +5870,10 @@
     <value>網站連線僅在 Windows 模式下可用。</value>
   </data>
   <data name="W Coin" xml:space="preserve">
-    <value>W幣</value>
+    <value>V幣</value>
   </data>
   <data name="Buy W Coin" xml:space="preserve">
-    <value>購買W幣</value>
+    <value>購買V幣</value>
   </data>
   <data name="Price :" xml:space="preserve">
     <value>價格 ：</value>
@@ -6926,7 +6926,7 @@
     <value>銀盒</value>
   </data>
   <data name="My W Coin : %s" xml:space="preserve">
-    <value>我的W幣：%s</value>
+    <value>我的V幣：%s</value>
   </data>
   <data name="Goblin Points : %s" xml:space="preserve">
     <value>哥布林點數：%s</value>
@@ -6968,7 +6968,7 @@
     <value>購買失敗</value>
   </data>
   <data name="You do not have enough W Coin or points." xml:space="preserve">
-    <value>您沒有足夠的W幣或積分。</value>
+    <value>您沒有足夠的V幣或積分。</value>
   </data>
   <data name="You do not have enough space in storage." xml:space="preserve">
     <value>您沒有足夠的儲存空間。</value>
@@ -7070,10 +7070,10 @@
     <value>MU商品商店不支援此功能。 ##請使用MU Online網站。</value>
   </data>
   <data name="Send W Coin" xml:space="preserve">
-    <value>發送W幣</value>
+    <value>發送V幣</value>
   </data>
   <data name="Recharge W Coin" xml:space="preserve">
-    <value>充值W幣</value>
+    <value>充值V幣</value>
   </data>
   <data name="Update Information" xml:space="preserve">
     <value>更新訊息</value>
@@ -7331,10 +7331,10 @@
     <value>%d 件</value>
   </data>
   <data name="%s W Coin" xml:space="preserve">
-    <value>%s W幣</value>
+    <value>%s V幣</value>
   </data>
   <data name="%d W Coin" xml:space="preserve">
-    <value>%d W幣</value>
+    <value>%d V幣</value>
   </data>
   <data name="Quantity: %d / Duration: %s" xml:space="preserve">
     <value>數量：%d / 持續時間：%s</value>
@@ -7352,7 +7352,7 @@
     <value>專案資訊視窗</value>
   </data>
   <data name="W Coin: %s Coins" xml:space="preserve">
-    <value>W幣：%s幣</value>
+    <value>V幣：%s幣</value>
   </data>
   <data name="You can only open MU Item Shop in a town or safe zone." xml:space="preserve">
     <value>您只能在城鎮或安全區開設 MU 物品商店。</value>
@@ -7565,10 +7565,10 @@
     <value>（使用中）</value>
   </data>
   <data name="W Coin(P)" xml:space="preserve">
-    <value>W幣(P)</value>
+    <value>V幣(P)</value>
   </data>
   <data name="My W Coin(P) : %s" xml:space="preserve">
-    <value>我的W幣(P) : %s</value>
+    <value>我的V幣(P) : %s</value>
   </data>
   <data name="You need more %%s to purchase this item." xml:space="preserve">
     <value>您需要更多 %%s 才能購買該商品。</value>
@@ -7649,7 +7649,7 @@
     <value>%s 點/秒</value>
   </data>
   <data name="You have selected an incorrect W Coin type. Please select again." xml:space="preserve">
-    <value>您選擇的W幣類型不正確。請重新選擇。</value>
+    <value>您選擇的V幣類型不正確。請重新選擇。</value>
   </data>
   <data name="Click the item to see the quest information again." xml:space="preserve">
     <value>按一下該項目可再次查看任務資訊。</value>
@@ -7814,7 +7814,7 @@
     <value>擴大庫存</value>
   </data>
   <data name="You can't buy W coin while in full screen mode." xml:space="preserve">
-    <value>全螢幕模式下無法購買W幣。</value>
+    <value>全螢幕模式下無法購買V幣。</value>
   </data>
   <data name="You lack %d points." xml:space="preserve">
     <value>您缺少 %d 積分。</value>
