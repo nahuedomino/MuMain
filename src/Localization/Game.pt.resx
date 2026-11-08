@@ -6971,7 +6971,7 @@
     <value>Falha na compra</value>
   </data>
   <data name="You do not have enough W Coin or points." xml:space="preserve">
-    <value>Você não tem W Coin ou pontos suficientes.</value>
+    <value>Você não tem V Coin ou pontos suficientes.</value>
   </data>
   <data name="You do not have enough space in storage." xml:space="preserve">
     <value>Você não tem espaço suficiente no armazenamento.</value>
@@ -7652,7 +7652,7 @@
     <value>Ponto %s/seg(s)</value>
   </data>
   <data name="You have selected an incorrect W Coin type. Please select again." xml:space="preserve">
-    <value>Você selecionou um tipo incorreto de W Coin. Selecione novamente.</value>
+    <value>Você selecionou um tipo incorreto de V Coin. Selecione novamente.</value>
   </data>
   <data name="Click the item to see the quest information again." xml:space="preserve">
     <value>Clique no item para ver as informações da missão novamente.</value>
