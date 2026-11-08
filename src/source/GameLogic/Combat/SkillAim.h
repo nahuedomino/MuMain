@@ -1,6 +1,6 @@
 #pragma once
 
-// MuCobra: skills that fire toward the cursor (or around the caster) instead of at a
+// MU Volta: skills that fire toward the cursor (or around the caster) instead of at a
 // clicked target. When the player holds the right button on the ground beyond the
 // skill's range, the aim point is pulled back along the same direction so the skill
 // still fires, as in the original servers' clients, instead of the hero walking there
