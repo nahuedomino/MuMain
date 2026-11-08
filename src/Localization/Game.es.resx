@@ -5873,10 +5873,10 @@
     <value>La conexión al sitio web solo está disponible en modo Windows.</value>
   </data>
   <data name="W Coin" xml:space="preserve">
-    <value>Moneda W</value>
+    <value>V Coin</value>
   </data>
   <data name="Buy W Coin" xml:space="preserve">
-    <value>Comprar moneda W</value>
+    <value>Comprar V Coin</value>
   </data>
   <data name="Price :" xml:space="preserve">
     <value>Precio :</value>
@@ -6929,7 +6929,7 @@
     <value>Caja plateada</value>
   </data>
   <data name="My W Coin : %s" xml:space="preserve">
-    <value>Mi moneda W: %s</value>
+    <value>Mis V Coin: %s</value>
   </data>
   <data name="Goblin Points : %s" xml:space="preserve">
     <value>Puntos de duende: %s</value>
@@ -6971,7 +6971,7 @@
     <value>Compra fallida</value>
   </data>
   <data name="You do not have enough W Coin or points." xml:space="preserve">
-    <value>No tienes suficientes W Coin o puntos.</value>
+    <value>No tienes suficientes V Coin o puntos.</value>
   </data>
   <data name="You do not have enough space in storage." xml:space="preserve">
     <value>No tienes suficiente espacio de almacenamiento.</value>
@@ -7073,10 +7073,10 @@
     <value>Esta función no es compatible con MU Item Shop.##Utilice el sitio web de MU Online.</value>
   </data>
   <data name="Send W Coin" xml:space="preserve">
-    <value>Enviar moneda W</value>
+    <value>Enviar V Coin</value>
   </data>
   <data name="Recharge W Coin" xml:space="preserve">
-    <value>Recargar moneda W</value>
+    <value>Recargar V Coin</value>
   </data>
   <data name="Update Information" xml:space="preserve">
     <value>Actualizar información</value>
@@ -7334,10 +7334,10 @@
     <value>Piezas %d</value>
   </data>
   <data name="%s W Coin" xml:space="preserve">
-    <value>Moneda %s W</value>
+    <value>%s V Coin</value>
   </data>
   <data name="%d W Coin" xml:space="preserve">
-    <value>Moneda %d W</value>
+    <value>%d V Coin</value>
   </data>
   <data name="Quantity: %d / Duration: %s" xml:space="preserve">
     <value>Cantidad: %d / Duración: %s</value>
@@ -7355,7 +7355,7 @@
     <value>Ventana de información del artículo</value>
   </data>
   <data name="W Coin: %s Coins" xml:space="preserve">
-    <value>Moneda W: Monedas %s</value>
+    <value>V Coin: %s</value>
   </data>
   <data name="You can only open MU Item Shop in a town or safe zone." xml:space="preserve">
     <value>Solo puedes abrir MU Item Shop en una ciudad o zona segura.</value>
@@ -7568,10 +7568,10 @@
     <value>(en uso)</value>
   </data>
   <data name="W Coin(P)" xml:space="preserve">
-    <value>Moneda W(P)</value>
+    <value>V Coin(P)</value>
   </data>
   <data name="My W Coin(P) : %s" xml:space="preserve">
-    <value>Mi moneda W(P): %s</value>
+    <value>Mis V Coin(P): %s</value>
   </data>
   <data name="You need more %%s to purchase this item." xml:space="preserve">
     <value>Necesitas más %%s para comprar este artículo.</value>
@@ -7652,7 +7652,7 @@
     <value>%s punto/seg(s)</value>
   </data>
   <data name="You have selected an incorrect W Coin type. Please select again." xml:space="preserve">
-    <value>Ha seleccionado un tipo de moneda W incorrecto. Por favor seleccione nuevamente.</value>
+    <value>Seleccionaste un tipo de V Coin incorrecto. Selecciona de nuevo.</value>
   </data>
   <data name="Click the item to see the quest information again." xml:space="preserve">
     <value>Haga clic en el elemento para ver la información de la misión nuevamente.</value>
@@ -7817,7 +7817,7 @@
     <value>Inventario ampliado</value>
   </data>
   <data name="You can't buy W coin while in full screen mode." xml:space="preserve">
-    <value>No puedes comprar monedas W mientras estás en modo de pantalla completa.</value>
+    <value>No puedes comprar V Coin en modo de pantalla completa.</value>
   </data>
   <data name="You lack %d points." xml:space="preserve">
     <value>Te faltan puntos %d.</value>
