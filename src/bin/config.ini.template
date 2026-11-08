@@ -24,7 +24,7 @@ UIScalePercent=100
 [Camera]
 Zoom=1735
 [Render]
-; Original S6 bodies when 1, improved bodies when 0. Restart required.
+; Original S6 bodies when 1, improved bodies when 0. MU Volta always uses the original bodies.
 UseS6PlayerModels=1
 VSync=1
 Look=Classic
