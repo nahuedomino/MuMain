@@ -1,9 +1,9 @@
-# MuCobra fork: builds the patched Windows runtime and attaches it to a release of this fork.
+# MU Volta fork: builds the patched Windows runtime and attaches it to a release of this fork.
 #
 # Push a tag "mucobra-v<upstream version>" (e.g. mucobra-v1.36.0) on the mucobra branch. The
 # Windows job is copied from upstream's ci.yml build-windows job; keep it in sync when rebasing.
 # The macOS runtime is built and uploaded to the same release by hand (see MUCOBRA.md).
-name: MuCobra Release
+name: MU Volta Release
 
 on:
   push:
@@ -464,6 +464,6 @@ jobs:
             gh release upload "$TAG" "$asset" --repo "$GITHUB_REPOSITORY" --clobber
           else
             gh release create "$TAG" "$asset" --repo "$GITHUB_REPOSITORY" --verify-tag \
-              --title "MuCobra ${TAG#mucobra-}" \
-              --notes "Upstream ${TAG#mucobra-} with the MuCobra patches of the mucobra branch. Game data: the upstream release ${TAG#mucobra-}."
+              --title "MU Volta ${TAG#mucobra-}" \
+              --notes "Upstream ${TAG#mucobra-} with the MU Volta patches of the mucobra branch. Game data: the upstream release ${TAG#mucobra-}."
           fi
