@@ -51,9 +51,9 @@ When syncing with a new upstream release, rebase from the upstream tag (not the 
 ```sh
 git fetch --no-recurse-submodules upstream --tags
 git switch mucobra
-git rebase --onto v1.38.0 v1.37.0      # replay our patches on the new tag
+git rebase --onto v1.39.0 v1.38.0      # replay our patches on the new tag
 ```
 
 Drop a patch when upstream ships its own fix. Compare the `build-windows` job of
 `.github/workflows/ci.yml` with `mucobra-release.yml` and copy any changes. Then tag
-`mucobra-v1.38.0` and push with `--force-with-lease` for the rebased branch.
+`mucobra-v1.39.0` and push with `--force-with-lease` for the rebased branch.
