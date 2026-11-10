@@ -233,6 +233,14 @@ mu_add_test(
         ${CMAKE_SOURCE_DIR}/src/source/GameLogic/KeyConfiguration/KeyConfigurationGate.cpp
 )
 
+mu_add_test(
+    NAME test_teleport_cooldown
+    SOURCES
+        test_teleport_cooldown.cpp
+        ${CMAKE_SOURCE_DIR}/src/source/App/Platform/Windows/Winmain.cpp
+    LINK_LIBS MuClient
+)
+
 # MU Volta: the health bar over party members' heads.
 mu_add_test(
     NAME test_party_health_bar
