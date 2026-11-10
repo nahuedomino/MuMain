@@ -329,15 +329,15 @@ bool mu::ui::window::CChatInputBox::UpdateKeyEvent()
         && m_lastChatTime < currentTickCount - ChatCooldownMs)
     {
         m_lastChatTime = currentTickCount;
-        wchar_t	szChatText[MAX_CHAT_SIZE + 1] = { '\0' };
+        wchar_t	szChatText[MaximumChatCodeUnits + 1] = { '\0' };
         wchar_t	szWhisperID[MAX_USERNAME_SIZE + 1] = { '\0' };
 
         {
             type_string strChat, strWhisper;
             GetChatText(strChat);
             GetWhsprID(strWhisper);
-            wcsncpy(szChatText, strChat.c_str(), MAX_CHAT_SIZE);
-            szChatText[MAX_CHAT_SIZE] = L'\0';
+            wcsncpy(szChatText, strChat.c_str(), MaximumChatCodeUnits);
+            szChatText[MaximumChatCodeUnits] = L'\0';
             wcsncpy(szWhisperID, strWhisper.c_str(), MAX_USERNAME_SIZE);
             szWhisperID[MAX_USERNAME_SIZE] = L'\0';
         }
@@ -569,6 +569,10 @@ void mu::ui::window::CChatInputBox::BindRmlModel(Rml::DataModelConstructor& c, C
 
 void mu::ui::window::CChatInputBox::OnRmlReloaded()
 {
+    if (Rml::Element* field = GetField("chat_field"))
+        field->SetAttribute("maxlength", MaximumChatCharacters);
+    if (Rml::Element* field = GetField("whisper_field"))
+        field->SetAttribute("maxlength", MAX_USERNAME_SIZE);
     UI::Placement::Invalidate();
 }
 
@@ -637,7 +641,9 @@ bool mu::ui::window::CChatInputBox::IsFieldFocused(const char* id) const
 void mu::ui::window::CChatInputBox::SetFieldText(const char* id, const type_string& text)
 {
     ChatInputRmlModel& model = m_RmlView.GetModel();
-    const Rml::String narrow = StringUtils::WideToNarrow(text.c_str());
+    Rml::String narrow = StringUtils::WideToNarrow(text.c_str());
+    const int maximumCharacters = strcmp(id, "chat_field") == 0 ? MaximumChatCharacters : MAX_USERNAME_SIZE;
+    narrow.resize(Rml::StringUtilities::ConvertCharacterOffsetToByteOffset(narrow, maximumCharacters));
 
     if (strcmp(id, "chat_field") == 0)
     {
