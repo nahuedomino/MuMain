@@ -2311,11 +2311,13 @@ BOOL ReceiveTeleport(const BYTE* ReceiveBuffer, BOOL bEncrypted)
 
     int iEtcPart = Hero->EtcPart;
 
+    const bool skillLanding = Data->Flag == 0 && gSkillManager.CompleteHeroTeleport();
     o->Angle[2] = ((float)(Data->Angle) - 1.f) * 45.f;
     if (Data->Flag == 0)
     {
-        gSkillManager.CompleteHeroTeleport();
-        CreateTeleportEnd(o);
+        // Rejected teleport requests use this packet too, but are only position corrections.
+        if (skillLanding)
+            CreateTeleportEnd(o);
     }
     else
     {
@@ -2430,7 +2432,8 @@ BOOL ReceiveTeleport(const BYTE* ReceiveBuffer, BOOL bEncrypted)
     MUHelper::g_MuHelper.TriggerStop();
 
     Hero->Movement = false;
-    SetPlayerStop(Hero);
+    if (!skillLanding)
+        SetPlayerStop(Hero);
 
     if (Data->Flag)
         UI::Hud::ShowMapName();
@@ -4336,8 +4339,8 @@ BOOL ReceiveMagic(const BYTE* ReceiveBuffer, int Size, BOOL bEncrypted)
         break;
 
     case AT_SKILL_TELEPORT_ALLY:
-        if (tc == Hero)
-            gSkillManager.BeginHeroTeleport();
+        if (tc == Hero && !gSkillManager.BeginHeroTeleport())
+            break;
         CreateTeleportBegin(to);
         CreateTeleportEnd(so);
 
@@ -4345,8 +4348,8 @@ BOOL ReceiveMagic(const BYTE* ReceiveBuffer, int Size, BOOL bEncrypted)
         break;
 
     case AT_SKILL_TELEPORT:
-        if (sc == Hero)
-            gSkillManager.BeginHeroTeleport();
+        if (sc == Hero && !gSkillManager.BeginHeroTeleport())
+            break;
         if (gMapManager.WorldActive == WD_39KANTURU_3RD && so->Type == MODEL_DARK_SKULL_SOLDIER_5)
         {
             vec3_t Light;
