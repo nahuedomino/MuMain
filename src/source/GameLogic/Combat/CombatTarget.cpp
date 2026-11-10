@@ -51,6 +51,11 @@ extern bool SelectFlag;
 
 namespace GameLogic::Combat
 {
+int GetAimedAttackTargetKey(CHARACTER* c)
+{
+    return CheckAttack() ? getTargetCharacterKey(c, SelectedCharacter) : 0xffff;
+}
+
 bool CheckTarget(CHARACTER* c)
 {
     if (SelectedCharacter >= 0 && SelectedCharacter < MAX_CHARACTERS_CLIENT)
