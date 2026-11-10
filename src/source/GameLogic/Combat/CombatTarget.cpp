@@ -1,6 +1,8 @@
 #include "stdafx.h"
 #include "GameLogic/Combat/CombatTarget.h"
 #include "GameLogic/Combat/SkillAim.h"
+#include "Core/Input/KeyState.h"
+#include "GameLogic/Combat/DuelMgr.h"
 
 // Includes mirror ZzzInterface.cpp, the unit this was extracted from.
 #include "Core/Platform/Imm.h"
@@ -60,6 +62,11 @@ int ValidateAreaAttackTargetKey(int targetKey)
         return 0xffff;
     const CHARACTER* target = &CharactersClient[index];
     if (target == Hero || !target->Object.Live || !CanAttackCharacter(index))
+        return 0xffff;
+    if (target->Object.Kind == KIND_PLAYER && !Core::Input::IsKeyDown(VK_CONTROL)
+        && !g_DuelMgr.IsDuelEnabled() && !gMapManager.InChaosCastle()
+        && !battleCastle::IsBattleCastleStart() && !IsStrifeMap(gMapManager.WorldActive)
+        && !gMapManager.IsCursedTemple() && !EnableGuildWar)
         return 0xffff;
     return targetKey;
 }
