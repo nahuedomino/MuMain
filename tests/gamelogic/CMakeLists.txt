@@ -155,6 +155,16 @@ mu_add_test(
 )
 
 target_compile_definitions(test_received_attack_target PRIVATE MU_TEST_DATA_DIR="${CMAKE_SOURCE_DIR}/src/bin/Data")
+
+# MU Volta: saved AoE targets obey the normal PvP input rules at send time.
+mu_add_test(
+    NAME test_area_pvp_target
+    SOURCES
+        test_area_pvp_target.cpp
+        ${CMAKE_SOURCE_DIR}/src/source/App/Platform/Windows/Winmain.cpp
+    LINK_LIBS MuClient
+)
+
 # MU Volta: a held right button aims direction skills at ground points beyond their range.
 mu_add_test(
     NAME test_skill_aim

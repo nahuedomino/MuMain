@@ -98,6 +98,7 @@ void SendMove(CHARACTER* c, OBJECT* o);
 void SetCharacterPos(CHARACTER* c, BYTE posX, BYTE posY, vec3_t position);
 
 bool CheckAttack();
+bool CanAttackCharacter(int characterIndex);
 bool CheckAttack_Fenrir(CHARACTER* c);
 int	 getTargetCharacterKey(CHARACTER* c, int selected);
 
