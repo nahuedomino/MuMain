@@ -30,6 +30,7 @@
 #include "GameLogic/Items/ItemOptionSlots.h"
 #include "GameLogic/Items/ItemOptions.h"
 #include "GameLogic/Items/ItemStats.h"
+#include "GameLogic/Items/EventItemPrice.h"
 #include "UI/Inventory/InventoryCtrl.h"
 #include "Network/Server/SocketSystem.h"
 #include "UI/Core/WindowSystem.h"
@@ -649,6 +650,9 @@ void SetItemAttributes(ITEM* ip)
 int64_t ItemValue(const ITEM* ip, int goldType)
 {
     if (ip->Type == -1) return 0;
+
+    if (const auto price = GameLogic::Items::GetEventItemBuyingPrice(ip->Type, ip->Level))
+        return goldType ? *price / 3 : *price;
 
     ITEM_ATTRIBUTE* p = &ItemAttribute[ip->Type];
 

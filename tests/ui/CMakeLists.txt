@@ -7,6 +7,14 @@ target_compile_definitions(mu_test_rml_layout_fixture PRIVATE
 )
 
 mu_add_test(
+    NAME chat_input_limits_tests
+    SOURCES
+        test_chat_input_limits.cpp
+        ${CMAKE_SOURCE_DIR}/src/source/App/Platform/Windows/Winmain.cpp
+    LINK_LIBS MuClient mu_test_rml_layout_fixture
+)
+
+mu_add_test(
     NAME map_name_tests
     SOURCES
         test_map_name.cpp

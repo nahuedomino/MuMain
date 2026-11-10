@@ -23,6 +23,14 @@ The `mucobra` branch is an upstream MuMain release tag plus the MU Volta patches
 
 ## Release
 
+Pending gameplay balance release: event ingredients/tickets (BC, DS and Illusion Temple) show
+the server's 5,000 Zen per level selling price (+0 also 5,000); NPC buying prices are three
+times that. Chat input accepts at most 60 Unicode characters (up to 240 UTF-8 bytes, within
+the one-byte packet length), including pasted text; whisper recipients are limited to 10.
+History insertion is clamped without cutting a UTF-8 character. Limits survive theme reloads.
+Deploy with the matching MU Volta server balance update; copy `chat_input.rml` into
+`mucobra-client/client-data/Interface/RmlUi/` because release runtimes contain no game data.
+
 ```sh
 git tag mucobra-v1.36.0 && git push origin mucobra mucobra-v1.36.0
 ```

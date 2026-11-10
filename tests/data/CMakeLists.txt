@@ -213,6 +213,7 @@ mu_add_test(
         test_item_option_slots.cpp
         test_item_requirement_weights.cpp
         test_item_rules.cpp
+        test_event_item_prices.cpp
         test_item_set_chrome.cpp
         test_item_stats.cpp
         test_item_tooltip_layouts.cpp
