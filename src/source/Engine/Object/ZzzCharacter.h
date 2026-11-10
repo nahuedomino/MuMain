@@ -3,6 +3,7 @@
 
 #include "Engine/Object/CharacterAttachments.h"
 #include "Render/Models/ZzzBMD.h"
+#include <chrono>
 #include <span>
 
 extern CHARACTER* CharactersClient;
@@ -70,6 +71,8 @@ void RequestEarthQuake(float value);
  * Only used in CHARACTER_SCENE; main scene uses the model's own OBB directly.
  */
 void BuildCharacterScenePickOBB(const OBJECT* o, OBB_t& outOBB);
+bool RecoverRemoteTeleportVisibility(CHARACTER* c,
+    std::chrono::steady_clock::time_point now = std::chrono::steady_clock::now());
 void MoveCharacterClient(CHARACTER* cc);
 void MoveCharactersClient();
 void UpdateCharactersAnimationParallel(std::span<CHARACTER> characters);
