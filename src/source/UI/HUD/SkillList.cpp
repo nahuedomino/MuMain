@@ -681,6 +681,9 @@ namespace
         // gate below. RenderSkillDelay()'s own resolution (further down) is NOT pet-aware -- a
         // pre-existing inconsistency between the two, preserved rather than fixed.
         WORD bySkillTypeForGate = CharacterAttribute->Skill[iIndex];
+        if (bySkillTypeForGate == AT_SKILL_TELEPORT)
+            return gSkillManager.GetTeleportCooldownFraction();
+
         if (iIndex >= AT_PET_COMMAND_DEFAULT)
             bySkillTypeForGate = (WORD)iIndex;
 

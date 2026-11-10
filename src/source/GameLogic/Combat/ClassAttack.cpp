@@ -1234,7 +1234,7 @@ void AttackWizard(CHARACTER* c, int Skill, float Distance)
     case AT_SKILL_HELL_FIRE_STR:
     {
         SendRequestMagicContinue(Skill, (c->PositionX),
-            (c->PositionY), (BYTE)(o->Angle[2] / 360.f * 256.f), 0, 0, 0xffff, 0);
+            (c->PositionY), (BYTE)(o->Angle[2] / 360.f * 256.f), 0, 0, GetAimedAttackTargetKey(c), 0);
         c->SkillSuccess = true;
         SetAttackSpeed();
         SetAction(o, PLAYER_SKILL_HELL);
@@ -1246,7 +1246,7 @@ void AttackWizard(CHARACTER* c, int Skill, float Distance)
     case AT_SKILL_INFERNO_STR_MG:
     {
         SendRequestMagicContinue(Skill, (c->PositionX),
-            (c->PositionY), (BYTE)(o->Angle[2] / 360.f * 256.f), 0, 0, 0xffff, 0);
+            (c->PositionY), (BYTE)(o->Angle[2] / 360.f * 256.f), 0, 0, GetAimedAttackTargetKey(c), 0);
         c->SkillSuccess = true;
         SetAttackSpeed();
         SetAction(o, PLAYER_SKILL_INFERNO);
@@ -1391,7 +1391,8 @@ void AttackWizard(CHARACTER* c, int Skill, float Distance)
             case AT_SKILL_EVIL_SPIRIT_STR:
             case AT_SKILL_EVIL_SPIRIT_STR_MG:
             {
-                SendRequestMagicContinue(Skill, (c->PositionX), (c->PositionY), (BYTE)(o->Angle[2] / 360.f * 256.f), 0, 0, 0xffff, &o->m_bySkillSerialNum);
+                WORD targetKey = GetAimedAttackTargetKey(c);
+                SendRequestMagicContinue(Skill, (c->PositionX), (c->PositionY), (BYTE)(o->Angle[2] / 360.f * 256.f), 0, 0, targetKey, &o->m_bySkillSerialNum);
                 c->SkillSuccess = true;
                 SetPlayerMagic(c);
             }
@@ -1399,7 +1400,7 @@ void AttackWizard(CHARACTER* c, int Skill, float Distance)
             case AT_SKILL_FLASH:
             {
                 SendRequestMagicContinue(Skill, (c->PositionX),
-                    (c->PositionY), (BYTE)(o->Angle[2] / 360.f * 256.f), 0, 0, 0xffff, 0);
+                    (c->PositionY), (BYTE)(o->Angle[2] / 360.f * 256.f), 0, 0, GetAimedAttackTargetKey(c), 0);
                 c->SkillSuccess = true;
                 SetAttackSpeed();
 
@@ -1415,7 +1416,7 @@ void AttackWizard(CHARACTER* c, int Skill, float Distance)
             case AT_SKILL_FLAME:
             case AT_SKILL_FLAME_STR:
             case AT_SKILL_FLAME_STR_MG:
-                SendRequestMagicContinue(Skill, (BYTE)(c->TargetPosition[0] / TERRAIN_SCALE), (BYTE)(c->TargetPosition[1] / TERRAIN_SCALE), (BYTE)(o->Angle[2] / 360.f * 256.f), 0, 0, 0xffff, 0);
+                SendRequestMagicContinue(Skill, (BYTE)(c->TargetPosition[0] / TERRAIN_SCALE), (BYTE)(c->TargetPosition[1] / TERRAIN_SCALE), (BYTE)(o->Angle[2] / 360.f * 256.f), 0, 0, GetAimedAttackTargetKey(c), 0);
                 c->SkillSuccess = true;
                 SetPlayerMagic(c);
                 return;
@@ -1510,7 +1511,6 @@ void AttackWizard(CHARACTER* c, int Skill, float Distance)
                     to->Angle[2] = CreateAngle2D(to->Position, tc->TargetPosition);
 
                     SocketClient->ToGameServer()->SendTeleportTarget(tc->Key, TargetX, TargetY);
-                    SetPlayerTeleport(tc);
                 }
             }
             return;
@@ -1580,7 +1580,7 @@ void AttackWizard(CHARACTER* c, int Skill, float Distance)
                             UnRegisterBuff(eDeBuff_Sleep, o);
                         }
 
-                        SetPlayerTeleport(c);
+                        // The server's skill animation confirms acceptance; rejected casts stay idle.
                     }
                 }
             }
