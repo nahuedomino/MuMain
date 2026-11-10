@@ -1084,6 +1084,7 @@ BOOL ReceiveLogOut(const BYTE* ReceiveBuffer, BOOL bEncrypted)
 
 void ResetClientToLoginScene()
 {
+    gSkillManager.ResetHeroTeleport();
     App::Control::Events::RecordDisconnected("the game session was torn down");
 
     // Mirror of the in-game logout path (see ReceiveLogOut, case 2): release the
@@ -1150,6 +1151,7 @@ int GetJoinMapServerStage(std::span<const BYTE> packet)
 
 BOOL ReceiveJoinMapServer(std::span<const BYTE> ReceiveBuffer)
 {
+    gSkillManager.ResetHeroTeleport();
     MouseLButton = false;
     HeroIndex = Random::Rand() % MAX_CHARACTERS_CLIENT;
     CHARACTER* c = &CharactersClient[HeroIndex];
@@ -1342,6 +1344,7 @@ static void EndDuelWhenLeftArena()
 
 void ReceiveRevival(const BYTE* ReceiveBuffer)
 {
+    gSkillManager.ResetHeroTeleport();
     MouseLButton = false;
     Hero->Object.Teleport = false;
     Hero->Object.Live = false;
@@ -2275,10 +2278,12 @@ BOOL ReceiveTeleport(const BYTE* ReceiveBuffer, BOOL bEncrypted)
     o->Angle[2] = ((float)(Data->Angle) - 1.f) * 45.f;
     if (Data->Flag == 0)
     {
+        gSkillManager.CompleteHeroTeleport();
         CreateTeleportEnd(o);
     }
     else
     {
+        gSkillManager.ResetHeroTeleport();
         // Before the view is emptied, not after: the events name the objects
         // that are about to disappear, and their slots are reused.
         App::Control::Events::RecordViewCleared("the character teleported");
@@ -4435,6 +4440,8 @@ BOOL ReceiveMagic(const BYTE* ReceiveBuffer, int Size, BOOL bEncrypted)
         break;
 
     case AT_SKILL_TELEPORT_ALLY:
+        if (tc == Hero)
+            gSkillManager.BeginHeroTeleport();
         CreateTeleportBegin(to);
         CreateTeleportEnd(so);
 
@@ -4442,6 +4449,8 @@ BOOL ReceiveMagic(const BYTE* ReceiveBuffer, int Size, BOOL bEncrypted)
         break;
 
     case AT_SKILL_TELEPORT:
+        if (sc == Hero)
+            gSkillManager.BeginHeroTeleport();
         if (gMapManager.WorldActive == WD_39KANTURU_3RD && so->Type == MODEL_DARK_SKULL_SOLDIER_5)
         {
             vec3_t Light;
