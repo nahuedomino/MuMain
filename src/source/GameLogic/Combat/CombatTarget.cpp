@@ -51,6 +51,19 @@ extern bool SelectFlag;
 
 namespace GameLogic::Combat
 {
+int ValidateAreaAttackTargetKey(int targetKey)
+{
+    if (targetKey < 0 || targetKey == 0xffff)
+        return 0xffff;
+    const int index = FindCharacterIndex(targetKey);
+    if (index < 0 || index >= MAX_CHARACTERS_CLIENT)
+        return 0xffff;
+    const CHARACTER* target = &CharactersClient[index];
+    if (target == Hero || !target->Object.Live || !CanAttackCharacter(index))
+        return 0xffff;
+    return targetKey;
+}
+
 int GetAimedAttackTargetKey(CHARACTER* c)
 {
     return CheckAttack() ? getTargetCharacterKey(c, SelectedCharacter) : 0xffff;

@@ -8,4 +8,5 @@ namespace GameLogic::Combat
 {
     bool CheckTarget(CHARACTER* c);
     int GetAimedAttackTargetKey(CHARACTER* c);
+    int ValidateAreaAttackTargetKey(int targetKey);
 }
