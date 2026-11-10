@@ -276,7 +276,8 @@ int ExecuteSkill(CHARACTER* c, ActionSkillType Skill, float Distance)
             Attacking = -1;
         }
         else if (ClassIndex == CLASS_WIZARD
-            && (Skill == AT_SKILL_NOVA_BEGIN || Skill == AT_SKILL_NOVA))
+            && (Skill == AT_SKILL_NOVA_BEGIN || Skill == AT_SKILL_NOVA
+                || Skill == AT_SKILL_TELEPORT || Skill == AT_SKILL_TELEPORT_ALLY))
         {
             Attacking = -1;
         }

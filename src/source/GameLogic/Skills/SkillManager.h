@@ -52,8 +52,9 @@ public:
     void GetSkillInformation_Damage(int iType, int* piDamage);
     bool CheckSkillDelay(int SkillIndex);
     void CalcSkillDelay(int time);
-    void BeginHeroTeleport() { m_teleportCooldown.Begin(); }
-    void CompleteHeroTeleport() { m_teleportCooldown.Land(); }
+    bool RequestHeroTeleport();
+    bool BeginHeroTeleport() { return m_teleportCooldown.Begin(); }
+    bool CompleteHeroTeleport() { return m_teleportCooldown.Land(); }
     void ResetHeroTeleport() { m_teleportCooldown.Reset(); }
     float GetTeleportCooldownFraction() const { return m_teleportCooldown.Fraction(); }
     BYTE GetSkillMasteryType(ActionSkillType iType);
