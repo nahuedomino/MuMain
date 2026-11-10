@@ -7,6 +7,7 @@
 
 #include "stdafx.h"
 #include "Core/Utilities/Random.h"
+#include "Core/Utilities/Log/MuLogger.h"
 #include <execution>
 #include <optional>
 #include <algorithm>
@@ -6392,9 +6393,36 @@ void MoveMonsterClient(CHARACTER* c, OBJECT* o)
     }
 }
 
+bool RecoverRemoteTeleportVisibility(CHARACTER* c, std::chrono::steady_clock::time_point now)
+{
+    auto& o = c->Object;
+    const bool fadingOut = o.Teleport == TELEPORT_BEGIN || o.Teleport == TELEPORT;
+    if (c == Hero || !o.Live || c->Dead > 0 || o.Kind != KIND_PLAYER
+        || !fadingOut || o.AlphaTarget != 0.f)
+    {
+        c->RemoteTeleportFadeStartedAt.reset();
+        return false;
+    }
+
+    // Takeoff normally ends with removal/recreation after 1.8 s. A missing completion
+    // must not leave a still-present player at zero opacity indefinitely.
+    if (!c->RemoteTeleportFadeStartedAt)
+        c->RemoteTeleportFadeStartedAt = now;
+    if (now - *c->RemoteTeleportFadeStartedAt < std::chrono::seconds(5)
+        || g_isCharacterBuff((&o), eBuff_Cloaking))
+        return false;
+
+    o.Teleport = TELEPORT_NONE;
+    o.AlphaTarget = 1.f;
+    c->RemoteTeleportFadeStartedAt.reset();
+    mu::log::Get("gameplay")->warn("Recovered stalled remote teleport visibility for character key {}", c->Key);
+    return true;
+}
+
 void MoveCharacterClient(CHARACTER* cc)
 {
     OBJECT* co = &cc->Object;
+    RecoverRemoteTeleportVisibility(cc);
     if (co->Live)
     {
         co->Visible = TestFrustrum2D(co->Position[0] * 0.01f, co->Position[1] * 0.01f, -20.f);
@@ -12665,6 +12693,7 @@ void CreateCharacterPointer(CHARACTER* c, int Type, unsigned char PositionX, uns
     g_CharacterClearBuff(o);
 
     o->Teleport = TELEPORT_NONE;
+    c->RemoteTeleportFadeStartedAt.reset();
     o->Kind = KIND_PLAYER;
     c->Change = false;
     o->SubType = 0;
