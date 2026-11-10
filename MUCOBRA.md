@@ -36,6 +36,11 @@ only a preceding confirmed skill animation may produce the landing effect or sta
 Duplicate confirmations do not replay takeoff effects. Teleport is excluded from automatic
 attack persistence, while holding the cast button still repeats once the skill is ready.
 Confirmed landing animations are not immediately overwritten with the standing action.
+For observers, a still-present, living character stranded in teleport fade-out for five
+seconds fades back in without replaying effects. Normal scope recreation resets this
+watchdog; repeated takeoff packets do not extend it. It does not reveal cloaked players,
+resurrect removed characters, alter the local hero's cooldown, or repair a missing server
+scope/spawn notification.
 
 Pending gameplay balance release: event ingredients/tickets (BC, DS and Illusion Temple) show
 the server's 5,000 Zen per level selling price (+0 also 5,000); NPC buying prices are three
