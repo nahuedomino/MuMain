@@ -82,6 +82,10 @@ namespace mu::ui::window
         bool m_bWhisperSend;
         bool m_bShowMessageElseNormal;
 
+        // Sixty Unicode characters fit the UTF-8 payload of a one-byte-length chat packet.
+        static constexpr int MaximumChatCharacters = 60;
+        static constexpr int MaximumChatCodeUnits = MaximumChatCharacters * 2;
+
         void Init();
 
         void SetInputMsgType(int iInputMsgType);
