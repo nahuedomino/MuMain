@@ -33,6 +33,7 @@ void CHARACTER::Initialize()
     Decoy = false;
     SoundOncePlayed = false;
     SoundsDrawnThisFrame = false;
+    RemoteTeleportFadeStartedAt.reset();
     ModelTimerLastTicks.fill(0);
     ModelTimerTicks = 0;
     ModelTimersAsked = false;
