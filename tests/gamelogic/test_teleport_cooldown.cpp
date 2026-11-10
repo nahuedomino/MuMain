@@ -3,11 +3,146 @@
 #include "GameLogic/Skills/SkillManager.h"
 #include "GameLogic/Combat/ClassAttack.h"
 #include "Engine/Object/ZzzCharacter.h"
+#include "Engine/AI/ZzzAI.h"
 #include "UI/HUD/SkillList.h"
 #include <array>
 
 using GameLogic::Skills::TeleportCooldown;
 using namespace std::chrono_literals;
+
+namespace
+{
+struct RemoteTeleportFixture
+{
+    CHARACTER remote;
+
+    void Takeoff()
+    {
+        remote.Object.Live = true;
+        remote.Object.Kind = KIND_PLAYER;
+        remote.Object.AlphaEnable = true;
+        remote.Object.Alpha = 1.f;
+        remote.Object.AlphaTarget = 0.f;
+        remote.Object.Teleport = TELEPORT_BEGIN;
+    }
+};
+}
+
+TEST_CASE("A stranded observer teleport fades back in after five seconds [skills][teleport]")
+{
+    RemoteTeleportFixture fixture;
+    auto& c = fixture.remote;
+    fixture.Takeoff();
+    const auto now = std::chrono::steady_clock::time_point{};
+    CHECK_FALSE(RecoverRemoteTeleportVisibility(&c, now));
+    for (int frame = 1; frame < 500; ++frame)
+    {
+        Alpha(&c.Object);
+        CHECK_FALSE(RecoverRemoteTeleportVisibility(&c, now + frame * 10ms));
+    }
+    CHECK(c.Object.Alpha == 0.f);
+    CHECK(RecoverRemoteTeleportVisibility(&c, now + 5s));
+    CHECK(c.Object.Teleport == TELEPORT_NONE);
+    CHECK(c.Object.AlphaTarget == 1.f);
+    for (int frame = 0; frame < 20; ++frame)
+        Alpha(&c.Object);
+    CHECK(c.Object.Alpha == 1.f);
+    CHECK_FALSE(RecoverRemoteTeleportVisibility(&c, now + 10s));
+}
+
+TEST_CASE("Repeated observer teleports reset only on landing and cannot accumulate invisibility [skills][teleport]")
+{
+    RemoteTeleportFixture fixture;
+    auto& c = fixture.remote;
+    const auto now = std::chrono::steady_clock::time_point{};
+    for (int cast = 0; cast < 1000; ++cast)
+    {
+        const auto start = now + cast * 4s;
+        fixture.Takeoff();
+        CHECK_FALSE(RecoverRemoteTeleportVisibility(&c, start));
+        CHECK_FALSE(RecoverRemoteTeleportVisibility(&c, start + 1799ms));
+        c.Object.Teleport = TELEPORT_END;
+        c.Object.AlphaTarget = 1.f;
+        CHECK_FALSE(RecoverRemoteTeleportVisibility(&c, start + 1800ms));
+        CHECK_FALSE(c.RemoteTeleportFadeStartedAt.has_value());
+    }
+    fixture.Takeoff();
+    CHECK_FALSE(RecoverRemoteTeleportVisibility(&c, now + 4000s));
+    // Replayed takeoff packets must not extend an already stranded fade.
+    for (int second = 1; second < 5; ++second)
+    {
+        c.Object.Teleport = TELEPORT_BEGIN;
+        CHECK_FALSE(RecoverRemoteTeleportVisibility(&c, now + 4000s + second * 1s));
+    }
+    CHECK(RecoverRemoteTeleportVisibility(&c, now + 4005s));
+}
+
+TEST_CASE("Teleport visibility recovery preserves cloaking and does not resurrect removed characters [skills][teleport]")
+{
+    RemoteTeleportFixture fixture;
+    auto& c = fixture.remote;
+    const auto now = std::chrono::steady_clock::time_point{};
+    fixture.Takeoff();
+    CHECK_FALSE(RecoverRemoteTeleportVisibility(&c, now));
+    g_CharacterRegisterBuff((&c.Object), eBuff_Cloaking);
+    CHECK_FALSE(RecoverRemoteTeleportVisibility(&c, now + 10s));
+    CHECK(c.Object.AlphaTarget == 0.f);
+    g_CharacterUnRegisterBuff((&c.Object), eBuff_Cloaking);
+    CHECK(RecoverRemoteTeleportVisibility(&c, now + 11s));
+
+    fixture.Takeoff();
+    CHECK_FALSE(RecoverRemoteTeleportVisibility(&c, now + 12s));
+    c.Object.Live = false;
+    CHECK_FALSE(RecoverRemoteTeleportVisibility(&c, now + 20s));
+    CHECK_FALSE(c.Object.Live);
+    CHECK(c.Object.AlphaTarget == 0.f);
+    CHECK_FALSE(c.RemoteTeleportFadeStartedAt.has_value());
+}
+
+TEST_CASE("Observer scope recreation clears the old teleport fade deadline [skills][teleport]")
+{
+    RemoteTeleportFixture fixture;
+    auto& c = fixture.remote;
+    const auto now = std::chrono::steady_clock::time_point{};
+    fixture.Takeoff();
+    CHECK_FALSE(RecoverRemoteTeleportVisibility(&c, now));
+    CreateCharacterPointer(&c, MODEL_PLAYER, 100, 100, 0.f);
+    CHECK(c.Object.Live);
+    CHECK(c.Object.Alpha == 1.f);
+    CHECK(c.Object.AlphaTarget == 1.f);
+    CHECK(c.Object.Teleport == TELEPORT_NONE);
+    CHECK_FALSE(c.RemoteTeleportFadeStartedAt.has_value());
+    fixture.Takeoff();
+    CHECK_FALSE(RecoverRemoteTeleportVisibility(&c, now + 4s));
+    CHECK_FALSE(RecoverRemoteTeleportVisibility(&c, now + 5s));
+    CHECK(RecoverRemoteTeleportVisibility(&c, now + 9s));
+}
+
+TEST_CASE("Teleport visibility recovery ignores ordinary transparency death and the local hero [skills][teleport]")
+{
+    RemoteTeleportFixture fixture;
+    auto& c = fixture.remote;
+    const auto now = std::chrono::steady_clock::time_point{};
+    fixture.Takeoff();
+    c.Object.Teleport = TELEPORT_NONE;
+    CHECK_FALSE(RecoverRemoteTeleportVisibility(&c, now));
+    CHECK_FALSE(RecoverRemoteTeleportVisibility(&c, now + 10s));
+    CHECK(c.Object.AlphaTarget == 0.f);
+    fixture.Takeoff();
+    c.Dead = 1;
+    CHECK_FALSE(RecoverRemoteTeleportVisibility(&c, now + 20s));
+    CHECK(c.Object.AlphaTarget == 0.f);
+    c.Dead = 0;
+    auto* previousHero = Hero;
+    Hero = &c;
+    CHECK_FALSE(RecoverRemoteTeleportVisibility(&c, now));
+    CHECK_FALSE(RecoverRemoteTeleportVisibility(&c, now + 30s));
+    CHECK(c.Object.AlphaTarget == 0.f);
+    Hero = previousHero;
+    c.RemoteTeleportFadeStartedAt = now;
+    c.Initialize();
+    CHECK_FALSE(c.RemoteTeleportFadeStartedAt.has_value());
+}
 
 TEST_CASE("Held teleport input sends one request until the server responds [skills][teleport]")
 {
