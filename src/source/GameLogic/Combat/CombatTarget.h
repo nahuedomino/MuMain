@@ -14,4 +14,5 @@ bool CheckTarget(CHARACTER* c, int skill, float distance);
 // direction skill, and sets TargetX/TargetY to its tile.
 void AimAtGround(CHARACTER* c, int skill, float distance, const float ground[3]);
 int GetAimedAttackTargetKey(CHARACTER* c);
+int ValidateAreaAttackTargetKey(int targetKey);
 }

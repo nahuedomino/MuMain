@@ -42,6 +42,13 @@ watchdog; repeated takeoff packets do not extend it. It does not reveal cloaked 
 resurrect removed characters, alter the local hero's cooldown, or repair a missing server
 scope/spawn notification.
 
+Every outgoing area cast revalidates its extra target using the normal attack rules,
+even when it came from a saved movement/autoattack target. Without Ctrl a neutral player
+is sent as no explicit target (`0xFFFF`), so the server cannot treat the cast as an aimed
+PvP opener. Commoner and outlaw casters follow the same rule; monster targets and existing
+hostile-target exceptions are unchanged. The server still handles retaliation, party,
+safe-zone and bystander protection. This changes neither the protocol nor server artifacts.
+
 Pending gameplay balance release: event ingredients/tickets (BC, DS and Illusion Temple) show
 the server's 5,000 Zen per level selling price (+0 also 5,000); NPC buying prices are three
 times that. Chat input accepts at most 60 Unicode characters (up to 240 UTF-8 bytes, within
