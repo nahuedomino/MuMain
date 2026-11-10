@@ -9,6 +9,50 @@
 using GameLogic::Skills::TeleportCooldown;
 using namespace std::chrono_literals;
 
+TEST_CASE("Held teleport input sends one request until the server responds [skills][teleport]")
+{
+    TeleportCooldown cooldown;
+    const auto now = TeleportCooldown::Clock::time_point{};
+    CHECK(cooldown.Request(now));
+    for (int frame = 1; frame < 60; ++frame)
+        CHECK_FALSE(cooldown.Request(now + frame * 10ms));
+    CHECK(cooldown.Begin(now + 600ms));
+    CHECK_FALSE(cooldown.Begin(now + 610ms));
+    CHECK_FALSE(cooldown.Request(now + 1800ms));
+    CHECK(cooldown.Land(now + 1800ms));
+    CHECK_FALSE(cooldown.Begin(now + 1900ms));
+    CHECK_FALSE(cooldown.Request(now + 3799ms));
+    CHECK(cooldown.Request(now + 3800ms));
+}
+
+TEST_CASE("Rejected teleport corrections never animate or start recovery [skills][teleport]")
+{
+    TeleportCooldown cooldown;
+    const auto now = TeleportCooldown::Clock::time_point{};
+    CHECK(cooldown.Request(now));
+    CHECK_FALSE(cooldown.Land(now + 20ms));
+    CHECK(cooldown.IsReady(now + 20ms));
+    CHECK(cooldown.Fraction(now + 20ms) == 0.f);
+    CHECK(cooldown.Begin());
+    CHECK(cooldown.Land(now + 1800ms));
+    CHECK_FALSE(cooldown.Land(now + 1900ms));
+    CHECK(cooldown.IsReady(now + 3800ms));
+}
+
+TEST_CASE("Unanswered teleport requests expire and reset without an animation [skills][teleport]")
+{
+    TeleportCooldown cooldown;
+    const auto now = TeleportCooldown::Clock::time_point{};
+    CHECK(cooldown.Request(now));
+    CHECK_FALSE(cooldown.IsReady(now + 1999ms));
+    CHECK_FALSE(cooldown.RequestTimedOut(now + 1999ms));
+    CHECK(cooldown.IsReady(now + 2000ms));
+    CHECK(cooldown.RequestTimedOut(now + 2000ms));
+    cooldown.Reset();
+    CHECK(cooldown.IsReady(now));
+    CHECK_FALSE(cooldown.Land(now));
+}
+
 TEST_CASE("Teleport recovery begins on confirmed landing and lasts exactly two seconds [skills][teleport]")
 {
     TeleportCooldown cooldown;
