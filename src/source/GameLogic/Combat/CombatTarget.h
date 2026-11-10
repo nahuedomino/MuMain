@@ -13,4 +13,5 @@ bool CheckTarget(CHARACTER* c, int skill, float distance);
 // CheckTarget's ground branch: aims `c` at the ground point `ground` (x, y, z in world units), pulled into range for a
 // direction skill, and sets TargetX/TargetY to its tile.
 void AimAtGround(CHARACTER* c, int skill, float distance, const float ground[3]);
+int GetAimedAttackTargetKey(CHARACTER* c);
 }

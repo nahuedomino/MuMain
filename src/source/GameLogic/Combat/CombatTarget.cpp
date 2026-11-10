@@ -71,6 +71,11 @@ void SetTargetTile(const CHARACTER* c)
 }
 } // namespace
 
+int GetAimedAttackTargetKey(CHARACTER* c)
+{
+    return CheckAttack() ? getTargetCharacterKey(c, SelectedCharacter) : 0xffff;
+}
+
 bool CheckTarget(CHARACTER* c, int skill, float distance)
 {
     if (SelectedCharacter >= 0 && SelectedCharacter < MAX_CHARACTERS_CLIENT)
