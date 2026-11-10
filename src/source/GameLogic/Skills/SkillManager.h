@@ -3,6 +3,7 @@
 #pragma once
 
 #include "Core/Globals/_enum.h"
+#include "GameLogic/Skills/TeleportCooldown.h"
 
 #include <map>
 
@@ -51,6 +52,10 @@ public:
     void GetSkillInformation_Damage(int iType, int* piDamage);
     bool CheckSkillDelay(int SkillIndex);
     void CalcSkillDelay(int time);
+    void BeginHeroTeleport() { m_teleportCooldown.Begin(); }
+    void CompleteHeroTeleport() { m_teleportCooldown.Land(); }
+    void ResetHeroTeleport() { m_teleportCooldown.Reset(); }
+    float GetTeleportCooldownFraction() const { return m_teleportCooldown.Fraction(); }
     BYTE GetSkillMasteryType(ActionSkillType iType);
     ActionSkillType MasterSkillToBaseSkillIndex(ActionSkillType masterSkill);
     bool skillVScharactorCheck(const DemendConditionInfo& basicInfo, const DemendConditionInfo& heroInfo);
@@ -60,6 +65,7 @@ public:
     void InitializeSkillAttributeRequirementsCache();
 
 private:
+    GameLogic::Skills::TeleportCooldown m_teleportCooldown;
     void RebuildSkillAttributeRequirementsCache();
 
     bool m_bSkillAttributeRequirementsCacheDirty;

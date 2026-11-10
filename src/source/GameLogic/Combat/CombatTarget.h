@@ -7,4 +7,5 @@ class CHARACTER;
 namespace GameLogic::Combat
 {
     bool CheckTarget(CHARACTER* c);
+    int GetAimedAttackTargetKey(CHARACTER* c);
 }
