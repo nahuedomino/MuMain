@@ -226,6 +226,9 @@ bool CSkillManager::CheckSkillDelay(int SkillIndex)
 {
     int Skill = CharacterAttribute->Skill[SkillIndex];
 
+    if (Skill == AT_SKILL_TELEPORT)
+        return m_teleportCooldown.IsReady();
+
     int Delay = SkillAttribute[Skill].Delay;
 
     if (!CheckAttack() && (

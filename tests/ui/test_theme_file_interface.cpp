@@ -545,6 +545,42 @@ TEST_CASE("an empty legacy child preserves real theme resources and layout [ui][
     }
 }
 
+TEST_CASE("skill cooldown shadows reveal icons from top to bottom in every theme [ui][skills][teleport]")
+{
+    Fixture fixture;
+    std::filesystem::create_directories(fixture.root / "Data/Interface");
+    std::filesystem::copy(MU_RMLUI_DIR, fixture.root / "Data/Interface/RmlUi",
+                          std::filesystem::copy_options::recursive);
+    fixture.ActivateRoot();
+    for (const char* theme : {"legacy", "classic", "modern"})
+    {
+        CAPTURE(theme);
+        const auto source = (fixture.Theme(theme) / "cooldown-test.rml").generic_string();
+        const auto markup =
+            "<rml><head><link type='text/rcss' href='main_frame.rcss'/></head><body>"
+            "<div class='slot-frame' style='position:absolute;left:0;top:0;width:36px;height:36px;'>"
+            "<div id='wipe' class='cooldown-wipe' style='height:100%;'></div></div></body></rml>";
+        auto* document = fixture.context->LoadDocumentFromMemory(markup, source);
+        REQUIRE(document != nullptr);
+        document->Show();
+        fixture.context->Update();
+        auto* wipe = document->GetElementById("wipe");
+        REQUIRE(wipe != nullptr);
+        CHECK(wipe->GetComputedValues().background_color() == Rml::Colourb(0, 0, 0, 160));
+        const float initialTop = wipe->GetAbsoluteOffset().y;
+        const float initialHeight = wipe->GetBox().GetSize().y;
+        REQUIRE(initialHeight > 0.f);
+        wipe->SetProperty("height", "50%");
+        fixture.context->Update();
+        CHECK(wipe->GetBox().GetSize().y == doctest::Approx(initialHeight / 2));
+        CHECK(wipe->GetAbsoluteOffset().y == doctest::Approx(initialTop + initialHeight / 2));
+        wipe->SetProperty("height", "0%");
+        fixture.context->Update();
+        CHECK(wipe->GetBox().GetSize().y == 0.f);
+        fixture.context->UnloadDocument(document);
+    }
+}
+
 TEST_CASE("map-name font tokens preserve normal families and inherited fallback [ui][map-name]")
 {
     Fixture fixture;

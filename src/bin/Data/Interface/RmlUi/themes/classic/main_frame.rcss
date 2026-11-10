@@ -233,7 +233,7 @@
 	left: 0;
 	bottom: 0;
 	width: 100%;
-	background-color: rgba(255, 128, 128, 128);
+	background-color: rgba(0, 0, 0, 160);
 	pointer-events: none;
 }
 .skill-hotkey-label {
@@ -273,7 +273,7 @@
 	pointer-events: auto;
 	cursor: pointer;
 }
-.skill-cell .cooldown-wipe { bottom: auto; top: 0; max-height: 36dp; }
+.skill-cell .cooldown-wipe { bottom: 0; top: auto; max-height: 36dp; }
 /* The Dark Lord's pet commands (0.97 has no Dark Lord): their own row of the same cells, centred
    just above the skill row, while the list is open. */
 #pet_skill_row {
@@ -288,4 +288,3 @@
 	pointer-events: none;
 }
 #pet_skill_row.hidden { display: none; }
-
