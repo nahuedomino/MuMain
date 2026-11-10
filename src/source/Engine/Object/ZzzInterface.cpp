@@ -24,6 +24,7 @@
 #include "Data/GameConfig/GameConfig.h"
 #include "UI/Chat/ChatInput.h"
 #include "GameLogic/Combat/ClassAttack.h"
+#include "GameLogic/Combat/CombatTarget.h"
 #include "GameLogic/Combat/SkillCast.h"
 #include "GameLogic/Combat/SkillAim.h"
 #include "GameLogic/Combat/SkillExecution.h"
@@ -710,12 +711,17 @@ bool CheckAttack_Fenrir(CHARACTER* c)
 
 bool CheckAttack()
 {
+    return CanAttackCharacter(SelectedCharacter);
+}
+
+bool CanAttackCharacter(int characterIndex)
+{
     if (mu::ui::window::CInventoryCtrl::GetPickedItem())
     {
         return false;
     }
 
-    if (SelectedCharacter < 0 || SelectedCharacter >= MAX_CHARACTERS_CLIENT)
+    if (characterIndex < 0 || characterIndex >= MAX_CHARACTERS_CLIENT)
     {
         return false;
     }
@@ -725,7 +731,7 @@ bool CheckAttack()
         return false;
     }
 
-    CHARACTER* c = &CharactersClient[SelectedCharacter];
+    CHARACTER* c = &CharactersClient[characterIndex];
 
     if (c->Dead > 0)
     {
@@ -761,7 +767,7 @@ bool CheckAttack()
         }
         else if (wcscmp(GuildMark[Hero->GuildMarkIndex].GuildName, GuildMark[c->GuildMarkIndex].GuildName) == 0)
         {
-            if (g_pPartyManager->IsPartyMember(SelectedCharacter))
+            if (g_pPartyManager->IsPartyMember(characterIndex))
             {
                 return false;
             }
@@ -788,7 +794,7 @@ bool CheckAttack()
             else/* if(c->GuildRelationShip == GR_NONE)*/
                 return false;
         }
-        else if (g_pPartyManager->IsPartyMember(SelectedCharacter))
+        else if (g_pPartyManager->IsPartyMember(characterIndex))
         {
             if ((c->GuildRelationShip == GR_RIVAL) || (c->GuildRelationShip == GR_RIVALUNION))
             {
@@ -934,7 +940,7 @@ bool CheckAttack()
         {
             return true;
         }
-        else if (gMapManager.IsCursedTemple() && !g_CursedTemple->IsPartyMember(SelectedCharacter))
+        else if (gMapManager.IsCursedTemple() && !g_CursedTemple->IsPartyMember(characterIndex))
         {
             return true;
         }
@@ -1149,7 +1155,8 @@ void SendRequestMagicContinue(int Type, int x, int y, int Angle, BYTE Dest, BYTE
 {
     CurrentSkill = Type;
 
-    SocketClient->ToGameServer()->SendAreaSkill(Type, x, y, Angle, TKey, MakeSkillSerialNumber(pSkillSerial));
+    const WORD attackTarget = GameLogic::Combat::ValidateAreaAttackTargetKey(TKey);
+    SocketClient->ToGameServer()->SendAreaSkill(Type, x, y, Angle, attackTarget, MakeSkillSerialNumber(pSkillSerial));
 
     g_ConsoleDebug->Write(MCD_SEND, L"0x1E [SendRequestMagicContinue]");
 }
