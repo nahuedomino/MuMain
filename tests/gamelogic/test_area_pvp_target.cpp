@@ -103,7 +103,7 @@ TEST_CASE("An outlaw caster still needs Ctrl to initiate AoE PvP against a neutr
     }
 }
 
-TEST_CASE("AoE target validation preserves normal hostile exceptions and monster attacks [skills][area-pvp]")
+TEST_CASE("AoE target validation requires Ctrl for hostile players but preserves monsters and events [skills][area-pvp]")
 {
     AreaTargetFixture fixture;
     auto& target = fixture.characters[0];
@@ -111,13 +111,40 @@ TEST_CASE("AoE target validation preserves normal hostile exceptions and monster
     CHECK(GameLogic::Combat::ValidateAreaAttackTargetKey(123) == 123);
     target.Object.Kind = KIND_PLAYER;
     target.PK = PVP_MURDERER2;
+    CHECK(GameLogic::Combat::ValidateAreaAttackTargetKey(123) == 0xffff);
+    SDL_SetModState(SDL_KMOD_LCTRL);
     CHECK(GameLogic::Combat::ValidateAreaAttackTargetKey(123) == 123);
+    SDL_SetModState(SDL_KMOD_NONE);
     target.PK = PVP_NEUTRAL;
     target.GuildRelationShip = GR_RIVAL;
+    CHECK(GameLogic::Combat::ValidateAreaAttackTargetKey(123) == 0xffff);
+    SDL_SetModState(SDL_KMOD_LCTRL);
     CHECK(GameLogic::Combat::ValidateAreaAttackTargetKey(123) == 123);
+    SDL_SetModState(SDL_KMOD_NONE);
     target.GuildRelationShip = GR_NONE;
     gMapManager.WorldActive = WD_18CHAOS_CASTLE;
     CHECK(GameLogic::Combat::ValidateAreaAttackTargetKey(123) == 123);
+}
+
+TEST_CASE("Every ordinary AoE player cast needs Ctrl regardless of either players karma [skills][area-pvp]")
+{
+    AreaTargetFixture fixture;
+    for (const int casterState : {PVP_NEUTRAL, PVP_MURDERER1, PVP_MURDERER2})
+    {
+        for (const int targetState : {PVP_NEUTRAL, PVP_MURDERER1, PVP_MURDERER2})
+        {
+            CAPTURE(casterState);
+            CAPTURE(targetState);
+            Hero->PK = casterState;
+            fixture.characters[0].PK = targetState;
+            SDL_SetModState(SDL_KMOD_NONE);
+            CHECK(GameLogic::Combat::ValidateAreaAttackTargetKey(123) == 0xffff);
+            SDL_SetModState(SDL_KMOD_LCTRL);
+            CHECK(GameLogic::Combat::ValidateAreaAttackTargetKey(123) == 123);
+            SDL_SetModState(SDL_KMOD_NONE);
+            CHECK(GameLogic::Combat::ValidateAreaAttackTargetKey(123) == 0xffff);
+        }
+    }
 }
 
 TEST_CASE("Invalid removed dead and self AoE targets cannot authorize an opener [skills][area-pvp]")
