@@ -6,8 +6,17 @@
 #include "Character/CharacterManager.h"
 #include "World/MapInfra/MapManager.h"
 #include "Engine/Object/ZzzCharacter.h"
+#include "Core/Utilities/Log/MuLogger.h"
 
 CSkillManager gSkillManager;
+
+bool CSkillManager::RequestHeroTeleport()
+{
+    const auto now = GameLogic::Skills::TeleportCooldown::Clock::now();
+    if (m_teleportCooldown.RequestTimedOut(now))
+        mu::log::Get("gameplay")->warn("Teleport request received no response within two seconds; allowing retry");
+    return m_teleportCooldown.Request(now);
+}
 
 const std::map<ActionSkillType, ActionSkillType> SKILL_REPLACEMENTS = {
     {AT_SKILL_POISON_STR, AT_SKILL_POISON},

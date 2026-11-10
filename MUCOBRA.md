@@ -30,6 +30,13 @@ with `CooldownMilliseconds = 2000` on the server. Client readiness uses the serv
 packet, not a timer started at the click; ordinary warps, map changes and revival reset it.
 Rebuild and replace the local runtime and the three themes' `main_frame.rcss` together.
 
+Teleport requests are gated while awaiting server confirmation (a missing response expires
+after two seconds). Rejected requests use a landing-shaped position packet in OpenMU 0.10.1:
+only a preceding confirmed skill animation may produce the landing effect or start recovery.
+Duplicate confirmations do not replay takeoff effects. Teleport is excluded from automatic
+attack persistence, while holding the cast button still repeats once the skill is ready.
+Confirmed landing animations are not immediately overwritten with the standing action.
+
 Pending gameplay balance release: event ingredients/tickets (BC, DS and Illusion Temple) show
 the server's 5,000 Zen per level selling price (+0 also 5,000); NPC buying prices are three
 times that. Chat input accepts at most 60 Unicode characters (up to 240 UTF-8 bytes, within

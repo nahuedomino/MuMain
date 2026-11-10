@@ -1562,6 +1562,8 @@ void AttackWizard(CHARACTER* c, int Skill, float Distance)
                     }
                     else
                     {
+                        if (!gSkillManager.RequestHeroTeleport())
+                            return;
                         SocketClient->ToGameServer()->SendEnterGateRequest(0, TargetX, TargetY);
                         bResult = true;
                     }
