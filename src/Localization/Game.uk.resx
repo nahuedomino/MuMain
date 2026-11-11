@@ -5873,7 +5873,7 @@
     <value>Монета W</value>
   </data>
   <data name="Buy W Coin" xml:space="preserve">
-    <value>Купіть V Coin</value>
+    <value>Купіть W Coin</value>
   </data>
   <data name="Price :" xml:space="preserve">
     <value>Ціна:</value>
@@ -6926,7 +6926,7 @@
     <value>Срібна коробка</value>
   </data>
   <data name="My W Coin : %s" xml:space="preserve">
-    <value>Моя V Coin: %s</value>
+    <value>Моя W Coin: %s</value>
   </data>
   <data name="Goblin Points : %s" xml:space="preserve">
     <value>Очки гоблінів: %s</value>
@@ -6968,7 +6968,7 @@
     <value>Не вдалося придбати</value>
   </data>
   <data name="You do not have enough W Coin or points." xml:space="preserve">
-    <value>У вас недостатньо V Coin або балів.</value>
+    <value>У вас недостатньо W Coin або балів.</value>
   </data>
   <data name="You do not have enough space in storage." xml:space="preserve">
     <value>У вас недостатньо місця в сховищі.</value>
@@ -7070,10 +7070,10 @@
     <value>Ця функція не підтримується в MU Item Shop.##Використовуйте веб-сайт MU Online.</value>
   </data>
   <data name="Send W Coin" xml:space="preserve">
-    <value>Надіслати V Coin</value>
+    <value>Надіслати W Coin</value>
   </data>
   <data name="Recharge W Coin" xml:space="preserve">
-    <value>Поповніть V Coin</value>
+    <value>Поповніть W Coin</value>
   </data>
   <data name="Update Information" xml:space="preserve">
     <value>Оновити інформацію</value>
@@ -7568,7 +7568,7 @@
     <value>Монета W (P)</value>
   </data>
   <data name="My W Coin(P) : %s" xml:space="preserve">
-    <value>Мій V Coin(P): %s</value>
+    <value>Мій W Coin(P): %s</value>
   </data>
   <data name="You need more %%s to purchase this item." xml:space="preserve">
     <value>Вам потрібно більше %%s, щоб придбати цей товар.</value>
@@ -7649,7 +7649,7 @@
     <value>%s очок/с</value>
   </data>
   <data name="You have selected an incorrect W Coin type. Please select again." xml:space="preserve">
-    <value>Ви вибрали неправильний тип V Coin. Виберіть ще раз.</value>
+    <value>Ви вибрали неправильний тип W Coin. Виберіть ще раз.</value>
   </data>
   <data name="Click the item to see the quest information again." xml:space="preserve">
     <value>Натисніть предмет, щоб знову переглянути інформацію про квест.</value>
