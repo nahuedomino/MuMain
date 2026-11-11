@@ -7298,10 +7298,10 @@
     <value>(使用中)</value>
   </data>
   <data name="W Coin(P)" xml:space="preserve">
-    <value>V Coin(P)</value>
+    <value>W Coin(P)</value>
   </data>
   <data name="My W Coin(P) : %s" xml:space="preserve">
-    <value>My V Coin(P) : %s</value>
+    <value>My W Coin(P) : %s</value>
   </data>
   <data name="You need more %%s to purchase this item." xml:space="preserve">
     <value>該当アイテムを購入するためには %%s チャージが必要です。</value>

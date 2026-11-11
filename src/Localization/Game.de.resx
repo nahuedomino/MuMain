@@ -5890,10 +5890,10 @@
     <value>Die Verbindung zur Website ist nur im Fenstermodus verfügbar.</value>
   </data>
   <data name="W Coin" xml:space="preserve">
-    <value>V Coin</value>
+    <value>W Coin</value>
   </data>
   <data name="Buy W Coin" xml:space="preserve">
-    <value>V Coin kaufen</value>
+    <value>W Coin kaufen</value>
   </data>
   <data name="Price :" xml:space="preserve">
     <value>Preis :</value>
@@ -6946,7 +6946,7 @@
     <value>Silberne Box</value>
   </data>
   <data name="My W Coin : %s" xml:space="preserve">
-    <value>Meine V Coins: %s</value>
+    <value>Meine W Coins: %s</value>
   </data>
   <data name="Goblin Points : %s" xml:space="preserve">
     <value>Goblin-Punkte: %s</value>
@@ -6988,7 +6988,7 @@
     <value>Kauf fehlgeschlagen</value>
   </data>
   <data name="You do not have enough W Coin or points." xml:space="preserve">
-    <value>Sie haben nicht genug V Coins oder Punkte.</value>
+    <value>Sie haben nicht genug W Coins oder Punkte.</value>
   </data>
   <data name="You do not have enough space in storage." xml:space="preserve">
     <value>Sie haben nicht genug Platz im Lager.</value>
@@ -7090,10 +7090,10 @@
     <value>Diese Funktion wird im MU Item Shop nicht unterstützt.##Bitte nutzen Sie die MU Online-Website.</value>
   </data>
   <data name="Send W Coin" xml:space="preserve">
-    <value>V Coin senden</value>
+    <value>W Coin senden</value>
   </data>
   <data name="Recharge W Coin" xml:space="preserve">
-    <value>V Coin aufladen</value>
+    <value>W Coin aufladen</value>
   </data>
   <data name="Update Information" xml:space="preserve">
     <value>Informationen aktualisieren</value>
@@ -7351,10 +7351,10 @@
     <value>%d Stück</value>
   </data>
   <data name="%s W Coin" xml:space="preserve">
-    <value>%s V Coin</value>
+    <value>%s W Coin</value>
   </data>
   <data name="%d W Coin" xml:space="preserve">
-    <value>%d V Coin</value>
+    <value>%d W Coin</value>
   </data>
   <data name="Quantity: %d / Duration: %s" xml:space="preserve">
     <value>Anzahl: %d / Dauer: %s</value>
@@ -7372,7 +7372,7 @@
     <value>Artikel-Infofenster</value>
   </data>
   <data name="W Coin: %s Coins" xml:space="preserve">
-    <value>V Coin: %s Coins</value>
+    <value>W Coin: %s Coins</value>
   </data>
   <data name="You can only open MU Item Shop in a town or safe zone." xml:space="preserve">
     <value>Sie können den MU Item Shop nur in einer Stadt oder sicheren Zone öffnen.</value>
@@ -7585,10 +7585,10 @@
     <value>(in Verwendung)</value>
   </data>
   <data name="W Coin(P)" xml:space="preserve">
-    <value>V Coin(P)</value>
+    <value>W Coin(P)</value>
   </data>
   <data name="My W Coin(P) : %s" xml:space="preserve">
-    <value>Meine V Coin(P): %s</value>
+    <value>Meine W Coin(P): %s</value>
   </data>
   <data name="You need more %%s to purchase this item." xml:space="preserve">
     <value>Sie benötigen mehr %%s, um diesen Artikel zu kaufen.</value>
@@ -7669,7 +7669,7 @@
     <value>%s Punkte/Sek.</value>
   </data>
   <data name="You have selected an incorrect W Coin type. Please select again." xml:space="preserve">
-    <value>Sie haben eine falsche V-Coin-Art ausgewählt. Bitte wählen Sie erneut.</value>
+    <value>Sie haben eine falsche W-Coin-Art ausgewählt. Bitte wählen Sie erneut.</value>
   </data>
   <data name="Click the item to see the quest information again." xml:space="preserve">
     <value>Klicken Sie auf den Gegenstand, um die Questinformationen erneut anzuzeigen.</value>
@@ -7834,7 +7834,7 @@
     <value>Erweitertes Inventar</value>
   </data>
   <data name="You can't buy W coin while in full screen mode." xml:space="preserve">
-    <value>Im Vollbildmodus können Sie keine V Coins kaufen.</value>
+    <value>Im Vollbildmodus können Sie keine W Coins kaufen.</value>
   </data>
   <data name="You lack %d points." xml:space="preserve">
     <value>Ihnen fehlen %d Punkte.</value>
@@ -9139,7 +9139,7 @@
     <value>Bonus: %ls</value>
   </data>
   <data name="W Coin(C)" xml:space="preserve">
-    <value>V Coin(C)</value>
+    <value>W Coin(C)</value>
   </data>
   <data name="Goblin Points" xml:space="preserve">
     <value>Goblin-Punkte</value>
