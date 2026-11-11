@@ -6926,7 +6926,7 @@
     <value>Серебряная шкатулка</value>
   </data>
   <data name="My W Coin : %s" xml:space="preserve">
-    <value>Моя V-монета: %s</value>
+    <value>Моя W-монета: %s</value>
   </data>
   <data name="Goblin Points : %s" xml:space="preserve">
     <value>Очки гоблинов: %s</value>
@@ -6968,7 +6968,7 @@
     <value>Покупка не удалась</value>
   </data>
   <data name="You do not have enough W Coin or points." xml:space="preserve">
-    <value>У вас недостаточно V Coin или очков.</value>
+    <value>У вас недостаточно W Coin или очков.</value>
   </data>
   <data name="You do not have enough space in storage." xml:space="preserve">
     <value>Вам не хватает места на складе.</value>
@@ -7070,10 +7070,10 @@
     <value>Эта функция не поддерживается в магазине предметов MU.##Пожалуйста, используйте веб-сайт MU Online.</value>
   </data>
   <data name="Send W Coin" xml:space="preserve">
-    <value>Отправить V-монету</value>
+    <value>Отправить W-монету</value>
   </data>
   <data name="Recharge W Coin" xml:space="preserve">
-    <value>Пополнить V-монету</value>
+    <value>Пополнить W-монету</value>
   </data>
   <data name="Update Information" xml:space="preserve">
     <value>Обновить информацию</value>
@@ -7331,10 +7331,10 @@
     <value>%d Части</value>
   </data>
   <data name="%s W Coin" xml:space="preserve">
-    <value>%s V-монета</value>
+    <value>%s W-монета</value>
   </data>
   <data name="%d W Coin" xml:space="preserve">
-    <value>%d V-монета</value>
+    <value>%d W-монета</value>
   </data>
   <data name="Quantity: %d / Duration: %s" xml:space="preserve">
     <value>Количество: %d / Продолжительность: %s</value>
@@ -7565,7 +7565,7 @@
     <value>(в использовании)</value>
   </data>
   <data name="W Coin(P)" xml:space="preserve">
-    <value>V Монета (P)</value>
+    <value>W Монета (P)</value>
   </data>
   <data name="My W Coin(P) : %s" xml:space="preserve">
     <value>Моя монета W(P): %s</value>
@@ -7649,7 +7649,7 @@
     <value>%s балл/сек.</value>
   </data>
   <data name="You have selected an incorrect W Coin type. Please select again." xml:space="preserve">
-    <value>Вы выбрали неправильный тип V Coin. Пожалуйста, выберите еще раз.</value>
+    <value>Вы выбрали неправильный тип W Coin. Пожалуйста, выберите еще раз.</value>
   </data>
   <data name="Click the item to see the quest information again." xml:space="preserve">
     <value>Нажмите на предмет, чтобы снова увидеть информацию о квесте.</value>

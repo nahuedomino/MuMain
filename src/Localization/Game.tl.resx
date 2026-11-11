@@ -5870,10 +5870,10 @@
     <value>Available lang ang koneksyon sa website sa windows mode.</value>
   </data>
   <data name="W Coin" xml:space="preserve">
-    <value>V Coin</value>
+    <value>W Coin</value>
   </data>
   <data name="Buy W Coin" xml:space="preserve">
-    <value>Bumili ng V Coin</value>
+    <value>Bumili ng W Coin</value>
   </data>
   <data name="Price :" xml:space="preserve">
     <value>Presyo :</value>
@@ -6926,7 +6926,7 @@
     <value>Kahong Pilak</value>
   </data>
   <data name="My W Coin : %s" xml:space="preserve">
-    <value>Aking V Coin : %s</value>
+    <value>Aking W Coin : %s</value>
   </data>
   <data name="Goblin Points : %s" xml:space="preserve">
     <value>Mga Puntos ng Goblin : %s</value>
@@ -6968,7 +6968,7 @@
     <value>Nabigo ang Pagbili</value>
   </data>
   <data name="You do not have enough W Coin or points." xml:space="preserve">
-    <value>Wala kang sapat na V Coin o mga puntos.</value>
+    <value>Wala kang sapat na W Coin o mga puntos.</value>
   </data>
   <data name="You do not have enough space in storage." xml:space="preserve">
     <value>Wala kang sapat na espasyo sa storage.</value>
@@ -7070,10 +7070,10 @@
     <value>Ang function na ito ay hindi suportado sa MU Item Shop.##Pakigamit ang MU Online website.</value>
   </data>
   <data name="Send W Coin" xml:space="preserve">
-    <value>Magpadala ng V Coin</value>
+    <value>Magpadala ng W Coin</value>
   </data>
   <data name="Recharge W Coin" xml:space="preserve">
-    <value>I-recharge ang V Coin</value>
+    <value>I-recharge ang W Coin</value>
   </data>
   <data name="Update Information" xml:space="preserve">
     <value>I-update ang Impormasyon</value>
@@ -7331,10 +7331,10 @@
     <value>Mga piraso ng %d</value>
   </data>
   <data name="%s W Coin" xml:space="preserve">
-    <value>%s V Coin</value>
+    <value>%s W Coin</value>
   </data>
   <data name="%d W Coin" xml:space="preserve">
-    <value>%d V Coin</value>
+    <value>%d W Coin</value>
   </data>
   <data name="Quantity: %d / Duration: %s" xml:space="preserve">
     <value>Dami: %d / Tagal: %s</value>
@@ -7352,7 +7352,7 @@
     <value>Window ng Impormasyon ng Item</value>
   </data>
   <data name="W Coin: %s Coins" xml:space="preserve">
-    <value>V Coin: %s Coins</value>
+    <value>W Coin: %s Coins</value>
   </data>
   <data name="You can only open MU Item Shop in a town or safe zone." xml:space="preserve">
     <value>Maaari ka lamang magbukas ng MU Item Shop sa isang bayan o safe zone.</value>
@@ -7565,10 +7565,10 @@
     <value>(ginagamit)</value>
   </data>
   <data name="W Coin(P)" xml:space="preserve">
-    <value>V Coin(P)</value>
+    <value>W Coin(P)</value>
   </data>
   <data name="My W Coin(P) : %s" xml:space="preserve">
-    <value>Aking V Coin(P) : %s</value>
+    <value>Aking W Coin(P) : %s</value>
   </data>
   <data name="You need more %%s to purchase this item." xml:space="preserve">
     <value>Kailangan mo ng higit pang %%s upang bilhin ang item na ito.</value>
@@ -7649,7 +7649,7 @@
     <value>%s (mga) punto/seg</value>
   </data>
   <data name="You have selected an incorrect W Coin type. Please select again." xml:space="preserve">
-    <value>Pumili ka ng maling uri ng V Coin. Mangyaring pumili muli.</value>
+    <value>Pumili ka ng maling uri ng W Coin. Mangyaring pumili muli.</value>
   </data>
   <data name="Click the item to see the quest information again." xml:space="preserve">
     <value>I-click ang item upang makita muli ang impormasyon sa paghahanap.</value>
@@ -7814,7 +7814,7 @@
     <value>Pinalawak na Imbentaryo</value>
   </data>
   <data name="You can't buy W coin while in full screen mode." xml:space="preserve">
-    <value>Hindi ka makakabili ng V coin habang nasa full screen mode.</value>
+    <value>Hindi ka makakabili ng W coin habang nasa full screen mode.</value>
   </data>
   <data name="You lack %d points." xml:space="preserve">
     <value>Kulang ka ng %d points.</value>
