@@ -3,9 +3,7 @@
 #include "Core/Utilities/SpinLock.h"
 
 #include <array>
-#include <chrono>
 #include <cstdint>
-#include <optional>
 
 typedef struct _PATH_t
 {
@@ -140,7 +138,6 @@ public:
     // SoundEvents::PlayDrawn ran this frame (a map's monster effects called
     // it), so FinishDrawnFrame does not play the frame again.
     bool SoundsDrawnThisFrame;
-    std::optional<std::chrono::steady_clock::time_point> RemoteTeleportFadeStartedAt;
     // The last ticks of its model's timers (Q-MN91), from when the character
     // was made, as the draw code kept Twintail's in OBJECT::m_dwTime: a
     // character that appears again keeps them.

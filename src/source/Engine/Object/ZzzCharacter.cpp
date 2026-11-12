@@ -6400,21 +6400,22 @@ bool RecoverRemoteTeleportVisibility(CHARACTER* c, std::chrono::steady_clock::ti
     if (c == Hero || !o.Live || c->Dead > 0 || o.Kind != KIND_PLAYER
         || !fadingOut || o.AlphaTarget != 0.f)
     {
-        c->RemoteTeleportFadeStartedAt.reset();
+        RemoteTeleportFade::Clear(c);
         return false;
     }
 
     // Takeoff normally ends with removal/recreation after 1.8 s. A missing completion
     // must not leave a still-present player at zero opacity indefinitely.
-    if (!c->RemoteTeleportFadeStartedAt)
-        c->RemoteTeleportFadeStartedAt = now;
-    if (now - *c->RemoteTeleportFadeStartedAt < std::chrono::seconds(5)
+    const auto startedAt = RemoteTeleportFade::StartedAt(c);
+    if (!startedAt)
+        RemoteTeleportFade::Set(c, now);
+    if (now - startedAt.value_or(now) < std::chrono::seconds(5)
         || g_isCharacterBuff((&o), eBuff_Cloaking))
         return false;
 
     o.Teleport = TELEPORT_NONE;
     o.AlphaTarget = 1.f;
-    c->RemoteTeleportFadeStartedAt.reset();
+    RemoteTeleportFade::Clear(c);
     mu::log::Get("gameplay")->warn("Recovered stalled remote teleport visibility for character key {}", c->Key);
     return true;
 }
@@ -12693,7 +12694,7 @@ void CreateCharacterPointer(CHARACTER* c, int Type, unsigned char PositionX, uns
     g_CharacterClearBuff(o);
 
     o->Teleport = TELEPORT_NONE;
-    c->RemoteTeleportFadeStartedAt.reset();
+    RemoteTeleportFade::Clear(c);
     o->Kind = KIND_PLAYER;
     c->Change = false;
     o->SubType = 0;

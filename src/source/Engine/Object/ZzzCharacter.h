@@ -3,6 +3,8 @@
 
 #include "Engine/Object/CharacterAttachments.h"
 #include "Render/Models/ZzzBMD.h"
+#include "Engine/Object/RemoteTeleportFade.h"
+
 #include <chrono>
 #include <span>
 
