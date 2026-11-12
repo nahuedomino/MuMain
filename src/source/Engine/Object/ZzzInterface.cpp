@@ -23,6 +23,7 @@
 #include "Engine/Object/ZzzInterface.h"
 #include "Data/GameConfig/GameConfig.h"
 #include "UI/Chat/ChatInput.h"
+#include "GameLogic/Combat/ServerReposition.h"
 #include "GameLogic/Combat/ClassAttack.h"
 #include "GameLogic/Combat/CombatTarget.h"
 #include "GameLogic/Combat/SkillCast.h"
@@ -2928,8 +2929,9 @@ namespace
     // While the hero slides to a server-set position (the basic weapon skills reposition the
     // hero on every cast), MoveHero would freeze all input until the slide ended, which capped
     // those skills' auto-attack cadence below the player's attack speed (issue #350). Keep the
-    // auto-attack re-cast running through the slide; the slide still animates smoothly and only
-    // manual move/click input stays suppressed. Returns true when the hero is mid-slide, in
+    // auto-attack re-cast, and a skill held on the right button, running through the slide (a
+    // knockback must not break an Evil Spirit or Triple Shot); the slide still animates smoothly
+    // and only manual move/click input stays suppressed. Returns true when the hero is mid-slide, in
     // which case MoveHero should stop after this.
     bool HandleHeroPositionSlide(CHARACTER* c)
     {
@@ -2938,7 +2940,8 @@ namespace
             return false;
         }
 
-        if (g_pOption->IsAutoAttack() && Attacking != -1 && SelectedCharacter != -1)
+        const bool hasAutoAttackTarget = g_pOption->IsAutoAttack() && Attacking != -1 && SelectedCharacter != -1;
+        if (GameLogic::Combat::KeepsAttackingDuringSlide(hasAutoAttackTarget, MouseRButton || MouseRButtonPress != 0))
         {
             Attack(Hero);
         }

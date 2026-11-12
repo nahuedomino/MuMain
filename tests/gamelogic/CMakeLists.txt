@@ -192,6 +192,15 @@ mu_add_test(
         MuClient
 )
 
+# MU Volta: a knockback keeps the attack swing and a held skill.
+mu_add_test(
+    NAME test_server_reposition
+    SOURCES
+        test_server_reposition.cpp
+        ${CMAKE_SOURCE_DIR}/src/source/App/Platform/Windows/Winmain.cpp
+    LINK_LIBS MuClient
+)
+
 mu_add_test(
     NAME test_teleport_cooldown
     SOURCES
