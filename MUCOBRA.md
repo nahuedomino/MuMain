@@ -29,6 +29,11 @@ build job is unchanged from 1.39.0. Both option-window overrides must include th
 Enhanced sunlight controls while keeping the S6-model row hidden. macOS uses the matching
 upstream precompiled shaders; player builds keep the editor and control socket disabled.
 
+Version 1.40.1 is a fork-only patch on upstream `v1.40.0`: a knockback keeps the attack swing and a held
+right-button skill (`fix(combat)`), and Exit Game / Switch Character / Select Server wait for the server's
+answer (`fix(logout)`). Deploy it before (or with) the mu-volta-plugins "Safe log out" handler, which counts
+down 5 s and refuses during combat; with OpenMU's own handler the server answers at once, as before.
+
 The teleport/PvP follow-up requires the matching OpenMU gameplay core and MU Volta plugin,
 with `CooldownMilliseconds = 2000` on the server. Client readiness uses the server's landing
 packet, not a timer started at the click; ordinary warps, map changes and revival reset it.
