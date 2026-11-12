@@ -14,6 +14,7 @@ The `mucobra` branch is an upstream MuMain release tag plus the MU Volta patches
 - `feat(party)`: a compact health bar over every visible party member (not yourself): dark frame, fill green/amber/red by health, eased between the server's 10% steps; hovering shows name and percent. Members are found by name each frame, because the cached party index was only resolved on some input paths and the bars rarely showed.
 - `fix(options)`: Automatic Attack defaults to on when the server sends no explicit choice (OpenMU seeds new characters with a zeroed key configuration).
 - `fix(models)`: always load the original S6 player bodies and hide the "S6 player models" option, because the improved bodies break unequipping a set after switching characters.
+- `fix(combat)`: a knockback (server position packet 0x15) keeps the attack or skill animation instead of resetting to the stand pose, and the hero's slide to the new tile keeps a skill held on the right button casting (Evil Spirit, Triple Shot...), like auto-attack.
 - `fix(skills)`: self-Teleport waits for server-confirmed animations, cannot cast during transit or its two-second post-landing recovery, and shows a top-to-bottom cooldown shadow in all themes. Wizard area casts retain the explicitly aimed opponent so the server can allow PvP opening hits without enabling attacks on unrelated bystanders.
 
 Upstream `v1.40.0` ships seven former MU Volta patches (sven-n/MuMain#1027 to #1036: Metal bitmap rows,
