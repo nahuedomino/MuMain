@@ -48,6 +48,7 @@
 
 #include "Audio/DSPlaySound.h"
 
+#include "GameLogic/Combat/ServerReposition.h"
 #include "GameLogic/Events/MatchEvent.h"
 #include "GameLogic/Monsters/MonsterAttackPlay.h"
 #include "GameLogic/Monsters/MonsterFacing.h"
@@ -2249,6 +2250,9 @@ void ReceiveMovePosition(const BYTE* ReceiveBuffer)
         CreateBomb(o->Position, false);
     }
 
+    // A knockback mid-swing keeps the swing; only a walk is stopped (it has no path any more).
+    const bool keepsAction = GameLogic::Combat::KeepsActionOnReposition(c, c->Movement);
+
     c->PositionX = Data->PositionX;
     c->PositionY = Data->PositionY;
     c->TargetX = Data->PositionX;
@@ -2258,7 +2262,10 @@ void ReceiveMovePosition(const BYTE* ReceiveBuffer)
     c->Path.PathNum = 0;
     c->Path.CurrentPath = 0;
     c->Path.CurrentPathFloat = 0;
-    SetPlayerStop(c);
+    if (!keepsAction)
+    {
+        SetPlayerStop(c);
+    }
 }
 
 extern int EnableEvent;
