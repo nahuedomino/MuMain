@@ -1024,6 +1024,8 @@ BOOL ReceiveLogOut(const BYTE* ReceiveBuffer, BOOL bEncrypted)
     switch (Data->Value)
     {
     case 0:
+        // The server disconnects right after this answer; that is the exit, not a lost connection to reconnect.
+        ReconnectManager::Instance().ClearSession();
         g_GuildCache.Reset();
         memset(GuildMark[MARK_EDIT].Mark, 0, sizeof(GuildMark[MARK_EDIT].Mark));
         memset(GuildMark[MARK_EDIT].GuildName, 0, sizeof(GuildMark[MARK_EDIT].GuildName));
