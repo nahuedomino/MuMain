@@ -29,7 +29,6 @@
 
 extern int DeleteIndex;
 extern int AppointStatus;
-extern bool LogOut;
 
 char AppointType;
 
@@ -366,10 +365,10 @@ void mu::ui::window::ShowSystemMenuDialog()
         }
         else
         {
+            // The server counts down (and refuses during combat) before it answers; its answer closes the game
+            // (ReceiveLogOut), so the game keeps running until then.
             MUHelper::g_MuHelper.TriggerStop();
-            LogOut = true;
             SocketClient->ToGameServer()->SendLogOut(LogOutType::CloseGame);
-            Core::Platform::RequestQuit();
             g_ConsoleDebug->Write(MCD_SEND, L"0xF1 [SendRequestLogOut] 0");
         }
 
@@ -399,7 +398,7 @@ void mu::ui::window::ShowSystemMenuDialog()
         {
             MUHelper::g_MuHelper.TriggerStop();
             g_pNewUIMng->ResetActiveUIObj();
-            LogOut = true;
+            // No LogOut lock: the server may count down or refuse during combat; ReceiveLogOut handles its answer.
             SocketClient->ToGameServer()->SendLogOut(LogOutType::BackToServerSelection);
             g_ConsoleDebug->Write(MCD_SEND, L"0xF1 [SendRequestLogOut] 2");
         }
@@ -430,7 +429,7 @@ void mu::ui::window::ShowSystemMenuDialog()
         {
             MUHelper::g_MuHelper.TriggerStop();
             g_pNewUIMng->ResetActiveUIObj();
-            LogOut = true;
+            // No LogOut lock: the server may count down or refuse during combat; ReceiveLogOut handles its answer.
             SocketClient->ToGameServer()->SendLogOut(LogOutType::BackToCharacterSelection);
             g_ConsoleDebug->Write(MCD_SEND, L"0xF1 [SendRequestLogOut] 1");
         }
