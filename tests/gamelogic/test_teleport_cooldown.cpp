@@ -64,7 +64,7 @@ TEST_CASE("Repeated observer teleports reset only on landing and cannot accumula
         c.Object.Teleport = TELEPORT_END;
         c.Object.AlphaTarget = 1.f;
         CHECK_FALSE(RecoverRemoteTeleportVisibility(&c, start + 1800ms));
-        CHECK_FALSE(c.RemoteTeleportFadeStartedAt.has_value());
+        CHECK_FALSE(RemoteTeleportFade::StartedAt(&c).has_value());
     }
     fixture.Takeoff();
     CHECK_FALSE(RecoverRemoteTeleportVisibility(&c, now + 4000s));
@@ -96,7 +96,7 @@ TEST_CASE("Teleport visibility recovery preserves cloaking and does not resurrec
     CHECK_FALSE(RecoverRemoteTeleportVisibility(&c, now + 20s));
     CHECK_FALSE(c.Object.Live);
     CHECK(c.Object.AlphaTarget == 0.f);
-    CHECK_FALSE(c.RemoteTeleportFadeStartedAt.has_value());
+    CHECK_FALSE(RemoteTeleportFade::StartedAt(&c).has_value());
 }
 
 TEST_CASE("Observer scope recreation clears the old teleport fade deadline [skills][teleport]")
@@ -111,7 +111,7 @@ TEST_CASE("Observer scope recreation clears the old teleport fade deadline [skil
     CHECK(c.Object.Alpha == 1.f);
     CHECK(c.Object.AlphaTarget == 1.f);
     CHECK(c.Object.Teleport == TELEPORT_NONE);
-    CHECK_FALSE(c.RemoteTeleportFadeStartedAt.has_value());
+    CHECK_FALSE(RemoteTeleportFade::StartedAt(&c).has_value());
     fixture.Takeoff();
     CHECK_FALSE(RecoverRemoteTeleportVisibility(&c, now + 4s));
     CHECK_FALSE(RecoverRemoteTeleportVisibility(&c, now + 5s));
@@ -139,9 +139,9 @@ TEST_CASE("Teleport visibility recovery ignores ordinary transparency death and 
     CHECK_FALSE(RecoverRemoteTeleportVisibility(&c, now + 30s));
     CHECK(c.Object.AlphaTarget == 0.f);
     Hero = previousHero;
-    c.RemoteTeleportFadeStartedAt = now;
+    RemoteTeleportFade::Set(&c, now);
     c.Initialize();
-    CHECK_FALSE(c.RemoteTeleportFadeStartedAt.has_value());
+    CHECK_FALSE(RemoteTeleportFade::StartedAt(&c).has_value());
 }
 
 TEST_CASE("Held teleport input sends one request until the server responds [skills][teleport]")
