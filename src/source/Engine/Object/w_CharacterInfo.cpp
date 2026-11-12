@@ -1,6 +1,7 @@
 
 #include "stdafx.h"
 #include "Engine/Object/w_CharacterInfo.h"
+#include "Engine/Object/RemoteTeleportFade.h"
 #include "GameLogic/Skills/SkillManager.h"
 
 #include "UI/HUD/GensRanking.h"
@@ -33,7 +34,7 @@ void CHARACTER::Initialize()
     Decoy = false;
     SoundOncePlayed = false;
     SoundsDrawnThisFrame = false;
-    RemoteTeleportFadeStartedAt.reset();
+    RemoteTeleportFade::Clear(this);
     ModelTimerLastTicks.fill(0);
     ModelTimerTicks = 0;
     ModelTimersAsked = false;
