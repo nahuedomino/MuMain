@@ -10,6 +10,7 @@ The `mucobra` branch is an upstream MuMain release tag plus the MU Volta patches
 - `fix(text)`: the leave-guild prompt no longer mentions a WEBZEN.COM password.
 - `feat(options)`: Gameplay option "Allow Killing Party Members" (off by default); while off, normal and Ctrl-forced attacks skip party members (duels, guild wars and the Cursed Temple keep their rules). Area damage is decided by the server.
 - `fix(letters)`: receiving a letter shows a system message again.
+- `feat(shop)`: VIP Ticket (15 days) 14/170 and (30 days) 14/171 in the item data (character card model), sold in the in-game shop; the server's mu-volta-plugins handle using them.
 - `fix(duel)`: leaving the arena also closes the duel score window (OpenMU 0.10.1 sent no duel end after a duel won on score). The duel answer's byte-order swap for 0.10.1 was reverted when the server moved to OpenMU 0.11.0 (2026-11-14).
 - `feat(party)`: a compact health bar over every visible party member (not yourself): dark frame, fill green/amber/red by health, eased between the server's 10% steps; hovering shows name and percent. Members are found by name each frame, because the cached party index was only resolved on some input paths and the bars rarely showed.
 - `fix(options)`: Automatic Attack defaults to on when the server sends no explicit choice (OpenMU seeds new characters with a zeroed key configuration).
