@@ -370,8 +370,6 @@ void mu::ui::window::ShowSystemMenuDialog()
             SocketClient->ToGameServer()->SendLogOut(LogOutType::CloseGame);
             g_ConsoleDebug->Write(MCD_SEND, L"0xF1 [SendRequestLogOut] 0");
         }
-
-        if (!Hero->PK) g_pNewUIHotKey->SetStateGameOver(true);
     };
     cfg.buttons.push_back(std::move(btnGameOver));
 
@@ -401,8 +399,6 @@ void mu::ui::window::ShowSystemMenuDialog()
             SocketClient->ToGameServer()->SendLogOut(LogOutType::BackToServerSelection);
             g_ConsoleDebug->Write(MCD_SEND, L"0xF1 [SendRequestLogOut] 2");
         }
-
-        if (!Hero->PK) g_pNewUIHotKey->SetStateGameOver(true);
     };
     cfg.buttons.push_back(std::move(btnChooseServer));
 
@@ -432,8 +428,6 @@ void mu::ui::window::ShowSystemMenuDialog()
             SocketClient->ToGameServer()->SendLogOut(LogOutType::BackToCharacterSelection);
             g_ConsoleDebug->Write(MCD_SEND, L"0xF1 [SendRequestLogOut] 1");
         }
-
-        if (!Hero->PK) g_pNewUIHotKey->SetStateGameOver(true);
     };
     cfg.buttons.push_back(std::move(btnChooseCharacter));
 
