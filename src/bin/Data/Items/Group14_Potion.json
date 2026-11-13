@@ -5519,6 +5519,60 @@
       "width": 1,
       "height": 1,
       "repairable": false
+    },
+    {
+      "number": 170,
+      "name": {
+        "en": "VIP Ticket (15 days)",
+        "de": "VIP-Ticket (15 Tage)",
+        "es": "Ticket VIP (15 días)",
+        "pl": "Bilet VIP (15 dni)",
+        "pt": "Ticket VIP (15 dias)"
+      },
+      "tags": ["cashShop"],
+      "groundLabels": [{"style": "cashShopItem"}],
+      "tooltipLayout": "noClassLines",
+      "description": [
+        {
+          "text": {
+            "en": "Right-click to add 15 VIP days to your account.",
+            "es": "Clic derecho para sumar 15 días VIP a tu cuenta.",
+            "pt": "Clique direito para adicionar 15 dias VIP à sua conta."
+          }
+        }
+      ],
+      "width": 1,
+      "height": 1,
+      "droppable": false,
+      "sellable": false,
+      "repairable": false
+    },
+    {
+      "number": 171,
+      "name": {
+        "en": "VIP Ticket (30 days)",
+        "de": "VIP-Ticket (30 Tage)",
+        "es": "Ticket VIP (30 días)",
+        "pl": "Bilet VIP (30 dni)",
+        "pt": "Ticket VIP (30 dias)"
+      },
+      "tags": ["cashShop"],
+      "groundLabels": [{"style": "cashShopItem"}],
+      "tooltipLayout": "noClassLines",
+      "description": [
+        {
+          "text": {
+            "en": "Right-click to add 30 VIP days to your account.",
+            "es": "Clic derecho para sumar 30 días VIP a tu cuenta.",
+            "pt": "Clique direito para adicionar 30 dias VIP à sua conta."
+          }
+        }
+      ],
+      "width": 1,
+      "height": 1,
+      "droppable": false,
+      "sellable": false,
+      "repairable": false
     }
   ]
 }
