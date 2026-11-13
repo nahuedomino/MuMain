@@ -273,7 +273,7 @@ TEST_CASE("The items each shipped profile rule gives its profile [data][items]")
         ++counts[static_cast<size_t>(rule)];
     }
     CHECK(counts == expected);
-    CHECK(withoutRule == 330);
+    CHECK(withoutRule == 332); // MU Volta: + the VIP tickets 14/170 and 14/171
 }
 
 // The fixed excellent bonus of the three chaos weapons is item data.
