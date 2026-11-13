@@ -231,7 +231,7 @@ TEST_CASE("Every item's tooltip is as recorded [data][items][tooltip]")
                     changedTooltips.emplace_back(key, text);
                 }
             });
-        CHECK(tooltips == 911 * 30 * 16);
+        CHECK(tooltips == 913 * 30 * 16); // MU Volta: + the VIP tickets 14/170 and 14/171
     }
     SetItemTooltipTextMeasure(nullptr);
 
