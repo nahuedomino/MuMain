@@ -3,7 +3,6 @@
 The `mucobra` branch is an upstream MuMain release tag plus the MU Volta patches, one commit each:
 
 - `fix(effects)`: Greater Damage shows only its red weapon sparkles; the swirling aura is for Greater Defense.
-- `fix(skills)`: holding the right button keeps casting direction skills (Evil Spirit, Triple Shot, Power Slash...) toward the cursor anywhere on the map, aimed at the edge of the skill range.
 - `feat(items)`: Reset Fruits take back 500 stat points (they never add points).
 - `fix(cash-shop)`: every category is clickable and the page count matches the items.
 - `feat(control)`: `duel` command for the developer control socket (only in builds with `ENABLE_CONTROL_SOCKET`, never in player builds).
@@ -23,6 +22,10 @@ Upstream `v1.40.0` ships seven former MU Volta patches (sven-n/MuMain#1027 to #1
 party card support skills, walk vs. position glide, cash shop item models, the E5 guild request, the skinned
 storage buffer rebind and the skill hotkey saves), so they were dropped from the branch.
 
+Upstream `v1.42.0` ships the held direction skill aim (sven-n/MuMain#1031), extended to Electric Spike, Flame Strike,
+Gigantic Storm, Lightning Shock and non-attackable characters under the cursor, so the fork's `fix(skills)` commit
+was dropped. It also ships our defense-down debuff light color (sven-n/MuMain#1086), which was never on the branch.
+
 ## Release
 
 Version 1.40.0 rebases the MU Volta patches onto upstream `v1.40.0`. The upstream Windows
@@ -41,6 +44,12 @@ unchanged. Fork changes: Exit / Switch Character / Select Server no longer lock 
 pick up keep working during the server's countdown or after a refusal); the duel byte-order patch for OpenMU 0.10.1
 is reverted (the server runs OpenMU 0.11.0); the VIP tickets 14/170 and 14/171 for the in-game shop. Ship it with
 the mu-volta-client shop script (Goblin Point store) and the server release of 2026-11-14.
+
+Version 1.42.0 rebases the MU Volta patches onto upstream `v1.42.0` (stat-down debuff colors, Weakness and Enervation
+cast colors, every pet's HP gauge shown, Chaotic Diseier impact only on attackable targets, auto-attack stops on a
+character that can't be attacked, one graphics look file with the light moods, NPC talk from data). The upstream
+Windows build job is unchanged (only the Linux job gained a port-like target build). No fork changes; the held
+direction skill patch is upstream now.
 
 The teleport/PvP follow-up requires the matching OpenMU gameplay core and MU Volta plugin,
 with `CooldownMilliseconds = 2000` on the server. Client readiness uses the server's landing
@@ -80,12 +89,12 @@ Deploy with the matching MU Volta server balance update; copy `chat_input.rml` i
 `mu-volta-client/client-data/Interface/RmlUi/` because release runtimes contain no game data.
 
 ```sh
-git tag mucobra-v1.41.0 && git push --force-with-lease fork mucobra mucobra-v1.41.0
+git tag mucobra-v1.42.0 && git push --force-with-lease fork mucobra mucobra-v1.42.0
 ```
 
 The `MU Volta Release` workflow builds the Windows runtime (about 35 minutes) and attaches it to the
-`mucobra-v1.41.0` release. Build the macOS runtime locally and upload it to the same release with
-`gh release upload mucobra-v1.41.0 MuMain-macos-native-arm64-release-editor-off-no-data.tar.gz --repo nahuedomino/MuMain`.
+`mucobra-v1.42.0` release. Build the macOS runtime locally and upload it to the same release with
+`gh release upload mucobra-v1.42.0 MuMain-macos-native-arm64-release-editor-off-no-data.tar.gz --repo nahuedomino/MuMain`.
 The game data still comes from the upstream release.
 
 To ship new patches for the same upstream version, release a fork-only patch version (e.g. `v1.36.1`
@@ -106,10 +115,10 @@ When syncing with a new upstream release, rebase from the upstream tag (not the 
 ```sh
 git fetch --no-recurse-submodules origin --tags
 git switch mucobra
-git branch mucobra-pre-1.41.0
-git rebase --onto v1.41.0 v1.40.0      # replay our patches on the new tag
+git branch mucobra-pre-1.42.0
+git rebase --onto v1.42.0 v1.41.0      # replay our patches on the new tag
 ```
 
 Drop a patch when upstream ships its own fix. Compare the `build-windows` job of
 `.github/workflows/ci.yml` with `mucobra-release.yml` and copy any changes. Then tag
-`mucobra-v1.41.0` and push with `--force-with-lease` for the rebased branch.
+`mucobra-v1.42.0` and push with `--force-with-lease` for the rebased branch.
