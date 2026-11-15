@@ -3,6 +3,7 @@
 
 #include "Engine/AI/ZzzAI.h"
 #include "Engine/Object/ZzzCharacter.h"
+#include "Engine/Object/ZzzInventory.h"
 #include "Engine/Object/ZzzObject.h"
 #include "GameLogic/Automation/Pickup.h"
 #include "GameLogic/Automation/Skill.h"
@@ -14,6 +15,7 @@
 #include <algorithm>
 #include <array>
 #include <chrono>
+#include <cwchar>
 #include <map>
 #include <memory>
 #include <utility>
@@ -414,4 +416,68 @@ TEST_CASE("A drop already walked to is picked up before the return home [helper_
     pickupResult = GameLogic::Automation::PickupResult::Requested;
     fixture.Tick(std::chrono::seconds(1));
     CHECK(pickupAttempts == std::vector<int>{DropSlot, DropSlot});
+}
+
+namespace
+{
+constexpr int AllyKey = 200;
+constexpr int OtherAllyKey = 201;
+
+// A party of the hero and two allies standing next to it, the first ally wounded.
+struct HealingPartyFixture : HelperActionFixture
+{
+    const int previousPartyNumber = PartyNumber;
+    const std::array<PARTY_t, 3> previousParty = {Party[0], Party[1], Party[2]};
+
+    HealingPartyFixture()
+    {
+        machine.Character.SkillNumber = 3;
+        machine.Character.Skill[2] = AT_SKILL_HEALING;
+        auto config = MUHelper::g_MuHelper.GetConfig();
+        config.bAutoHeal = config.bAutoHealParty = true;
+        config.iHealThreshold = config.iHealPartyThreshold = 50;
+        MUHelper::g_MuHelper.Load(config);
+        PartyNumber = 3;
+        std::wcscpy(Party[0].Name, L"Hero"); // Not in view through CharactersClient: skipped.
+        AddAlly(1, L"Ally", AllyKey, 2);
+        AddAlly(2, L"OtherAlly", OtherAllyKey, 10);
+    }
+
+    ~HealingPartyFixture()
+    {
+        std::copy(previousParty.begin(), previousParty.end(), Party);
+        PartyNumber = previousPartyNumber;
+    }
+
+    void AddAlly(int slot, const wchar_t* name, int key, BYTE stepHP)
+    {
+        std::wcscpy(Party[slot].Name, name);
+        Party[slot].stepHP = stepHP;
+        auto& ally = characters[slot];
+        std::wcscpy(ally.ID, name);
+        ally.Key = key;
+        ally.Object.Live = true;
+        ally.Object.Kind = KIND_PLAYER;
+        ally.PositionX = HeroTile;
+        ally.PositionY = HeroRow;
+        std::copy_n(hero.Object.Position, 3, ally.Object.Position);
+    }
+};
+} // namespace
+
+TEST_CASE("A heal held up by a swing is cast on the same member before the next attack [helper_actions]")
+{
+    HealingPartyFixture fixture;
+    fixture.hero.PositionX = HeroTile;
+    fixture.Tick(); // The hero's slot: nothing to heal, so it attacks.
+    REQUIRE_FALSE(submittedCasts.empty());
+    REQUIRE(submittedCasts.back().first == Primary);
+    targetCastResults[AllyKey] = GameLogic::Automation::SkillResult::Busy;
+    fixture.Tick(); // The wounded ally's slot, while the swing is still on.
+    REQUIRE(submittedCasts.back() == std::pair{AT_SKILL_HEALING, AllyKey});
+    targetCastResults.erase(AllyKey);
+    const auto castsBefore = submittedCasts.size();
+    fixture.Tick(); // The swing is over.
+    REQUIRE(submittedCasts.size() > castsBefore);
+    CHECK(submittedCasts[castsBefore] == std::pair{AT_SKILL_HEALING, AllyKey});
 }
