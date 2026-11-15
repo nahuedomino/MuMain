@@ -17,6 +17,9 @@ The `mucobra` branch is an upstream MuMain release tag plus the MU Volta patches
 - `fix(combat)`: a knockback (server position packet 0x15) keeps the attack or skill animation instead of resetting to the stand pose, and the hero's slide to the new tile keeps a skill held on the right button casting (Evil Spirit, Triple Shot...), like auto-attack.
 - `fix(logout)`: Exit Game, Switch Character and Select Server only send the request and keep the game running; the server (mu-volta-plugins "Safe log out") refuses during PvP combat and counts down 5 s, and its answer exits or switches. The buttons don't lock the hotkeys, so the player can chat, open the inventory and pick up items during the countdown or after a refusal. The exit answer clears the reconnect session. Needs the server plugin; an old server answers at once.
 - `fix(skills)`: self-Teleport waits for server-confirmed animations, cannot cast during transit or its two-second post-landing recovery, and shows a top-to-bottom cooldown shadow in all themes. Wizard area casts retain the explicitly aimed opponent so the server can allow PvP opening hits without enabling attacks on unrelated bystanders.
+- `fix(follow)`: the Command window's Follow runs wherever the mouse is; a background client's last cursor position over the HUD stopped its follower.
+- `fix(macos)`: `NSAppSleepDisabled` in Info.plist, so macOS doesn't nap a background client.
+- `fix(render)`: a covered or minimized window skips the swapchain wait and the drawing and runs the game at 25 fps; on macOS such a window waited up to a second per frame, so a follower in another client crawled.
 
 Upstream `v1.40.0` ships seven former MU Volta patches (sven-n/MuMain#1027 to #1036: Metal bitmap rows,
 party card support skills, walk vs. position glide, cash shop item models, the E5 guild request, the skinned
@@ -58,6 +61,10 @@ way round) and a refresh covers every buff and member; buffs and heals short of 
 5 s); a party heal held by a swing stays on the wounded member; the skill picker stands over the party list; the
 BC/DS/Illusion Temple item prices follow the server's "MU Volta event prices (early game)" update (2,500 to 30,000
 Zen at +1 to +8).
+
+Unreleased (on `mucobra` after 1.42.1): `fix(follow)`, `fix(macos)` and `fix(render)` above, so a follower in a
+background client keeps following (reported on macOS, 2026-11-15). 3,092 macOS Release tests pass. Ship with the next
+client release.
 
 The teleport/PvP follow-up requires the matching OpenMU gameplay core and MU Volta plugin,
 with `CooldownMilliseconds = 2000` on the server. Client readiness uses the server's landing
