@@ -2265,8 +2265,8 @@ public:
     // Its frames still run the game, they just aren't drawn (see BeginFrame and IterateClient's pacing).
     static bool IsWindowOutOfSight()
     {
-        return s_window != nullptr
-               && (SDL_GetWindowFlags(s_window) & (SDL_WINDOW_OCCLUDED | SDL_WINDOW_MINIMIZED)) != 0;
+        return s_window != nullptr &&
+               (SDL_GetWindowFlags(s_window) & (SDL_WINDOW_OCCLUDED | SDL_WINDOW_MINIMIZED)) != 0;
     }
 
     // Waits on the same frame-in-flight fence as BeginFrame's acquire, so the acquire after it returns at once.
