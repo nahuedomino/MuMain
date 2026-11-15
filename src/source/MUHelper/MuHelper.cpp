@@ -512,11 +512,12 @@ namespace MUHelper
             PARTY_t* pMember = &Party[m_iCurrentBuffPartyIndex];
             CHARACTER* pChar = g_pPartyManager->GetPartyMemberChar(pMember);
 
+            // Before the range check: the cycle starts with the first member, who may be out of range.
+            StartTimedBuffRefresh(m_config.bBuffDurationParty);
+
             if (pChar != NULL
                 && ComputeDistanceFromTarget(pChar) <= MAX_ACTIONABLE_DISTANCE)
             {
-                StartTimedBuffRefresh(m_config.bBuffDurationParty);
-
                 // A cast still under way keeps this member and buff for the next tick.
                 if (!BuffTarget(pChar, (ActionSkillType)m_config.aiBuff[m_iCurrentBuffIndex]))
                 {
@@ -553,9 +554,14 @@ namespace MUHelper
         return 1;
     }
 
-    void CMuHelper::StartTimedBuffRefresh(bool bRefreshOnExpiryOnly)
+    // "Buff Duration" (and its party variant) keeps buffs up: every "Time Space of Casting Buff" seconds the
+    // active buffs are cast again, before they run out. Unchecked, a buff is only cast once it is gone.
+    // The server-side helper (offline leveling) reads the same options the same way.
+    void CMuHelper::StartTimedBuffRefresh(bool bKeepBuffDuration)
     {
-        if (!bRefreshOnExpiryOnly && m_config.iBuffCastInterval != 0 && !m_bTimerActivatedBuffOngoing &&
+        // A refresh starts with the first buff and member: one started mid-cycle ended at the wrap, skipping the rest.
+        const bool bCycleStart = m_iCurrentBuffIndex == 0 && m_iCurrentBuffPartyIndex == 0;
+        if (bKeepBuffDuration && bCycleStart && m_config.iBuffCastInterval != 0 && !m_bTimerActivatedBuffOngoing &&
             m_iSecondsElapsed >= m_iNextBuffCastAt)
         {
             m_bTimerActivatedBuffOngoing = true;

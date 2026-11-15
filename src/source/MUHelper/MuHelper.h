@@ -61,7 +61,7 @@ private:
     int ActivatePet();
     int Buff();
     int BuffTarget(CHARACTER* pTargetChar, ActionSkillType iBuffSkill);
-    void StartTimedBuffRefresh(bool bRefreshOnExpiryOnly);
+    void StartTimedBuffRefresh(bool bKeepBuffDuration);
     int RecoverHealth();
     int Heal();
     int HealSelf(ActionSkillType iHealingSkill);
