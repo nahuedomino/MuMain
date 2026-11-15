@@ -51,6 +51,14 @@ character that can't be attacked, one graphics look file with the light moods, N
 Windows build job is unchanged (only the Linux job gained a port-like target build). No fork changes; the held
 direction skill patch is upstream now.
 
+Version 1.42.1 rebases the MU Volta patches onto upstream `v1.42.1` (shader formats from one table, desktop OpenGL
+headers dropped from shared code; the upstream Windows build job is unchanged). Fork changes, all in the MU Helper
+unless noted: "Buff Duration" recasts active buffs every "Time Space of Casting Buff" seconds (it was read the other
+way round) and a refresh covers every buff and member; buffs and heals short of mana come before attacking (up to
+5 s); a party heal held by a swing stays on the wounded member; the skill picker stands over the party list; the
+BC/DS/Illusion Temple item prices follow the server's "MU Volta event prices (early game)" update (2,500 to 30,000
+Zen at +1 to +8).
+
 The teleport/PvP follow-up requires the matching OpenMU gameplay core and MU Volta plugin,
 with `CooldownMilliseconds = 2000` on the server. Client readiness uses the server's landing
 packet, not a timer started at the click; ordinary warps, map changes and revival reset it.
@@ -89,12 +97,12 @@ Deploy with the matching MU Volta server balance update; copy `chat_input.rml` i
 `mu-volta-client/client-data/Interface/RmlUi/` because release runtimes contain no game data.
 
 ```sh
-git tag mucobra-v1.42.0 && git push --force-with-lease fork mucobra mucobra-v1.42.0
+git tag mucobra-v1.42.1 && git push --force-with-lease fork mucobra mucobra-v1.42.1
 ```
 
 The `MU Volta Release` workflow builds the Windows runtime (about 35 minutes) and attaches it to the
-`mucobra-v1.42.0` release. Build the macOS runtime locally and upload it to the same release with
-`gh release upload mucobra-v1.42.0 MuMain-macos-native-arm64-release-editor-off-no-data.tar.gz --repo nahuedomino/MuMain`.
+`mucobra-v1.42.1` release. Build the macOS runtime locally and upload it to the same release with
+`gh release upload mucobra-v1.42.1 MuMain-macos-native-arm64-release-editor-off-no-data.tar.gz --repo nahuedomino/MuMain`.
 The game data still comes from the upstream release.
 
 To ship new patches for the same upstream version, release a fork-only patch version (e.g. `v1.36.1`
@@ -115,10 +123,10 @@ When syncing with a new upstream release, rebase from the upstream tag (not the 
 ```sh
 git fetch --no-recurse-submodules origin --tags
 git switch mucobra
-git branch mucobra-pre-1.42.0
-git rebase --onto v1.42.0 v1.41.0      # replay our patches on the new tag
+git branch mucobra-pre-1.42.1
+git rebase --onto v1.42.1 v1.42.0      # replay our patches on the new tag
 ```
 
 Drop a patch when upstream ships its own fix. Compare the `build-windows` job of
 `.github/workflows/ci.yml` with `mucobra-release.yml` and copy any changes. Then tag
-`mucobra-v1.42.0` and push with `--force-with-lease` for the rebased branch.
+`mucobra-v1.42.1` and push with `--force-with-lease` for the rebased branch.
