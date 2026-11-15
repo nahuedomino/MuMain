@@ -1185,8 +1185,8 @@ void HandleWindowResize(int width, int height)
 // (movement is scaled up to 25 fps) without burning a core. The FPS chosen before comes back once it's visible.
 static void PaceFramesOutOfSight()
 {
-    const bool outOfSight = g_sdlWindow != nullptr
-                            && (SDL_GetWindowFlags(g_sdlWindow) & (SDL_WINDOW_OCCLUDED | SDL_WINDOW_MINIMIZED)) != 0;
+    const bool outOfSight =
+        g_sdlWindow != nullptr && (SDL_GetWindowFlags(g_sdlWindow) & (SDL_WINDOW_OCCLUDED | SDL_WINDOW_MINIMIZED)) != 0;
     if (outOfSight && !g_HasOutOfSightFpsOverride && !g_HasInactiveFpsOverride)
     {
         g_TargetFpsBeforeOutOfSight = GetTargetFps();
