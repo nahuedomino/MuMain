@@ -8,6 +8,7 @@
 #include <atomic>
 #include <chrono>
 #include <map>
+#include <optional>
 
 #include "MuHelperData.h"
 #include "GameLogic/Automation/AttackSkillRotation.h"
@@ -74,6 +75,7 @@ private:
     int SimulateAttack(ActionSkillType iSkill);
     int SimulateSkill(ActionSkillType iSkill, bool bTargetRequired, int iTarget);
     int SimulateSupportSkill(ActionSkillType iSkill, bool bTargetRequired, int iTarget);
+    bool IsShortOfManaFor(ActionSkillType iSkill) const;
     int SimulateBasicAttack(int iTarget);
     int SimulateComboAttack();
     int GetNearestTarget();
@@ -119,6 +121,9 @@ private:
     int m_iNextBuffCastAt;
     int m_iSecondsAway;
     bool m_bTimerActivatedBuffOngoing;
+    // Support comes first: a buff or heal short of mana holds the attacks, for a while, until mana covers it.
+    std::optional<std::chrono::steady_clock::time_point> m_supportWaitingForManaSince;
+    bool m_bSupportWaitingForMana = false;
     bool m_bPetActivated;
     int m_iTotalCost;
 

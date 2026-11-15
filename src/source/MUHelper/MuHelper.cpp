@@ -137,6 +137,8 @@ namespace MUHelper
 
         m_bTimerActivatedBuffOngoing = false;
         m_bPetActivated = false;
+        m_supportWaitingForManaSince.reset();
+        m_bSupportWaitingForMana = false;
 
         m_bActive = true;
 
@@ -213,12 +215,16 @@ namespace MUHelper
             // Emergency potions never wait behind actions that can.
             ConsumePotion();
 
-            if (!Buff())
+            m_bSupportWaitingForMana = false;
+            const int iBuffResult = Buff();
+
+            // A buff waiting for mana still lets the heals through; only the attacks wait behind it.
+            if (!iBuffResult && !m_bSupportWaitingForMana)
             {
                 return;
             }
 
-            if (!RecoverHealth())
+            if (!RecoverHealth() || !iBuffResult)
             {
                 return;
             }
@@ -930,7 +936,46 @@ namespace MUHelper
 
         // Only a cast under way holds up the actions after it; one that cannot happen must not starve them.
         const SkillResult result = CastSkill(iSkill, bTargetRequired, iTarget);
-        return result == SkillResult::Busy || result == SkillResult::Approaching ? 0 : 1;
+        if (result == SkillResult::Busy || result == SkillResult::Approaching)
+        {
+            return 0;
+        }
+
+        // Short of mana, the attacks wait for the buffs and heals: otherwise every attack spends the mana again
+        // and the party is only supported once no monster is left. The wait is bounded, so a helper whose
+        // mana never recovers (no potions, a fight it is losing) still fights back.
+        constexpr auto MaximumManaWait = std::chrono::seconds(5);
+        if (result == SkillResult::NotReady && IsShortOfManaFor(iSkill))
+        {
+            if (!m_supportWaitingForManaSince)
+            {
+                m_supportWaitingForManaSince = m_now;
+            }
+
+            if (m_now - *m_supportWaitingForManaSince < MaximumManaWait)
+            {
+                m_bSupportWaitingForMana = true;
+                return 0;
+            }
+        }
+
+        m_supportWaitingForManaSince.reset();
+        return 1;
+    }
+
+    bool CMuHelper::IsShortOfManaFor(ActionSkillType iSkill) const
+    {
+        int iMana = 0;
+        int iSkillMana = 0;
+        gSkillManager.GetSkillInformation(iSkill, 1, nullptr, &iMana, nullptr, &iSkillMana);
+
+        // A cost above the maximum would never be met: waiting for it would only stall the helper.
+        const auto Short = [](int iCost, DWORD current, DWORD maximum)
+        {
+            return iCost > 0 && current < static_cast<DWORD>(iCost) && static_cast<DWORD>(iCost) <= maximum;
+        };
+        return Short(iMana, CharacterAttribute->Mana, CharacterAttribute->ManaMax)
+               || Short(iSkillMana, CharacterAttribute->SkillMana, CharacterAttribute->SkillManaMax);
     }
 
     GameLogic::Automation::SkillResult CMuHelper::CastSkill(ActionSkillType iSkill, bool bTargetRequired, int iTarget)
