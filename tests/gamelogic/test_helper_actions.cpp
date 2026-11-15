@@ -257,6 +257,57 @@ TEST_CASE("A buff that cannot be cast does not starve later helper actions [help
     CHECK(submittedCasts[1].first == Primary);
 }
 
+namespace
+{
+// The helper looks at one of the three buff slots per tick.
+constexpr int BuffSlots = 3;
+
+long CountBuffCasts()
+{
+    return std::count_if(submittedCasts.begin(), submittedCasts.end(),
+                         [](const auto& cast) { return cast.first == AT_SKILL_ATTACK; });
+}
+
+void KeepAttackBuffActive(HelperActionFixture& fixture, bool bKeepBuffDuration)
+{
+    auto config = MUHelper::g_MuHelper.GetConfig();
+    config.aiBuff = {AT_SKILL_ATTACK, 0, 0};
+    config.bBuffDuration = bKeepBuffDuration;
+    config.iBuffCastInterval = 30;
+    MUHelper::g_MuHelper.Load(config);
+    g_CharacterRegisterBuff((&fixture.hero.Object), eBuff_Attack);
+}
+} // namespace
+
+TEST_CASE("Buff Duration recasts an active buff every casting interval, before it runs out [helper_actions]")
+{
+    HelperActionFixture fixture;
+    KeepAttackBuffActive(fixture, true);
+    fixture.Tick(std::chrono::milliseconds(0));
+    CHECK(CountBuffCasts() == 1);
+    for (int tick = 0; tick < 10; ++tick)
+        fixture.Tick(std::chrono::seconds(2));
+    CHECK(CountBuffCasts() == 1);
+    fixture.Tick(std::chrono::seconds(15)); // 30 s after the first round ended
+    for (int slot = 1; slot < BuffSlots; ++slot)
+        fixture.Tick(std::chrono::milliseconds(0));
+    CHECK(CountBuffCasts() == 2);
+    g_CharacterUnRegisterBuff((&fixture.hero.Object), eBuff_Attack);
+}
+
+TEST_CASE("Without Buff Duration an active buff is left until it runs out [helper_actions]")
+{
+    HelperActionFixture fixture;
+    KeepAttackBuffActive(fixture, false);
+    for (int tick = 0; tick < 20; ++tick)
+        fixture.Tick(std::chrono::seconds(5));
+    CHECK(CountBuffCasts() == 0);
+    g_CharacterUnRegisterBuff((&fixture.hero.Object), eBuff_Attack);
+    for (int slot = 0; slot < BuffSlots; ++slot)
+        fixture.Tick();
+    CHECK(CountBuffCasts() == 1);
+}
+
 TEST_CASE("Starting the helper finds monsters that were already in view [helper_actions]")
 {
     HelperActionFixture fixture;
