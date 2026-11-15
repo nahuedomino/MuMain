@@ -2913,6 +2913,34 @@ void FillAddFriendName()
 }
 }
 
+// Walks the hero towards the character chosen with the Command window's Follow, once per frame.
+// Returns false when nothing is followed (or the followed character is gone), so the caller can handle clicks.
+static bool FollowCharacterStep(CHARACTER* c, OBJECT* o)
+{
+    if (g_iFollowCharacter < 0 || g_iFollowCharacter >= MAX_CHARACTERS_CLIENT)
+    {
+        return false;
+    }
+
+    CHARACTER* followCharacter = &CharactersClient[g_iFollowCharacter];
+    if (followCharacter->Object.Live == 0)
+    {
+        g_iFollowCharacter = -1;
+        return false;
+    }
+
+    c->MovementType = MOVEMENT_MOVE;
+    ActionTarget = g_iFollowCharacter;
+    TargetX = (int)(followCharacter->Object.Position[0] / TERRAIN_SCALE);
+    TargetY = (int)(followCharacter->Object.Position[1] / TERRAIN_SCALE);
+    if (PathFinding2((c->PositionX), (c->PositionY), TargetX, TargetY, &c->Path))
+    {
+        SendMove(c, o);
+    }
+
+    return true;
+}
+
 void MoveHero()
 {
     CHARACTER* c = Hero;
@@ -3149,25 +3177,7 @@ void MoveHero()
                 }
             }
         }
-        if (g_iFollowCharacter >= 0 && g_iFollowCharacter < MAX_CHARACTERS_CLIENT)
-        {
-            CHARACTER* followCharacter = &CharactersClient[g_iFollowCharacter];
-            if (followCharacter->Object.Live == 0)
-            {
-                g_iFollowCharacter = -1;
-            }
-            else
-            {
-                //
-                c->MovementType = MOVEMENT_MOVE;
-                ActionTarget = g_iFollowCharacter;
-                TargetX = (int)(followCharacter->Object.Position[0] / TERRAIN_SCALE);
-                TargetY = (int)(followCharacter->Object.Position[1] / TERRAIN_SCALE);
-                if (PathFinding2((c->PositionX), (c->PositionY), TargetX, TargetY, &c->Path))
-                    SendMove(c, o);
-            }
-        }
-        else if (Success &&
+        if (!FollowCharacterStep(c, o) && Success &&
             ((o->CurrentAction != PLAYER_SHOCK && (o->Teleport != TELEPORT_BEGIN && o->Teleport != TELEPORT && o->Alpha >= 0.7f) &&
                 !Engine::Object::IsAttackAction(o->CurrentAction)
                 && (o->CurrentAction<PLAYER_SKILL_SLEEP || o->CurrentAction>PLAYER_SKILL_LIGHTNING_SHOCK)
@@ -3398,6 +3408,12 @@ void MoveHero()
             }
         }
         MouseUpdateTime++;
+    }
+    else
+    {
+        // The Command window's Follow must not depend on where the mouse is: a client in the background keeps
+        // the last cursor position, often over the HUD, and its follower stood still until its window got focus.
+        FollowCharacterStep(c, o);
     }
 
     Attack(Hero);
