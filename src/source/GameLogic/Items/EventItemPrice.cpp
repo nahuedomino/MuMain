@@ -19,9 +19,11 @@ std::optional<std::int64_t> GetEventItemBuyingPrice(int itemType, int level)
     case ITEM_ILLUSION_SORCERER_COVENANT:
     case ITEM_SCROLL_OF_BLOOD:
     {
-        constexpr std::int64_t SellPricePerLevel = 5000;
+        // Matches the server's "MU Volta event prices (early game)": 2,500 Zen per level up to +4, then 15,000 at
+        // +5 and 5,000 more per level (+7: 25,000, +8: 30,000); level 0 sells like +1. NPCs ask three times that.
         constexpr int BuyToSellRatio = 3;
-        return SellPricePerLevel * BuyToSellRatio * std::max(1, level);
+        const std::int64_t selling = level <= 4 ? 2500LL * std::max(1, level) : 5000LL * (level - 2);
+        return selling * BuyToSellRatio;
     }
     default:
         return std::nullopt;
