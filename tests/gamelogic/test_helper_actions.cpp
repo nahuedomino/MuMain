@@ -310,6 +310,46 @@ TEST_CASE("Without Buff Duration an active buff is left until it runs out [helpe
     CHECK(CountBuffCasts() == 1);
 }
 
+TEST_CASE("A buff short of mana holds the attacks for a while [helper_actions]")
+{
+    HelperActionFixture fixture;
+    auto config = MUHelper::g_MuHelper.GetConfig();
+    config.aiBuff = {AT_SKILL_ATTACK, 0, 0};
+    MUHelper::g_MuHelper.Load(config);
+    fixture.attributes[AT_SKILL_ATTACK].Mana = 40;
+    fixture.machine.Character.ManaMax = 100;
+    fixture.machine.Character.Mana = 10;
+    castResults[AT_SKILL_ATTACK] = GameLogic::Automation::SkillResult::NotReady;
+    const auto attacks = [] { return std::count_if(submittedCasts.begin(), submittedCasts.end(),
+                                                   [](const auto& cast) { return cast.first != AT_SKILL_ATTACK; }); };
+
+    // Support first: every attack would spend the mana the buff waits for.
+    for (int tick = 0; tick < 8; ++tick)
+        fixture.Tick();
+    CHECK(attacks() == 0);
+    CHECK(submittedCasts.size() == 8);
+
+    // Mana that never comes back doesn't stall the helper: after the wait, it fights.
+    fixture.Tick(std::chrono::seconds(5));
+    CHECK(attacks() > 0);
+}
+
+TEST_CASE("A buff that is not ready with enough mana does not hold the attacks [helper_actions]")
+{
+    HelperActionFixture fixture;
+    auto config = MUHelper::g_MuHelper.GetConfig();
+    config.aiBuff = {AT_SKILL_ATTACK, 0, 0};
+    MUHelper::g_MuHelper.Load(config);
+    fixture.attributes[AT_SKILL_ATTACK].Mana = 40;
+    fixture.machine.Character.ManaMax = 100;
+    fixture.machine.Character.Mana = 100;
+    castResults[AT_SKILL_ATTACK] = GameLogic::Automation::SkillResult::NotReady;
+    fixture.Tick();
+    REQUIRE(submittedCasts.size() == 2);
+    CHECK(submittedCasts[0].first == AT_SKILL_ATTACK);
+    CHECK(submittedCasts[1].first == Primary);
+}
+
 TEST_CASE("Starting the helper finds monsters that were already in view [helper_actions]")
 {
     HelperActionFixture fixture;
