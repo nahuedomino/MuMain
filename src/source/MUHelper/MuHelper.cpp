@@ -715,9 +715,16 @@ namespace MUHelper
                 }
             }
 
+            // A heal still under way keeps this member for the next tick, as Buff() does: moving on let the
+            // next, healthy member's slot hand the tick to Attack() as soon as the swing ended.
+            if (!iHealResult)
+            {
+                return 0;
+            }
+
             m_iCurrentHealPartyIndex = (m_iCurrentHealPartyIndex + 1) % PartyNumber;
 
-            return iHealResult;
+            return 1;
         }
         else
         {
@@ -1008,7 +1015,7 @@ namespace MUHelper
 
         for (int i = 0; i < aiHealingSkills.size(); i++)
         {
-            int iSkillIndex = g_pSkillList->GetSkillIndex(aiHealingSkills[i]);
+            int iSkillIndex = gSkillManager.FindSkillIndex(aiHealingSkills[i]);
             if (iSkillIndex != -1)
             {
                 return aiHealingSkills[i];
@@ -1033,7 +1040,7 @@ namespace MUHelper
 
         for (int i = 0; i < aiDrainLifeSkills.size(); i++)
         {
-            int iSkillIndex = g_pSkillList->GetSkillIndex(aiDrainLifeSkills[i]);
+            int iSkillIndex = gSkillManager.FindSkillIndex(aiDrainLifeSkills[i]);
             if (iSkillIndex != -1)
             {
                 return aiDrainLifeSkills[i];
