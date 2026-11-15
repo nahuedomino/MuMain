@@ -694,6 +694,8 @@ int Hangul = 0;
 bool g_bEnterPressed = false;
 
 double g_TargetFpsBeforeInactive = -1.0;
+bool g_HasOutOfSightFpsOverride = false;
+double g_TargetFpsBeforeOutOfSight = -1.0;
 bool g_HasInactiveFpsOverride = false;
 
 int g_iMousePopPosition_x = 0;
@@ -1191,6 +1193,27 @@ void HandleWindowResize(int width, int height)
     UpdateCursorClip();
 }
 
+// While nothing of the window can be seen (covered by other windows or minimized), the renderer skips drawing and
+// the wait for the display, so the frames would run as fast as the CPU allows. They run the game at the reference
+// 25 fps instead: a client in the background, like a character following another, keeps moving at full speed
+// (movement is scaled up to 25 fps) without burning a core. The FPS chosen before comes back once it's visible.
+static void PaceFramesOutOfSight()
+{
+    const bool outOfSight = g_sdlWindow != nullptr
+                            && (SDL_GetWindowFlags(g_sdlWindow) & (SDL_WINDOW_OCCLUDED | SDL_WINDOW_MINIMIZED)) != 0;
+    if (outOfSight && !g_HasOutOfSightFpsOverride && !g_HasInactiveFpsOverride)
+    {
+        g_TargetFpsBeforeOutOfSight = GetTargetFps();
+        SetTargetFps(REFERENCE_FPS);
+        g_HasOutOfSightFpsOverride = true;
+    }
+    else if (!outOfSight && g_HasOutOfSightFpsOverride)
+    {
+        SetTargetFps(g_TargetFpsBeforeOutOfSight);
+        g_HasOutOfSightFpsOverride = false;
+    }
+}
+
 void HandleFocusChange(bool active)
 {
     if (InputDiagnosticsEnabled())
@@ -1600,6 +1623,8 @@ bool IterateClient()
     // rendering so an act's step is drawn in the same frame. Does nothing
     // when the socket was never opened.
     App::Control::ControlServer::Instance().Poll();
+
+    PaceFramesOutOfSight();
 
     if (CheckRenderNextFrame())
     {
