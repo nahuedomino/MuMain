@@ -127,6 +127,8 @@ TEST_CASE("documents stack as the original's windows did [ui][stacking]")
     CHECK(Depth("loading.rml") > Depth("notices.rml"));
     CHECK(Depth("sys_menu.rml") > Depth("notices.rml"));
     CHECK(Depth("reconnect_dialog.rml") > Depth("loading.rml"));
+    // The MU Helper's skill picker opens where the party list stands, so it covers the list.
+    CHECK(Depth("mu_helper_skill_picker.rml") > Depth("party_list.rml"));
     // The master skill tree's band shares its depth.
     CHECK(Depth("master_level_band.rml") == Depth("master_level.rml"));
 }

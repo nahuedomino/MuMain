@@ -96,8 +96,9 @@ constexpr DocumentPlacement Placements[] = {
     {"duel_watch_frame.rml", 5.0f, MainScene},
     {"duel_watch_spectators.rml", 5.0f, MainScene},
     {"character_info.rml", 5.1f, MainScene},
-    {"mu_helper_skill_picker.rml", 5.2f, MainScene},
     {"party_list.rml", 5.4f, MainScene},
+    // Over the party list: the picker opens to the left of the MU Helper window, where the list stands.
+    {"mu_helper_skill_picker.rml", 5.5f, MainScene},
     {"friend_shell.rml", 6.0f, MainScene},
     {"chat_room.rml", 6.0f, MainScene},
     {"letter_read.rml", 6.0f, MainScene},

@@ -82,7 +82,8 @@ bool CMuHelperSkillPicker::Render()
 
 float CMuHelperSkillPicker::GetLayerDepth()
 {
-    return 5.2f;
+    // Over the party list (5.4), which stands where the picker opens; see RmlStackingOrder.cpp.
+    return 5.5f;
 }
 
 void CMuHelperSkillPicker::FilterByAttackSkills()
