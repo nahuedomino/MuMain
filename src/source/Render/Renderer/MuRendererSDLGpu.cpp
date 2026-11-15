@@ -2291,10 +2291,19 @@ public:
         mu::log::Get("render")->info("SDL_gpu -- Shutdown complete");
     }
 
+    // A covered or minimized window: macOS hands it no new drawable, and a wait for one blocks up to a second
+    // each frame, which held a client in the background (a follower, say) to about one frame per second.
+    // Its frames still run the game, they just aren't drawn (see BeginFrame and IterateClient's pacing).
+    static bool IsWindowOutOfSight()
+    {
+        return s_window != nullptr
+               && (SDL_GetWindowFlags(s_window) & (SDL_WINDOW_OCCLUDED | SDL_WINDOW_MINIMIZED)) != 0;
+    }
+
     // Waits on the same frame-in-flight fence as BeginFrame's acquire, so the acquire after it returns at once.
     void WaitForSwapchain() override
     {
-        if (!s_device || !s_window || !Render::TargetFramesMayWait())
+        if (!s_device || !s_window || !Render::TargetFramesMayWait() || IsWindowOutOfSight())
         {
             return;
         }
@@ -2417,6 +2426,14 @@ public:
         // the frames in flight are full, and the loop ran on without drawing, several times per displayed frame on
         // Vulkan and Direct3D 12 alike. The game loop already waited in WaitForSwapchain, before reading input, so
         // this returns at once there; it still paces the frames drawn outside it (the title and loading screens).
+        // Nothing of the window can be seen: skip the frame like a hidden one, without waiting for a drawable.
+        if (IsWindowOutOfSight())
+        {
+            SDL_CancelGPUCommandBuffer(s_cmdBuf);
+            s_cmdBuf = nullptr;
+            return;
+        }
+
         // Where the host paces the frames instead, a frame without a free texture is skipped.
         const bool mayWait = Render::TargetFramesMayWait();
         const auto acquire = mayWait ? &SDL_WaitAndAcquireGPUSwapchainTexture : &SDL_AcquireGPUSwapchainTexture;
