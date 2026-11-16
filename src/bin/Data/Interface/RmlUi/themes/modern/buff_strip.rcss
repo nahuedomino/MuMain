@@ -228,3 +228,17 @@
 	atlas2-88: 160px 224px 20px 28px;
 	atlas2-89: 180px 224px 20px 28px;
 }
+
+/* MU Volta: the time left, over the bottom of the icon (CBuffStrip, BuffCountdown). */
+.buff-timer {
+	position: absolute;
+	left: 0dp;
+	bottom: 1dp;
+	width: 20dp;
+	text-align: center;
+	font-size: 9dp;
+	line-height: 10dp;
+	color: #ffffff;
+	font-effect: outline(1dp #000000);
+	pointer-events: none;
+}

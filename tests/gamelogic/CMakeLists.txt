@@ -168,6 +168,14 @@ mu_add_test(
 )
 
 mu_add_test(
+    NAME test_buff_countdown
+    SOURCES
+        test_buff_countdown.cpp
+    LINK_LIBS
+        MuClient
+)
+
+mu_add_test(
     NAME test_party_member_skill
     SOURCES
         test_party_member_skill.cpp
