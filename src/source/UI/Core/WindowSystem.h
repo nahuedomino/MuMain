@@ -43,6 +43,7 @@
 #include "UI/Options/OptionWindow.h"
 #include "UI/HUD/MuHelperBar.h"
 #include "UI/Dialogs/HelpWindow.h"
+#include "UI/Dialogs/EventScheduleWindow.h"
 #include "UI/Dialogs/ChatCommandWindow.h"
 #include "UI/Inventory/ItemExplanationWindow.h"
 #include "UI/Inventory/SetItemExplanation.h"
@@ -187,6 +188,7 @@ namespace mu::ui::window
         CWindowMenu* m_pNewWindowMenu;
         COptionWindow* m_pNewOptionWindow;
         CHelpWindow* m_pNewHelpWindow;
+        CEventScheduleWindow* m_pEventScheduleWindow;
         CChatCommandWindow* m_pNewChatCommandWindow;
         CItemExplanationWindow* m_pNewItemExplanationWindow;
         CSetItemExplanation* m_pNewSetItemExplanation;

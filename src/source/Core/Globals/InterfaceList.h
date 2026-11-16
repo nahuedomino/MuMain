@@ -131,6 +131,9 @@ enum INTERFACE_LIST
     // a different button model (arbitrary labeled list vs two fixed OK/Cancel slots). Same
     // reasoning as INTERFACE_CREDITS above.
     INTERFACE_GENERIC_MENU_DIALOG,
+    // MU Volta: the event schedule on the H key (UI/Dialogs/EventScheduleWindow.h). Just before INTERFACE_END, same
+    // reasoning as INTERFACE_CREDITS above.
+    INTERFACE_EVENT_SCHEDULE,
     INTERFACE_END,
     INTERFACE_COUNT = INTERFACE_END - 2,
 };
