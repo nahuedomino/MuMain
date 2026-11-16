@@ -16,6 +16,8 @@
 			<div class="buff-slot" data-for="buff : buffs" data-event-mouseup="buff_cancel(it_index)"
 			     data-event-mouseover="buff_hover(it_index)" data-event-mouseout="buff_leave">
 				<div class="buff-icon-art" data-style-decorator="buff.decorator"></div>
+				<!-- MU Volta: time left, from the server's buff duration packet (BuffCountdown). -->
+				<div class="buff-timer" data-if="buff.timer != ''">{{buff.timer}}</div>
 			</div>
 		</div>
 	</div>

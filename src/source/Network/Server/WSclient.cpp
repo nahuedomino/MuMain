@@ -134,6 +134,7 @@ using namespace mu::ui::window;
 #include "GameLogic/Items/ItemCategories.h"
 #include "Data/GameData/ItemData/ItemModelSlots.h"
 #include "GameLogic/Skills/SkillHotkeyConfiguration.h"
+#include "GameLogic/Buffs/BuffCountdown.h"
 
 #define MAX_DEBUG_MAX 10
 
@@ -10126,6 +10127,19 @@ void ReceiveEventChip(const BYTE* ReceiveBuffer)
         g_shEventChipCount = Data->m_unChipCount;
 }
 
+// MU Volta: C1 07 FA 01, effect number, remaining seconds (little endian; 0xFFFF = unknown). The countdown on the
+// hero's buff icons; OpenMU's effect status packet carries no time.
+void ReceiveMagicEffectDuration(const BYTE* ReceiveBuffer, int Size)
+{
+    if (Size < 7)
+    {
+        return;
+    }
+
+    const auto seconds = static_cast<unsigned short>(ReceiveBuffer[5] | (ReceiveBuffer[6] << 8));
+    GameLogic::Buffs::HeroBuffCountdown().Start(ReceiveBuffer[4], seconds, std::chrono::steady_clock::now());
+}
+
 void ReceiveBuffState(const BYTE* ReceiveBuffer)
 {
     auto Data = (LPPMSG_ITEMEFFECTCANCEL)ReceiveBuffer;
@@ -14084,6 +14098,17 @@ static void ProcessPacket(const BYTE* ReceiveBuffer, int32_t Size)
         }
     }
     break;
+    case 0xFA: // MU Volta
+    {
+        auto Data = (LPPHEADER_DEFAULT_SUBCODE)ReceiveBuffer;
+        switch (Data->SubCode)
+        {
+        case 0x01:
+            ReceiveMagicEffectDuration(ReceiveBuffer, Size);
+            break;
+        }
+    }
+    break;
 
     case 0xA7:
         ReceivePetCommand(ReceiveBuffer);
@@ -15741,6 +15766,11 @@ void RegisterBuff(eBuffState buff, OBJECT* o, const int bufftime)
 
 void UnRegisterBuff(eBuffState buff, OBJECT* o)
 {
+    if (o == &Hero->Object)
+    {
+        GameLogic::Buffs::HeroBuffCountdown().Stop(static_cast<int>(buff));
+    }
+
     GameLogic::Monsters::Setup::NoteServerBuff(*o, static_cast<int>(buff), false);
     eBuffClass buffclasstype = g_IsBuffClass(buff);
 
