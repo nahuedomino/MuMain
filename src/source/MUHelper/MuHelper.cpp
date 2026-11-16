@@ -20,6 +20,8 @@
 #include "Core/Utilities/Log/muConsoleDebug.h"
 #include "Character/CharacterManager.h"
 #include "GameLogic/Skills/SkillManager.h"
+
+#include <algorithm>
 #include "GameLogic/Social/PartyManager.h"
 #include "World/MapInfra/MapManager.h"
 #include "Network/Server/WSclient.h"
@@ -136,6 +138,7 @@ namespace MUHelper
         m_iNextBuffCastAt = 0;
 
         m_bTimerActivatedBuffOngoing = false;
+        m_partyMembersSeen.clear();
         m_bPetActivated = false;
         m_supportWaitingForManaSince.reset();
         m_bSupportWaitingForMana = false;
@@ -513,6 +516,7 @@ namespace MUHelper
 
         if (m_config.bSupportParty && g_pPartyManager->IsPartyActive())
         {
+            RefreshBuffsForNewPartyMembers();
             m_iCurrentBuffPartyIndex %= PartyNumber;
 
             PARTY_t* pMember = &Party[m_iCurrentBuffPartyIndex];
@@ -536,6 +540,7 @@ namespace MUHelper
         else
         {
             m_iCurrentBuffPartyIndex = 0;
+            m_partyMembersSeen.clear();
 
             StartTimedBuffRefresh(m_config.bBuffDuration);
 
@@ -558,6 +563,30 @@ namespace MUHelper
         }
 
         return 1;
+    }
+
+    // Someone joined the party: the rotation starts over with a refresh of every buff on every member, as starting the
+    // helper does. Without it, a newcomer whose buffs were still running (cast by someone else, or before joining) waited
+    // for the next "Time Space of Casting Buff" round, or until they ran out.
+    void CMuHelper::RefreshBuffsForNewPartyMembers()
+    {
+        std::set<std::wstring> members;
+        for (int i = 0; i < PartyNumber; ++i)
+        {
+            members.emplace(Party[i].Name);
+        }
+
+        const bool bSomeoneJoined = std::any_of(members.begin(), members.end(),
+            [this](const std::wstring& name) { return m_partyMembersSeen.count(name) == 0; });
+        m_partyMembersSeen = std::move(members);
+        if (!bSomeoneJoined)
+        {
+            return;
+        }
+
+        m_iCurrentBuffIndex = 0;
+        m_iCurrentBuffPartyIndex = 0;
+        m_bTimerActivatedBuffOngoing = true;
     }
 
     // "Buff Duration" (and its party variant) keeps buffs up: every "Time Space of Casting Buff" seconds the
