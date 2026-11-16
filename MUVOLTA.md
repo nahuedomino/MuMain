@@ -1,6 +1,7 @@
 # MU Volta fork
 
-The `mucobra` branch is an upstream MuMain release tag plus the MU Volta patches, one commit each:
+The `muvolta` branch is an upstream MuMain release tag plus the MU Volta patches, one commit each (until 2026-11-16 it was called `mucobra`, and the releases up to 1.42.1 are tagged
+`mucobra-v*`; the client packaging tries `muvolta-v*` first, then `mucobra-v*`):
 
 - `fix(effects)`: Greater Damage shows only its red weapon sparkles; the swirling aura is for Greater Defense.
 - `feat(items)`: Reset Fruits take back 500 stat points (they never add points).
@@ -62,7 +63,7 @@ way round) and a refresh covers every buff and member; buffs and heals short of 
 BC/DS/Illusion Temple item prices follow the server's "MU Volta event prices (early game)" update (2,500 to 30,000
 Zen at +1 to +8).
 
-Unreleased (on `mucobra` after 1.42.1): `fix(follow)`, `fix(macos)` and `fix(render)` above, so a follower in a
+Unreleased (on `muvolta` after 1.42.1): `fix(follow)`, `fix(macos)` and `fix(render)` above, so a follower in a
 background client keeps following (reported on macOS, 2026-11-15). 3,092 macOS Release tests pass. Ship with the next
 client release.
 
@@ -109,12 +110,12 @@ Deploy with the matching MU Volta server balance update; copy `chat_input.rml` i
 `mu-volta-client/client-data/Interface/RmlUi/` because release runtimes contain no game data.
 
 ```sh
-git tag mucobra-v1.42.1 && git push --force-with-lease fork mucobra mucobra-v1.42.1
+git tag muvolta-v1.42.1 && git push --force-with-lease fork muvolta muvolta-v1.42.1
 ```
 
 The `MU Volta Release` workflow builds the Windows runtime (about 35 minutes) and attaches it to the
-`mucobra-v1.42.1` release. Build the macOS runtime locally and upload it to the same release with
-`gh release upload mucobra-v1.42.1 MuMain-macos-native-arm64-release-editor-off-no-data.tar.gz --repo nahuedomino/MuMain`.
+`muvolta-v1.42.1` release. Build the macOS runtime locally and upload it to the same release with
+`gh release upload muvolta-v1.42.1 MuMain-macos-native-arm64-release-editor-off-no-data.tar.gz --repo nahuedomino/MuMain`.
 The game data still comes from the upstream release.
 
 To ship new patches for the same upstream version, release a fork-only patch version (e.g. `v1.36.1`
@@ -123,9 +124,9 @@ workflow's default notes assume the tag is an upstream version and the client pa
 from them:
 
 ```sh
-git tag mucobra-v1.36.1 && git push origin mucobra mucobra-v1.36.1
-gh release create mucobra-v1.36.1 --verify-tag --title "MU Volta v1.36.1" \
-  --notes "Upstream v1.36.0 with the MU Volta patches of the mucobra branch. Game data: the upstream release v1.36.0."
+git tag muvolta-v1.36.1 && git push origin muvolta muvolta-v1.36.1
+gh release create muvolta-v1.36.1 --verify-tag --title "MU Volta v1.36.1" \
+  --notes "Upstream v1.36.0 with the MU Volta patches of the muvolta branch. Game data: the upstream release v1.36.0."
 ```
 
 When syncing with a new upstream release, rebase from the upstream tag (not the patch version).
@@ -134,11 +135,11 @@ When syncing with a new upstream release, rebase from the upstream tag (not the 
 
 ```sh
 git fetch --no-recurse-submodules origin --tags
-git switch mucobra
-git branch mucobra-pre-1.42.1
+git switch muvolta
+git branch muvolta-pre-1.42.1
 git rebase --onto v1.42.1 v1.42.0      # replay our patches on the new tag
 ```
 
 Drop a patch when upstream ships its own fix. Compare the `build-windows` job of
-`.github/workflows/ci.yml` with `mucobra-release.yml` and copy any changes. Then tag
-`mucobra-v1.42.1` and push with `--force-with-lease` for the rebased branch.
+`.github/workflows/ci.yml` with `muvolta-release.yml` and copy any changes. Then tag
+`muvolta-v1.42.1` and push with `--force-with-lease` for the rebased branch.
