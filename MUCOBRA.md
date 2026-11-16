@@ -66,6 +66,11 @@ Unreleased (on `mucobra` after 1.42.1): `fix(follow)`, `fix(macos)` and `fix(ren
 background client keeps following (reported on macOS, 2026-11-15). 3,092 macOS Release tests pass. Ship with the next
 client release.
 
+Version 1.42.2 is a fork-only patch on upstream `v1.42.1` (same game data): the buff strip counts the hero's buffs
+down, over each icon ("45", "9m", "2h") and in the tooltip, from the MU Volta server's buff duration packet
+(C1 07 FA 01: effect, seconds; OpenMU `muvolta/v0.11.0` from `6046b0c55`). Older servers send nothing and the strip
+looks as before. Copy `buff_strip.rml` and the legacy/modern `buff_strip.rcss` into `mu-volta-client/client-data/`.
+
 The teleport/PvP follow-up requires the matching OpenMU gameplay core and MU Volta plugin,
 with `CooldownMilliseconds = 2000` on the server. Client readiness uses the server's landing
 packet, not a timer started at the click; ordinary warps, map changes and revival reset it.
