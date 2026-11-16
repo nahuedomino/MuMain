@@ -135,6 +135,7 @@ using namespace mu::ui::window;
 #include "Data/GameData/ItemData/ItemModelSlots.h"
 #include "GameLogic/Skills/SkillHotkeyConfiguration.h"
 #include "GameLogic/Buffs/BuffCountdown.h"
+#include "GameLogic/Events/EventSchedule.h"
 
 #define MAX_DEBUG_MAX 10
 
@@ -14100,11 +14101,17 @@ static void ProcessPacket(const BYTE* ReceiveBuffer, int32_t Size)
     break;
     case 0xFA: // MU Volta
     {
-        auto Data = (LPPHEADER_DEFAULT_SUBCODE)ReceiveBuffer;
-        switch (Data->SubCode)
+        const BYTE subCode = bIsC1C3 ? ReceiveBuffer[3] : (Size > 4 ? ReceiveBuffer[4] : 0);
+        switch (subCode)
         {
         case 0x01:
             ReceiveMagicEffectDuration(ReceiveBuffer, Size);
+            break;
+        case 0x02:
+            if (auto schedule = GameLogic::Events::ParseSchedule(received_span, std::chrono::system_clock::now()))
+            {
+                GameLogic::Events::CurrentSchedule() = std::move(*schedule);
+            }
             break;
         }
     }

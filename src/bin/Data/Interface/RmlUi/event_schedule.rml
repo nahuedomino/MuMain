@@ -1,0 +1,19 @@
+<rml>
+<head>
+	<title>Events</title>
+	<link type="text/rcss" href="base.rcss"/>
+	<link type="text/rcss" href="help_window.rcss"/>
+</head>
+<!-- MU Volta: the event schedule on the H key (CEventScheduleWindow), drawn like the F1 help window: the same
+     stylesheet and rows (help_window.rcss), a countdown per event, then today's starts in local time. -->
+<body data-model="event_schedule">
+	<div id="panel" class="stage">
+		<div id="help_panel" class="sharp-text"
+		     data-style---line-height="line_height + 'px'" data-style---bold-line-height="bold_line_height + 'px'">
+			<div class="help-line" data-for="line : lines"
+			     data-class-heading="line.heading" data-class-half-spacer="line.half_spacer"><span class="help-text" data-if="!line.half_spacer"
+			       data-style-font-size="(line.heading ? bold_text_px : text_px) + 'px'">{{line.text}}</span></div>
+		</div>
+	</div>
+</body>
+</rml>
