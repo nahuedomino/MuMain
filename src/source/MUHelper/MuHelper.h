@@ -63,6 +63,7 @@ private:
     int Buff();
     int BuffTarget(CHARACTER* pTargetChar, ActionSkillType iBuffSkill);
     void StartTimedBuffRefresh(bool bKeepBuffDuration);
+    void RefreshBuffsForNewPartyMembers();
     int RecoverHealth();
     int Heal();
     int HealSelf(ActionSkillType iHealingSkill);
@@ -121,6 +122,8 @@ private:
     int m_iNextBuffCastAt;
     int m_iSecondsAway;
     bool m_bTimerActivatedBuffOngoing;
+    // The party members the buff rotation has seen; a new name restarts it, so a newcomer is buffed right away.
+    std::set<std::wstring> m_partyMembersSeen;
     // Support comes first: a buff or heal short of mana holds the attacks, for a while, until mana covers it.
     std::optional<std::chrono::steady_clock::time_point> m_supportWaitingForManaSince;
     bool m_bSupportWaitingForMana = false;

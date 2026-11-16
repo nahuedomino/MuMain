@@ -521,3 +521,35 @@ TEST_CASE("A heal held up by a swing is cast on the same member before the next 
     REQUIRE(submittedCasts.size() > castsBefore);
     CHECK(submittedCasts[castsBefore] == std::pair{AT_SKILL_HEALING, AllyKey});
 }
+
+TEST_CASE("A member who joins the party is buffed right away, not at the next casting interval [helper_actions]")
+{
+    HealingPartyFixture fixture;
+    auto config = MUHelper::g_MuHelper.GetConfig();
+    config.bAutoHeal = config.bAutoHealParty = false;
+    config.aiBuff = {AT_SKILL_ATTACK, 0, 0};
+    config.bSupportParty = config.bBuffDurationParty = true;
+    config.iBuffCastInterval = 30;
+    MUHelper::g_MuHelper.Load(config);
+    PartyNumber = 2; // The hero and Ally; OtherAlly joins later.
+    g_CharacterRegisterBuff((&fixture.characters[1].Object), eBuff_Attack);
+    g_CharacterRegisterBuff((&fixture.characters[2].Object), eBuff_Attack);
+    const auto castsOn = [](int key) { return std::count(submittedCasts.begin(), submittedCasts.end(), std::pair{AT_SKILL_ATTACK, key}); };
+
+    // The first round buffs everyone; the next one is 30 s away.
+    for (int tick = 0; tick < 12; ++tick)
+        fixture.Tick();
+    CHECK(castsOn(AllyKey) == 1);
+    for (int tick = 0; tick < 12; ++tick)
+        fixture.Tick(std::chrono::seconds(1));
+    CHECK(castsOn(AllyKey) == 1);
+
+    // OtherAlly joins with its buff still running: it's buffed within the next rotation, not 18 s later.
+    PartyNumber = 3;
+    for (int tick = 0; tick < 9; ++tick)
+        fixture.Tick();
+    CHECK(castsOn(OtherAllyKey) == 1);
+
+    g_CharacterUnRegisterBuff((&fixture.characters[1].Object), eBuff_Attack);
+    g_CharacterUnRegisterBuff((&fixture.characters[2].Object), eBuff_Attack);
+}
