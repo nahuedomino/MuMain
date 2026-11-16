@@ -9156,4 +9156,22 @@ Pantalla completa cambia el monitor a la resolución elegida.</value>
   <data name="Warp resets %d" xml:space="preserve">
     <value>R %d</value>
   </data>
+  <data name="Events" xml:space="preserve">
+    <value>Eventos</value>
+  </data>
+  <data name="Waiting for the server..." xml:space="preserve">
+    <value>Esperando al servidor...</value>
+  </data>
+  <data name="No events in the next 24 hours" xml:space="preserve">
+    <value>No hay eventos en las próximas 24 horas</value>
+  </data>
+  <data name="%s: starts in %s" xml:space="preserve">
+    <value>%s: empieza en %s</value>
+  </data>
+  <data name="%s: running, ends in %s" xml:space="preserve">
+    <value>%s: en curso, termina en %s</value>
+  </data>
+  <data name="Today (your local time)" xml:space="preserve">
+    <value>Horarios (tu hora local)</value>
+  </data>
 </root>

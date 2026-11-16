@@ -86,6 +86,7 @@ CSystem::CSystem()
     m_pMuHelperSkillPicker = nullptr;
     m_pMuHelperDetail = nullptr;
     m_pNewHelpWindow = nullptr;
+    m_pEventScheduleWindow = nullptr;
     m_pNewChatCommandWindow = nullptr;
     m_pNewItemExplanationWindow = nullptr;
     m_pNewSetItemExplanation = nullptr;
@@ -375,6 +376,12 @@ bool CSystem::LoadMainSceneInterface()
         return false;
     }
 
+    m_pEventScheduleWindow = new CEventScheduleWindow;
+    if (m_pEventScheduleWindow->Create(m_pNewUIMng) == false)
+    {
+        return false;
+    }
+
     m_pNewItemExplanationWindow = new CItemExplanationWindow;
     if (m_pNewItemExplanationWindow->Create(m_pNewUIMng) == false)
     {
@@ -635,6 +642,7 @@ void CSystem::UnloadMainSceneInterface()
     }
 
     SAFE_DELETE(m_pNewHelpWindow);
+    SAFE_DELETE(m_pEventScheduleWindow);
     SAFE_DELETE(m_pNewChatCommandWindow);
     SAFE_DELETE(m_pNewItemExplanationWindow);
     SAFE_DELETE(m_pNewSetItemExplanation);
@@ -979,7 +987,13 @@ void CSystem::Show(DWORD dwKey)
         Hide(INTERFACE_MOVEMAP);
         Hide(INTERFACE_ITEM_EXPLANATION);
         Hide(INTERFACE_SETITEM_EXPLANATION);
+        Hide(INTERFACE_EVENT_SCHEDULE);
         g_pHelp->OpenningProcess();
+    }
+    else if (dwKey == INTERFACE_EVENT_SCHEDULE)
+    {
+        Hide(INTERFACE_HELP);
+        m_pEventScheduleWindow->OpenningProcess();
     }
     else if (dwKey == INTERFACE_ITEM_EXPLANATION)
     {

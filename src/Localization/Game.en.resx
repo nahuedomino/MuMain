@@ -9693,4 +9693,22 @@ Fullscreen changes the monitor to the chosen resolution.</value>
   <data name="Warp resets %d" xml:space="preserve">
     <value>R %d</value>
   </data>
+  <data name="Events" xml:space="preserve">
+    <value>Events</value>
+  </data>
+  <data name="Waiting for the server..." xml:space="preserve">
+    <value>Waiting for the server...</value>
+  </data>
+  <data name="No events in the next 24 hours" xml:space="preserve">
+    <value>No events in the next 24 hours</value>
+  </data>
+  <data name="%s: starts in %s" xml:space="preserve">
+    <value>%s: starts in %s</value>
+  </data>
+  <data name="%s: running, ends in %s" xml:space="preserve">
+    <value>%s: running, ends in %s</value>
+  </data>
+  <data name="Today (your local time)" xml:space="preserve">
+    <value>Today (your local time)</value>
+  </data>
 </root>

@@ -263,6 +263,13 @@ bool mu::ui::window::CHotKey::UpdateKeyEvent()
         PlayBuffer(SOUND_CLICK01);
         return false;
     }
+    else if (mu::ui::window::IsPress('H') == true)
+    {
+        // MU Volta: the event schedule.
+        g_pNewUISystem->Toggle(mu::ui::window::INTERFACE_EVENT_SCHEDULE);
+        PlayBuffer(SOUND_CLICK01);
+        return false;
+    }
     else if (mu::ui::window::IsPress('J') == true)
     {
         // Only servers which offer their chat commands have something to show.
