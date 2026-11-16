@@ -159,6 +159,15 @@ mu_add_test(
 )
 
 mu_add_test(
+    NAME test_event_schedule
+    SOURCES
+        test_event_schedule.cpp
+        ${CMAKE_SOURCE_DIR}/src/source/App/Platform/Windows/Winmain.cpp
+    LINK_LIBS
+        MuClient
+)
+
+mu_add_test(
     NAME test_buff_countdown
     SOURCES
         test_buff_countdown.cpp

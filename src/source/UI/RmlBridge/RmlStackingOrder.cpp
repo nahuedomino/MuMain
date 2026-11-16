@@ -112,6 +112,7 @@ constexpr DocumentPlacement Placements[] = {
     {"slide_notice.rml", 1.91f, MainScene},
     {"mini_map.rml", 8.1f, MainScene},
     {"help_window.rml", 8.3f, MainScene},
+    {"event_schedule.rml", 8.3f, MainScene}, // MU Volta: the H key, drawn like the help window
     {"move_command.rml", 8.3f, MainScene},
     {"crywolf.rml", 10.0f, MainScene},
     // CInGameShop::GetLayerDepth(): the shop sits above crywolf and below kanturu_enter.
