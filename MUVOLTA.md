@@ -71,6 +71,10 @@ Version 1.42.2 is a fork-only patch on upstream `v1.42.1` (same game data): the 
 down, over each icon ("45", "9m", "2h") and in the tooltip, from the MU Volta server's buff duration packet
 (C1 07 FA 01: effect, seconds; OpenMU `muvolta/v0.11.0` from `6046b0c55`). Older servers send nothing and the strip
 looks as before. Copy `buff_strip.rml` and the legacy/modern `buff_strip.rcss` into `mu-volta-client/client-data/`.
+Also in 1.42.2: the event schedule on the H key (`event_schedule.rml`, also in `client-data/`): a countdown to each
+event's next start and today's starts in local time, from the server's C2 FA 02 answer (OpenMU from `e8cfb0472`);
+a party newcomer is buffed right away by the MU Helper; the shop script without lucky tickets, rings and wings
+(mu-volta-client `client-data`).
 
 The teleport/PvP follow-up requires the matching OpenMU gameplay core and MU Volta plugin,
 with `CooldownMilliseconds = 2000` on the server. Client readiness uses the server's landing
