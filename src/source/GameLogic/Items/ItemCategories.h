@@ -70,6 +70,8 @@ namespace GameLogic::Items
     bool IsLuckyItemType(int itemType);
     bool IsGemJewelry(const ITEM* pItem);
     bool IsGambleItem(const ITEM* pItem);
+    // MU Volta: the VIP tickets, used with a right-click.
+    bool IsVipTicket(const ITEM* pItem);
     bool IsGambleItemModel(int modelType);
 
     // Event and quest items
