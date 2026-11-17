@@ -160,7 +160,6 @@ void CBuffStrip::BindRmlModel(Rml::DataModelConstructor& c, BuffStripRmlModel& m
     // call, including on a theme switch -- no guard here.
     auto buff = c.RegisterStruct<BuffEntry>();
     buff.RegisterMember("decorator", &BuffEntry::decorator);
-    buff.RegisterMember("timer", &BuffEntry::timer);
     c.RegisterArray<std::vector<BuffEntry>>();
 
     c.BindEventCallback("buff_cancel",
@@ -242,16 +241,11 @@ void CBuffStrip::SyncRmlModel()
 
     // Slot positions are the stylesheets' own: #panel wraps its 20x28 slots at 8 per row, which is
     // what native's own counters produced. Order here is the order they appear.
-    const auto now = std::chrono::steady_clock::now();
     for (eBuffState buff : buffstate)
     {
         BuffEntry entry;
 
         entry.decorator = BuildIconDecorator(buff);
-        if (const auto left = GameLogic::Buffs::HeroBuffCountdown().RemainingSeconds(buff, now))
-        {
-            entry.timer = GameLogic::Buffs::BuffCountdown::ShortText(*left);
-        }
         model.buffs.push_back(entry);
     }
 

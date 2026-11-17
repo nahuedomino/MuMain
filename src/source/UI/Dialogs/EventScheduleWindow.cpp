@@ -6,12 +6,14 @@
 #include "I18N/All.h"
 #include "GameLogic/Events/EventSchedule.h"
 #include "Network/Server/WSclient.h"
-#include "Render/Text/CUIRenderTextSDLTtf.h"
 #include "UI/Core/WindowSystem.h"
 #include "UI/RmlBridge/RmlDocumentVisibility.h"
-#include "UI/RmlBridge/RmlNativeTextSize.h"
+#include "UI/RmlBridge/RmlDraggable.h"
+#include "UI/RmlBridge/RmlPointer.h"
 
+#include <RmlUi/Core/DataModelHandle.h>
 #include <RmlUi/Core/ElementDocument.h>
+#include <RmlUi/Core/Event.h>
 
 using namespace mu::ui::window;
 
@@ -66,15 +68,38 @@ void CEventScheduleWindow::Release()
 
 bool CEventScheduleWindow::UpdateMouseEvent()
 {
-    return true;
+    // Over the window, a click never falls through to the world behind it; the window isn't modal.
+    if (!m_pPanelEl && m_RmlView.Document())
+        m_pPanelEl = m_RmlView.Document()->GetElementById("panel");
+
+    return !UI::RmlBridge::IsPointerOver(m_pPanelEl);
+}
+
+// Dragged by any part that is not a control for the session, like the options window; the position is not saved.
+void CEventScheduleWindow::OnRmlBuilt()
+{
+    Rml::ElementDocument* document = m_RmlView.Document();
+    m_pPanelEl = document->GetElementById("panel");
+    UI::RmlBridge::MakeDraggable(document, document, nullptr,
+                                 [document] { UI::RmlBridge::KeepInsideWindow(document); });
+    m_BuiltLines.clear();
+    m_LabelsBuilt = false;
+}
+
+void CEventScheduleWindow::Close()
+{
+    if (g_pNewUISystem->IsVisible(INTERFACE_EVENT_SCHEDULE))
+    {
+        g_pNewUISystem->Hide(INTERFACE_EVENT_SCHEDULE);
+        PlayBuffer(SOUND_CLICK01);
+    }
 }
 
 bool CEventScheduleWindow::UpdateKeyEvent()
 {
     if (g_pNewUISystem->IsVisible(INTERFACE_EVENT_SCHEDULE) && (IsPress(VK_ESCAPE) || IsPress('H')))
     {
-        g_pNewUISystem->Hide(INTERFACE_EVENT_SCHEDULE);
-        PlayBuffer(SOUND_CLICK01);
+        Close();
         return false;
     }
 
@@ -131,8 +156,8 @@ void CEventScheduleWindow::RequestSchedule()
 std::vector<CEventScheduleWindow::Line> CEventScheduleWindow::BuildLines(bool received, std::chrono::system_clock::time_point now)
 {
     using namespace GameLogic::Events;
+    // The window's title (the frame's header) says "Events".
     std::vector<Line> lines;
-    lines.push_back({Text(I18N::Game::Events), true, false});
     if (!received)
     {
         lines.push_back({Text(I18N::Game::WaitingForTheServer)});
@@ -197,19 +222,24 @@ std::vector<CEventScheduleWindow::Line> CEventScheduleWindow::BuildLines(bool re
     return lines;
 }
 
-void CEventScheduleWindow::BindRmlModel(Rml::DataModelConstructor& c, HelpWindowRmlModel& model)
+void CEventScheduleWindow::BindRmlModel(Rml::DataModelConstructor& c, EventScheduleRmlModel& model)
 {
-    c.Bind("text_px", &model.textPx);
-    c.Bind("bold_text_px", &model.boldTextPx);
-    c.Bind("line_height", &model.lineHeight);
-    c.Bind("bold_line_height", &model.boldLineHeight);
+    c.Bind("positioned", &model.positioned);
+    c.Bind("root_x", &model.rootX);
+    c.Bind("root_y", &model.rootY);
+    c.Bind("has_title", &model.hasTitle);
+    c.Bind("title", &model.title);
+    c.Bind("close_label", &model.closeLabel);
 
-    auto line = c.RegisterStruct<HelpLineEntry>();
-    line.RegisterMember("text", &HelpLineEntry::text);
-    line.RegisterMember("heading", &HelpLineEntry::heading);
-    line.RegisterMember("half_spacer", &HelpLineEntry::halfSpacer);
-    c.RegisterArray<std::vector<HelpLineEntry>>();
+    auto line = c.RegisterStruct<EventScheduleLineEntry>();
+    line.RegisterMember("text", &EventScheduleLineEntry::text);
+    line.RegisterMember("heading", &EventScheduleLineEntry::heading);
+    line.RegisterMember("half_spacer", &EventScheduleLineEntry::halfSpacer);
+    c.RegisterArray<std::vector<EventScheduleLineEntry>>();
     c.Bind("lines", &model.lines);
+
+    c.BindEventCallback("event_schedule_close",
+                        [this](Rml::DataModelHandle, Rml::Event&, const Rml::VariantList&) { Close(); });
 }
 
 void CEventScheduleWindow::SyncRmlModel()
@@ -223,10 +253,19 @@ void CEventScheduleWindow::SyncRmlModel()
     if (!visible)
         return;
 
+    EventScheduleRmlModel& model = m_RmlView.GetModel();
+    if (!m_LabelsBuilt)
+    {
+        m_LabelsBuilt = true;
+        model.title = Text(I18N::Game::Events);
+        model.closeLabel = Text(I18N::Game::Close);
+        for (const char* field : {"title", "close_label", "has_title"})
+            m_RmlView.MarkDirty(field);
+    }
+
     const bool received = GameLogic::Events::CurrentSchedule().receivedAt >= m_OpenedAt - RefreshInterval;
     auto lines = BuildLines(received, std::chrono::system_clock::now());
-    const float textPx = UI::RmlBridge::NativeTextPx(UI::Scaling::FontRole::Normal);
-    const bool same = textPx == m_BuiltTextPx && lines.size() == m_BuiltLines.size() &&
+    const bool same = lines.size() == m_BuiltLines.size() &&
                       std::equal(lines.begin(), lines.end(), m_BuiltLines.begin(), [](const Line& a, const Line& b) {
                           return a.text == b.text && a.heading == b.heading && a.halfSpacer == b.halfSpacer;
                       });
@@ -234,16 +273,9 @@ void CEventScheduleWindow::SyncRmlModel()
         return;
 
     m_BuiltLines = lines;
-    m_BuiltTextPx = textPx;
-    HelpWindowRmlModel& model = m_RmlView.GetModel();
     model.lines.clear();
     for (const Line& line : lines)
         model.lines.push_back({line.text, line.heading, line.halfSpacer});
 
-    model.textPx = textPx;
-    model.boldTextPx = UI::RmlBridge::NativeTextPx(UI::Scaling::FontRole::Bold);
-    model.lineHeight = static_cast<float>(CUIRenderTextSDLTtf::LineHeight(UI::Scaling::FontRole::Normal));
-    model.boldLineHeight = static_cast<float>(CUIRenderTextSDLTtf::LineHeight(UI::Scaling::FontRole::Bold));
-    for (const char* field : {"lines", "text_px", "bold_text_px", "line_height", "bold_line_height"})
-        m_RmlView.MarkDirty(field);
+    m_RmlView.MarkDirty("lines");
 }

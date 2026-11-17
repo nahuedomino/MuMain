@@ -29,7 +29,7 @@ std::vector<std::uint8_t> KanturuPacket()
 
 TEST_CASE("The event schedule packet gives the names, durations and starts [events][schedule]")
 {
-    const auto now = Clock::now();
+    const auto now = std::chrono::floor<std::chrono::minutes>(Clock::now());
     const auto packet = KanturuPacket();
     const auto schedule = ParseSchedule(packet, now);
 
@@ -53,6 +53,19 @@ TEST_CASE("The event schedule packet gives the names, durations and starts [even
     CHECK_FALSE(GetNextRun(event, now + std::chrono::hours(2)).has_value());
 }
 
+TEST_CASE("A start the server rounded down to the second is shown on its minute [events][schedule]")
+{
+    // The packet says 3600 s, but the request reached the server 0.6 s after `now`'s whole minute.
+    const auto minute = std::chrono::floor<std::chrono::minutes>(Clock::now());
+    const auto received = minute - std::chrono::milliseconds(600);
+    const auto packet = KanturuPacket();
+    const auto schedule = ParseSchedule(packet, received);
+
+    REQUIRE(schedule.has_value());
+    CHECK(schedule->events[0].starts[1] == minute + std::chrono::hours(1));
+    CHECK(FormatLocalTime(schedule->events[0].starts[1]) == FormatLocalTime(minute + std::chrono::hours(1)));
+}
+
 TEST_CASE("A truncated or foreign packet is not a schedule [events][schedule]")
 {
     auto packet = KanturuPacket();
@@ -74,25 +87,26 @@ TEST_CASE("The countdown text [events][schedule]")
 
 TEST_CASE("The event window counts down the running event first, then the next ones [events][schedule]")
 {
-    const auto now = Clock::now();
+    const auto now = std::chrono::floor<std::chrono::minutes>(Clock::now());
     const auto packet = KanturuPacket();
     auto schedule = *ParseSchedule(packet, now);
     schedule.events.push_back({"Blood Castle", std::chrono::minutes(20), {now + std::chrono::minutes(30)}});
     CurrentSchedule() = schedule;
 
     const auto waiting = mu::ui::window::CEventScheduleWindow::BuildLines(false, now);
-    REQUIRE(waiting.size() == 2);
-    CHECK(waiting[0].heading);
+    // The window's title says "Events"; while waiting, one line says so.
+    REQUIRE(waiting.size() == 1);
+    CHECK_FALSE(waiting[0].heading);
 
     const auto lines = mu::ui::window::CEventScheduleWindow::BuildLines(true, now);
-    REQUIRE(lines.size() >= 6);
-    CHECK(lines[1].text.find("Kanturu") == 0);
-    CHECK(lines[1].text.find("10m 00s") != std::string::npos);
-    CHECK(lines[2].text.find("Blood Castle") == 0);
-    CHECK(lines[2].text.find("30m 00s") != std::string::npos);
-    CHECK(lines[3].halfSpacer);
-    CHECK(lines[4].heading);
-    CHECK(lines[5].text == "Kanturu: " + FormatLocalTime(now - std::chrono::seconds(600)) + ", " +
+    REQUIRE(lines.size() >= 5);
+    CHECK(lines[0].text.find("Kanturu") == 0);
+    CHECK(lines[0].text.find("10m 00s") != std::string::npos);
+    CHECK(lines[1].text.find("Blood Castle") == 0);
+    CHECK(lines[1].text.find("30m 00s") != std::string::npos);
+    CHECK(lines[2].halfSpacer);
+    CHECK(lines[3].heading);
+    CHECK(lines[4].text == "Kanturu: " + FormatLocalTime(now - std::chrono::seconds(600)) + ", " +
                                FormatLocalTime(now + std::chrono::seconds(3600)));
 
     CurrentSchedule() = {};
