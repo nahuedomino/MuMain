@@ -75,6 +75,9 @@ Also in 1.42.2: the event schedule on the H key (`event_schedule.rml`, also in `
 event's next start and today's starts in local time, from the server's C2 FA 02 answer (OpenMU from `e8cfb0472`), and listed on the F1 key page;
 a party newcomer is buffed right away by the MU Helper; the shop script without lucky tickets, rings and wings
 (mu-volta-client `client-data`).
+Version 1.42.3: the buff time is only in the icon's tooltip (no number over the icon); the event schedule is a window
+in the shared frame (`window_shell.rml`, `event_schedule.rcss` per theme), dragged like the options window, with a
+Close button; its starts are rounded to the minute (the server sends whole seconds, so 14:00 showed as 13:59).
 
 The teleport/PvP follow-up requires the matching OpenMU gameplay core and MU Volta plugin,
 with `CooldownMilliseconds = 2000` on the server. Client readiness uses the server's landing

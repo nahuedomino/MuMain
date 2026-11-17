@@ -52,8 +52,6 @@ namespace mu::ui::window
             // before ClosePositionedElements() places such children) -- don't retry a clipped-atlas
             // approach; named @spritesheet rects are the working mechanism.
             Rml::String decorator;
-            // MU Volta: time left on the icon ("45", "9m", "2h"); empty without a countdown.
-            Rml::String timer;
         };
         struct BuffStripRmlModel
         {
