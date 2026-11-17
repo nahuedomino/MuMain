@@ -1381,18 +1381,9 @@
         "zh-TW": "晉升印章"
       },
       "description": {
-        "en": "EXP gain 150%",
-        "de": "Erfahrungsgewinn 150%",
-        "es": "EXP gana incremento 150%",
-        "id": "Perolehan EXP 150%",
-        "ja": "経験値獲得 150%",
-        "pl": "Zdobywane Exp 150%",
-        "pt": "Aumento de ganho de EXP de 150%",
-        "ru": "Прирост опыта 150%",
-        "tl": "Nakukuhang EXP 150%",
-        "uk": "Збільшення досвіду 150%",
-        "zh-CN": "经验值获得 150%",
-        "zh-TW": "經驗值獲得 150%"
+        "en": "EXP +10%",
+        "es": "EXP +10%",
+        "pt": "EXP +10%"
       },
       "item": {
         "group": 13,
@@ -1429,18 +1420,9 @@
         "zh-TW": "財富印章"
       },
       "description": {
-        "en": "EXP gain 200%\nItem gain 150%",
-        "de": "Erfahrungsgewinn 200%\nGegenstands-Drop 150%",
-        "es": "EXP gana incremento 200%\nÍtem gana incremento 150%",
-        "id": "Perolehan EXP 200%\nPerolehan item 150%",
-        "ja": "経験値獲得 200%\nアイテム獲得 150%",
-        "pl": "Zdobywane Exp 200%\nDrop przedmiotów 150%",
-        "pt": "Aumento de ganho de EXP de 200%\naumento de ganho de itens de 150%",
-        "ru": "Прирост опыта 200%\nВыпадение предметов 150%",
-        "tl": "Nakukuhang EXP 200%\nNakukuhang item 150%",
-        "uk": "Збільшення досвіду 200%\nВипадіння предметів 150%",
-        "zh-CN": "经验值获得 200%\n物品获得 150%",
-        "zh-TW": "經驗值獲得 200%\n物品獲得 150%"
+        "en": "EXP +10%\nZen +10%",
+        "es": "EXP +10%\nZen +10%",
+        "pt": "EXP +10%\nZen +10%"
       },
       "item": {
         "group": 13,
@@ -3128,18 +3110,9 @@
         "zh-TW": "治癒印章"
       },
       "description": {
-        "en": "EXP gain 150%\nRecovers 5% life automatically",
-        "de": "Erfahrungsgewinn 150%\nStellt automatisch 5% Leben wieder her",
-        "es": "EXP gana incremento 150%\nrecuperación de Vida Automática al 5%",
-        "id": "Perolehan EXP 150%\nMemulihkan 5% kehidupan secara otomatis",
-        "ja": "経験値獲得 150%\n生命力を5%自動回復",
-        "pl": "Zdobywane Exp 150%\nAutomatycznie odnawia 5% życia",
-        "pt": "Aumento do ganho de EXP de 150%\nRecuperação automática de vida de 5%",
-        "ru": "Прирост опыта 150%\nАвтовосстановление 5% жизни",
-        "tl": "Nakukuhang EXP 150%\nAwtomatikong bumabawi ng 5% na buhay",
-        "uk": "Збільшення досвіду 150%\nАвтовідновлення 5% життя",
-        "zh-CN": "经验值获得 150%\n自动恢复 5% 生命值",
-        "zh-TW": "經驗值獲得 150%\n自動恢復 5% 生命"
+        "en": "EXP +10%\nLife recovery +5%",
+        "es": "EXP +10%\nRecuperación de vida +5%",
+        "pt": "EXP +10%\nRecuperação de vida +5%"
       },
       "item": {
         "group": 13,
@@ -3704,18 +3677,9 @@
         "zh-TW": "大師晉升印章"
       },
       "description": {
-        "en": "EXP gain increase 150%",
-        "de": "Erfahrungsgewinn 150%",
-        "es": "EXP gana incremento 150%",
-        "id": "Perolehan EXP 150%",
-        "ja": "経験値獲得 150%",
-        "pl": "Zdobywane Exp 150%",
-        "pt": "Aumento de ganho de EXP de 150%",
-        "ru": "Прирост опыта 150%",
-        "tl": "Nakukuhang EXP 150%",
-        "uk": "Збільшення досвіду 150%",
-        "zh-CN": "经验值获得 150%",
-        "zh-TW": "經驗值獲得 150%"
+        "en": "Master EXP +10%",
+        "es": "EXP maestra +10%",
+        "pt": "EXP mestre +10%"
       },
       "item": {
         "group": 13,
@@ -3752,18 +3716,9 @@
         "zh-TW": "大師財富印章"
       },
       "description": {
-        "en": "EXP gain increase 200%\nItem gain increase 150%",
-        "de": "Erfahrungsgewinn 200%\nGegenstands-Drop 150%",
-        "es": "EXP gana incremento 200%\nÍtem gana incremento 150%",
-        "id": "Perolehan EXP 200%\nPerolehan item 150%",
-        "ja": "経験値獲得 200%\nアイテム獲得 150%",
-        "pl": "Zdobywane Exp 200%\nDrop przedmiotów 150%",
-        "pt": "Aumento de ganho de EXP de 200%\naumento de ganho de itens de 150%",
-        "ru": "Прирост опыта 200%\nВыпадение предметов 150%",
-        "tl": "Nakukuhang EXP 200%\nNakukuhang item 150%",
-        "uk": "Збільшення досвіду 200%\nВипадіння предметів 150%",
-        "zh-CN": "经验值获得 200%\n物品获得 150%",
-        "zh-TW": "經驗值獲得 200%\n物品獲得 150%"
+        "en": "Master EXP +10%\nZen +10%",
+        "es": "EXP maestra +10%\nZen +10%",
+        "pt": "EXP mestre +10%\nZen +10%"
       },
       "item": {
         "group": 13,

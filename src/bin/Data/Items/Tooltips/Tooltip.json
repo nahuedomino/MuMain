@@ -508,19 +508,6 @@
       "zh-CN": "无法修理",
       "zh-TW": "無法修復"
     },
-    "increasesExperience": {
-      "en": "Increases experience gained.",
-      "de": "Erhöht die erhaltene Erfahrung.",
-      "es": "Aumenta la experiencia adquirida.",
-      "id": "Meningkatkan pengalaman yang diperoleh.",
-      "ja": "経験値獲得量が増加する効果があります。",
-      "pl": "Zwiększa zdobywane doświadczenie.",
-      "pt": "Aumenta a experiência adquirida.",
-      "ru": "Увеличивает получаемый опыт.",
-      "tl": "Nagpapataas ng karanasang natamo.",
-      "uk": "Збільшує отриманий досвід.",
-      "zh-TW": "增加獲得的經驗。"
-    },
     "warpCommandWindow": {
       "en": "Warp Command Window available.",
       "de": "Warp-Befehlsfenster verfügbar.",
@@ -533,45 +520,6 @@
       "tl": "Available ang Warp Command Window.",
       "uk": "Доступне вікно команд Warp.",
       "zh-TW": "扭曲命令視窗可用。"
-    },
-    "notApplicableTo": {
-      "en": "Not applicable to",
-      "de": "Gilt nicht für",
-      "es": "No aplicable a",
-      "id": "Tidak berlaku untuk",
-      "ja": "ご注意 マスターレベルには経験値獲得量増加、",
-      "pl": "Nie dotyczy",
-      "pt": "Não aplicável a",
-      "ru": "Не применимо к",
-      "tl": "Hindi naaangkop sa",
-      "uk": "Не застосовується до",
-      "zh-TW": "不適用於"
-    },
-    "masterLevelCharacters": {
-      "en": "Master Level Characters.",
-      "de": "Charaktere mit Master-Level.",
-      "es": "Personajes de nivel maestro.",
-      "id": "Karakter Tingkat Master.",
-      "ja": "アイテム獲得率増加効果は適用されません。",
-      "pl": "postaci na poziomie mistrzowskim.",
-      "pt": "Personagens de nível mestre.",
-      "ru": "Персонажи уровня Мастер.",
-      "tl": "Mga Master Level na Character.",
-      "uk": "Персонажі майстерного рівня.",
-      "zh-TW": "大師級人物。"
-    },
-    "increasesExperienceAndDrops": {
-      "en": "Increases experience gained and item drop rate.",
-      "de": "Erhöht die erhaltene Erfahrung und die Droprate von Gegenständen.",
-      "es": "Aumenta la experiencia obtenida y la tasa de caída de elementos.",
-      "id": "Meningkatkan pengalaman yang diperoleh dan tingkat penurunan item.",
-      "ja": "経験値とアイテム獲得量が増加する効果があります。",
-      "pl": "Zwiększa zdobywane doświadczenie i częstotliwość wypadania przedmiotów.",
-      "pt": "Aumenta a experiência adquirida e a taxa de queda de itens.",
-      "ru": "Увеличивает получаемый опыт и шанс выпадения предметов.",
-      "tl": "Pinapataas ang karanasang natamo at rate ng pagbaba ng item.",
-      "uk": "Збільшує отриманий досвід і швидкість випадання предметів.",
-      "zh-TW": "增加獲得的經驗值和物品掉落率。"
     },
     "thirdWingIngredient": {
       "en": "Ingredients for the 3rd wing assembly.",
@@ -967,19 +915,6 @@
       "tl": "Talisman of Wings of Darkness",
       "uk": "Талісман крил темряви",
       "zh-TW": "黑暗之翼護身符"
-    },
-    "attackRateAndDefenseRateIncrease": {
-      "en": "Attack rate and defense rate increase.",
-      "de": "Angriffsrate und Verteidigungsrate erhöhen sich.",
-      "es": "La tasa de ataque y la tasa de defensa aumentan.",
-      "id": "Tingkat serangan dan tingkat pertahanan meningkat.",
-      "ja": "攻撃力と防御力が向上します。",
-      "pl": "Zwiększenie współczynnika ataku i współczynnika obrony.",
-      "pt": "A taxa de ataque e a taxa de defesa aumentam.",
-      "ru": "Увеличивается скорость атаки и защита.",
-      "tl": "Attack rate at defense rate increase.",
-      "uk": "Збільшення швидкості атаки та захисту.",
-      "zh-TW": "攻擊率和防禦率增加。"
     },
     "questItem": {
       "en": "Quest Item",

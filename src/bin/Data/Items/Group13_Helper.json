@@ -3040,19 +3040,19 @@
       "tags": ["cashShop"],
       "description": [
         {
-          "text": "@increasesExperience",
+          "text": {
+            "en": "Experience +10% for 30 minutes",
+            "es": "Experiencia +10% durante 30 minutos",
+            "pt": "Experiência +10% por 30 minutos"
+          },
           "color": "blue"
         },
         {
-          "text": "@warpCommandWindow",
-          "color": "blue"
-        },
-        {
-          "text": "@notApplicableTo",
-          "color": "yellow"
-        },
-        {
-          "text": "@masterLevelCharacters",
+          "text": {
+            "en": "Right-click to use. Only one experience seal works at a time.",
+            "es": "Clic derecho para usarlo. Solo un sello de experiencia a la vez.",
+            "pt": "Clique direito para usar. Apenas um selo de experiência por vez."
+          },
           "color": "yellow"
         }
       ],
@@ -3089,19 +3089,19 @@
       "tags": ["cashShop"],
       "description": [
         {
-          "text": "@increasesExperienceAndDrops",
+          "text": {
+            "en": "Experience +10% and zen per drop +10% for 30 minutes",
+            "es": "Experiencia +10% y zen por drop +10% durante 30 minutos",
+            "pt": "Experiência +10% e zen por drop +10% por 30 minutos"
+          },
           "color": "blue"
         },
         {
-          "text": "@warpCommandWindow",
-          "color": "blue"
-        },
-        {
-          "text": "@notApplicableTo",
-          "color": "yellow"
-        },
-        {
-          "text": "@masterLevelCharacters",
+          "text": {
+            "en": "Right-click to use. Only one experience seal works at a time.",
+            "es": "Clic derecho para usarlo. Solo un sello de experiencia a la vez.",
+            "pt": "Clique direito para usar. Apenas um selo de experiência por vez."
+          },
           "color": "yellow"
         }
       ],
@@ -3860,54 +3860,18 @@
       "description": [
         {
           "text": {
-            "en": "Experience rate is increased {addOptionValue1}%",
-            "de": "Erfahrungsrate um {addOptionValue1}% erhöht",
-            "es": "La tasa de experiencia aumenta {addOptionValue1}%",
-            "id": "Tingkat pengalaman meningkat {addOptionValue1}%",
-            "ja": "経験値獲得量　{addOptionValue1}%に上昇",
-            "pl": "Doświadczenie zwiększone o {addOptionValue1}%",
-            "pt": "A taxa de experiência aumentou {addOptionValue1}%",
-            "ru": "Процент опыта увеличен {addOptionValue1}%",
-            "tl": "Tumaas ang rate ng karanasan {addOptionValue1}%",
-            "uk": "Швидкість досвіду збільшено {addOptionValue1}%",
-            "zh-TW": "經驗率增加{addOptionValue1}%"
+            "en": "Experience +10% and automatic life recovery +5% for 30 minutes",
+            "es": "Experiencia +10% y recuperación de vida +5% durante 30 minutos",
+            "pt": "Experiência +10% e recuperação de vida +5% por 30 minutos"
           },
           "color": "blue"
         },
         {
           "text": {
-            "en": "Automatic Life Recover increment {addOptionValue2}%",
-            "de": "Automatische Lebensregeneration +{addOptionValue2}%",
-            "es": "Incremento de recuperación de vida automática {addOptionValue2}%",
-            "id": "Peningkatan Pemulihan Kehidupan Otomatis {addOptionValue2}%",
-            "ja": "生命自動回復{addOptionValue2}%上昇",
-            "pl": "Automatyczna regeneracja życia +{addOptionValue2}%",
-            "pt": "Incremento automático de recuperação de vida {addOptionValue2}%",
-            "ru": "Увеличение автоматического восстановления ресурса {addOptionValue2}%",
-            "tl": "Ang Awtomatikong Life Recover na pagtaas {addOptionValue2}%",
-            "uk": "Приріст автоматичного відновлення життя {addOptionValue2}%",
-            "zh-TW": "自動生命復原增量 {addOptionValue2}%"
+            "en": "Right-click to use. Only one experience seal works at a time.",
+            "es": "Clic derecho para usarlo. Solo un sello de experiencia a la vez.",
+            "pt": "Clique direito para usar. Apenas um selo de experiência por vez."
           },
-          "color": "blue"
-        },
-        {
-          "text": {
-            "en": "EXP achievement and the automatic life recovery rate increases.",
-            "de": "Erhöht die erhaltene Erfahrung und die automatische Lebensregeneration.",
-            "es": "El logro de EXP y la tasa de recuperación automática de vida aumentan.",
-            "id": "Pencapaian EXP dan tingkat pemulihan kehidupan otomatis meningkat.",
-            "ja": "経験値獲得量と生命自動回復量が上昇されます。",
-            "pl": "Zwiększa zdobywany EXP i automatyczną regenerację życia.",
-            "pt": "A conquista de EXP e a taxa de recuperação automática de vida aumentam.",
-            "ru": "Достижение опыта и скорость автоматического восстановления жизни увеличиваются.",
-            "tl": "EXP achievement at ang awtomatikong pagtaas ng rate ng pagbawi sa buhay.",
-            "uk": "Досягнення EXP і швидкість автоматичного відновлення життя збільшуються.",
-            "zh-TW": "EXP成就和自動生命恢復率增加。"
-          },
-          "color": "blue"
-        },
-        {
-          "text": "@masterLevelEXPCannotBeAchievedDuringTheItemUsage",
           "color": "yellow"
         }
       ],
@@ -5267,16 +5231,20 @@
       "tags": ["cashShop"],
       "description": [
         {
-          "text": "@increasesExperience",
+          "text": {
+            "en": "Master experience +10% for 30 minutes",
+            "es": "Experiencia maestra +10% durante 30 minutos",
+            "pt": "Experiência mestre +10% por 30 minutos"
+          },
           "color": "blue"
         },
         {
-          "text": "@warpCommandWindow",
-          "color": "blue"
-        },
-        {
-          "text": "@attackRateAndDefenseRateIncrease",
-          "when": ["durability"]
+          "text": {
+            "en": "Right-click to use. Only one experience seal works at a time.",
+            "es": "Clic derecho para usarlo. Solo un sello de experiencia a la vez.",
+            "pt": "Clique direito para usar. Apenas um selo de experiência por vez."
+          },
+          "color": "yellow"
         }
       ],
       "groundLabels": [{"style": "seal"}],
@@ -5311,12 +5279,20 @@
       "tags": ["cashShop"],
       "description": [
         {
-          "text": "@increasesExperienceAndDrops",
+          "text": {
+            "en": "Master experience +10% and zen per drop +10% for 30 minutes",
+            "es": "Experiencia maestra +10% y zen por drop +10% durante 30 minutos",
+            "pt": "Experiência mestre +10% e zen por drop +10% por 30 minutos"
+          },
           "color": "blue"
         },
         {
-          "text": "@warpCommandWindow",
-          "color": "blue"
+          "text": {
+            "en": "Right-click to use. Only one experience seal works at a time.",
+            "es": "Clic derecho para usarlo. Solo un sello de experiencia a la vez.",
+            "pt": "Clique direito para usar. Apenas um selo de experiência por vez."
+          },
+          "color": "yellow"
         }
       ],
       "tooltipLayout": "noClassLines",

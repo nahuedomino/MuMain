@@ -774,18 +774,6 @@ const std::vector<OldChainItem>& OldChainLines()
         {14, 150, {{"Congratulations. Please contact CS team and change it to item.", ItemTextColor::Blue}}},
         {14, 53, {{"Increases the combination rate,but only up to the maximum rate.", ItemTextColor::Blue}}},
         {13,
-         43,
-         {{"Increases experience gained.", ItemTextColor::Blue},
-          {"Warp Command Window available.", ItemTextColor::Blue},
-          {"Not applicable to", ItemTextColor::Yellow},
-          {"Master Level Characters.", ItemTextColor::Yellow}}},
-        {13,
-         44,
-         {{"Increases experience gained and item drop rate.", ItemTextColor::Blue},
-          {"Warp Command Window available.", ItemTextColor::Blue},
-          {"Not applicable to", ItemTextColor::Yellow},
-          {"Master Level Characters.", ItemTextColor::Yellow}}},
-        {13,
          45,
          {{"Prevents experiences to be gained.", ItemTextColor::Blue},
           {"Warp Command Window available.", ItemTextColor::Blue},
@@ -840,14 +828,6 @@ const std::vector<OldChainItem>& OldChainLines()
          {{"Item durability will not be decrease for a certain period.", ItemTextColor::Blue},
           {"Keeps item durable", ItemTextColor::Blue},
           {"Applicable to mountable items only besides pet.", ItemTextColor::Blue}}},
-        {13,
-         93,
-         {{"Increases experience gained.", ItemTextColor::Blue},
-          {"Warp Command Window available.", ItemTextColor::Blue}}},
-        {13,
-         94,
-         {{"Increases experience gained and item drop rate.", ItemTextColor::Blue},
-          {"Warp Command Window available.", ItemTextColor::Blue}}},
         {13,
          61,
          {{"Enables entrance into Illusion Temple.", ItemTextColor::Blue},
@@ -933,7 +913,8 @@ TEST_CASE("The second item chain's tooltip texts come from the descriptions as f
             CHECK_FALSE(line.HasLevels());
         }
     }
-    CHECK(OldChainLines().size() == 72);
+    // MU Volta replaced the texts of the seals 13/43, 13/44, 13/93 and 13/94 (+10% experience, 2026-11-18).
+    CHECK(OldChainLines().size() == 68);
 }
 
 // The translations of those texts are the ones the old code showed: item_chain_texts_before.json records them from the
@@ -983,7 +964,8 @@ TEST_CASE("The second item chain's tooltip texts keep their translations [data][
             }
         }
     }
-    CHECK(checked >= 1050);
+    // 930 since MU Volta replaced the seal texts (12 lines in 10 languages, 2026-11-18).
+    CHECK(checked >= 930);
 }
 
 // What the old code printed for an item's level lines in the UI's language, where the texts are the game's that other

@@ -70,6 +70,8 @@ namespace GameLogic::Items
     bool IsGambleItem(const ITEM* pItem);
     // MU Volta: the VIP tickets, used with a right-click.
     bool IsVipTicket(const ITEM* pItem);
+    // MU Volta: the seals of the shop (experience, wealth, healing, master seals), used with a right-click.
+    bool IsSealItem(const ITEM* pItem);
     bool IsGambleItemModel(int modelType);
 
     // Event and quest items

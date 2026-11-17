@@ -281,6 +281,28 @@ namespace GameLogic::Items
         return pItem != nullptr && (pItem->Type == ITEM_VIP_TICKET_15_DAYS || pItem->Type == ITEM_VIP_TICKET_30_DAYS);
     }
 
+    bool IsSealItem(const ITEM* pItem)
+    {
+        if (pItem == nullptr)
+        {
+            return false;
+        }
+
+        switch (pItem->Type)
+        {
+        case ITEM_SEAL_OF_ASCENSION:
+        case ITEM_SEAL_OF_WEALTH:
+        case ITEM_SEAL_OF_SUSTENANCE:
+        case ITEM_SEAL_OF_HEALING:
+        case ITEM_SEAL_OF_DIVINITY:
+        case ITEM_MASTER_SEAL_OF_ASCENSION:
+        case ITEM_MASTER_SEAL_OF_WEALTH:
+            return true;
+        default:
+            return false;
+        }
+    }
+
     bool IsGambleItem(const ITEM* pItem)
     {
         return HasTag(pItem, ItemTag::GambleItem);

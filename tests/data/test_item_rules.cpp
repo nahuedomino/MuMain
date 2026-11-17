@@ -291,6 +291,17 @@ TEST_CASE("Item categories come from the item data [data][items][rules]")
     CHECK_FALSE(IsVipTicket(&rageFighterCard));
     CHECK_FALSE(IsVipTicket(nullptr));
 
+    // MU Volta: right-clicking a seal uses it; seals 13/43-45 have a ring slot, so they used to go to a ring slot.
+    for (const int sealType : {ITEM_SEAL_OF_ASCENSION, ITEM_SEAL_OF_WEALTH, ITEM_SEAL_OF_SUSTENANCE, ITEM_SEAL_OF_HEALING,
+                               ITEM_SEAL_OF_DIVINITY, ITEM_MASTER_SEAL_OF_ASCENSION, ITEM_MASTER_SEAL_OF_WEALTH})
+    {
+        const ITEM seal = MakeItem(sealType);
+        CHECK(IsSealItem(&seal));
+    }
+    const ITEM sealOfMobility = MakeItem(ITEM_SEAL_OF_MOBILITY);
+    CHECK_FALSE(IsSealItem(&sealOfMobility));
+    CHECK_FALSE(IsSealItem(nullptr));
+
     CHECK(IsSocketSeedOrSphereType(ITEM_SEED_FIRE));
     CHECK_FALSE(IsSocketSeedOrSphereType(KrisType));
 
