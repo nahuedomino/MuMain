@@ -20,7 +20,7 @@ TEST_CASE("help key page: heading, F1-F4, engine hotkeys, then the shipped keys 
     const auto lines = UI::Help::BuildPage(UI::Help::KeyFunctionPage);
 
     // Spacer, heading, spacer, 4 + 6 + 15 key rows, spacer -- the original's TextList.
-    REQUIRE(lines.size() == 29);
+    REQUIRE(lines.size() == 30);
     CHECK(lines.front().halfSpacer);
     CHECK(lines[2].halfSpacer);
     CHECK(lines.back().halfSpacer);
@@ -32,8 +32,9 @@ TEST_CASE("help key page: heading, F1-F4, engine hotkeys, then the shipped keys 
     CHECK(lines[6].text == I18N::Game::F4AdjustChatWindowSize);
     CHECK(lines[7].text == I18N::Game::F8ToggleMonsterHPBar);
     CHECK(lines[12].text == I18N::Game::JToggleChatCommands);
-    CHECK(lines[13].text == I18N::Game::EnterChattingMode);
-    CHECK(lines[27].text == I18N::Game::PrintScreenSaveScreenshots);
+    CHECK(lines[13].text == I18N::Game::HEventSchedule);
+    CHECK(lines[14].text == I18N::Game::EnterChattingMode);
+    CHECK(lines[28].text == I18N::Game::PrintScreenSaveScreenshots);
 }
 
 TEST_CASE("help chat page: heading and the sixteen chat rows [ui][help]")
