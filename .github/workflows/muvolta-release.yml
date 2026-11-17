@@ -238,7 +238,7 @@ jobs:
           $requiredFiles = @(
             "$runtimeDirectory/Main.exe",
             "$runtimeDirectory/MUnique.Client.Library.dll",
-            "$runtimeDirectory/config.ini"
+            "$runtimeDirectory/config.ini.template"
           )
           foreach ($path in $requiredFiles) {
             if (-not (Test-Path -LiteralPath $path -PathType Leaf)) {
