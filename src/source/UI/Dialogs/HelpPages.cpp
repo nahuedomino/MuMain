@@ -69,10 +69,11 @@ void AddKeyFunctionLines(std::vector<UI::Help::PageLine>& lines)
     for (int i = 0; i < kFunctionKeyTextsBeforeExtras; ++i)
         AddText(lines, *kShippedKeyTexts[i]);
 
-    // Engine-added camera/MU Helper hotkey entries, inserted between F4 and the shipped entries.
+    // Engine-added camera/MU Helper/event schedule hotkey entries, inserted between F4 and the shipped entries.
     const wchar_t* const extraHelpLines[] = {
         I18N::Game::F8ToggleMonsterHPBar, I18N::Game::F9Toggle3DCamera,   I18N::Game::F10LockUnlockCameraZoom,
         I18N::Game::F11ResetCameraView,   I18N::Game::HomeToggleMUHelper, I18N::Game::JToggleChatCommands,
+        I18N::Game::HEventSchedule,
     };
     for (const wchar_t* line : extraHelpLines)
         AddText(lines, line);
