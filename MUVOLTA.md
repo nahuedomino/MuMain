@@ -75,11 +75,18 @@ Also in 1.42.2: the event schedule on the H key (`event_schedule.rml`, also in `
 event's next start and today's starts in local time, from the server's C2 FA 02 answer (OpenMU from `e8cfb0472`), and listed on the F1 key page;
 a party newcomer is buffed right away by the MU Helper; the shop script without lucky tickets, rings and wings
 (mu-volta-client `client-data`).
-Version 1.42.3: the buff time is only in the icon's tooltip (no number over the icon); the event schedule is a window
-in the shared frame (`window_shell.rml`, `event_schedule.rcss` per theme), dragged like the options window, with a
-Close button; its starts are rounded to the minute (the server sends whole seconds, so 14:00 showed as 13:59).
-Also: entering the world clears a pending item move (`EquipmentItem`), which blocked every move until a restart when
-its answer never came.
+Version 1.44.0 rebases the MU Volta patches onto upstream `v1.44.0` (1.43: settings, logs, macros and screenshots in
+a per-user folder, `config.ini` created there from the one next to the game or from `config.ini.template`; the warp
+list the server sends; Enhanced Movement, off by default; the Graphics Look window; 1.44: the ancient bonus in the item
+data, GPU waits removed from texture uploads, VSync shown as on where it can't be turned off). The upstream Windows
+build job only checks `config.ini.template` instead of `config.ini`; mu-volta-client's `build-client.sh` writes the
+server address into both and sets the template's `[Client] Name` (the user folder's name). Our cash-shop fix is
+upstream (sven-n/MuMain#1034) and was dropped. Fork changes since 1.42.2: the buff time only in the icon's tooltip; the
+event schedule in a window in the shared frame (`window_shell.rml`, `event_schedule.rcss` per theme), dragged like the
+options window, with a Close button, its starts rounded to the minute (14:00 showed as 13:59); entering the world
+clears a pending item move (`EquipmentItem`), which blocked every move until a restart when its answer never came.
+The start-up file list (`Data/Maps/Files/Shared.json`) has no `config.ini.template`: the S6 player bodies load without
+reading `config.ini`. 3,221 macOS Release tests pass.
 
 The teleport/PvP follow-up requires the matching OpenMU gameplay core and MU Volta plugin,
 with `CooldownMilliseconds = 2000` on the server. Client readiness uses the server's landing
@@ -119,12 +126,12 @@ Deploy with the matching MU Volta server balance update; copy `chat_input.rml` i
 `mu-volta-client/client-data/Interface/RmlUi/` because release runtimes contain no game data.
 
 ```sh
-git tag muvolta-v1.42.1 && git push --force-with-lease fork muvolta muvolta-v1.42.1
+git tag muvolta-v1.44.0 && git push --force-with-lease fork muvolta muvolta-v1.44.0
 ```
 
 The `MU Volta Release` workflow builds the Windows runtime (about 35 minutes) and attaches it to the
-`muvolta-v1.42.1` release. Build the macOS runtime locally and upload it to the same release with
-`gh release upload muvolta-v1.42.1 MuMain-macos-native-arm64-release-editor-off-no-data.tar.gz --repo nahuedomino/MuMain`.
+`muvolta-v1.44.0` release. Build the macOS runtime locally and upload it to the same release with
+`gh release upload muvolta-v1.44.0 MuMain-macos-native-arm64-release-editor-off-no-data.tar.gz --repo nahuedomino/MuMain`.
 The game data still comes from the upstream release.
 
 To ship new patches for the same upstream version, release a fork-only patch version (e.g. `v1.36.1`
@@ -145,10 +152,10 @@ When syncing with a new upstream release, rebase from the upstream tag (not the 
 ```sh
 git fetch --no-recurse-submodules origin --tags
 git switch muvolta
-git branch muvolta-pre-1.42.1
-git rebase --onto v1.42.1 v1.42.0      # replay our patches on the new tag
+git branch muvolta-pre-1.44.0
+git rebase --onto v1.44.0 v1.42.1      # replay our patches on the new tag
 ```
 
 Drop a patch when upstream ships its own fix. Compare the `build-windows` job of
 `.github/workflows/ci.yml` with `muvolta-release.yml` and copy any changes. Then tag
-`muvolta-v1.42.1` and push with `--force-with-lease` for the rebased branch.
+`muvolta-v1.44.0` and push with `--force-with-lease` for the rebased branch.
