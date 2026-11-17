@@ -1213,10 +1213,16 @@ int GetJoinMapServerStage(std::span<const BYTE> packet)
     return packet.size() > StageIndex ? packet[StageIndex] : 0;
 }
 
+extern BOOL g_bPacketAfter_EquipmentItem;
+
 BOOL ReceiveJoinMapServer(std::span<const BYTE> ReceiveBuffer)
 {
     gSkillManager.ResetHeroTeleport();
     MouseLButton = false;
+    // MU Volta: an item move whose answer never came (the connection or the character changed) blocked every later
+    // move until the client restarted; the new session has none waiting.
+    EquipmentItem = false;
+    g_bPacketAfter_EquipmentItem = FALSE;
     HeroIndex = Random::Rand() % MAX_CHARACTERS_CLIENT;
     CHARACTER* c = &CharactersClient[HeroIndex];
 

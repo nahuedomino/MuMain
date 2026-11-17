@@ -78,6 +78,8 @@ a party newcomer is buffed right away by the MU Helper; the shop script without 
 Version 1.42.3: the buff time is only in the icon's tooltip (no number over the icon); the event schedule is a window
 in the shared frame (`window_shell.rml`, `event_schedule.rcss` per theme), dragged like the options window, with a
 Close button; its starts are rounded to the minute (the server sends whole seconds, so 14:00 showed as 13:59).
+Also: entering the world clears a pending item move (`EquipmentItem`), which blocked every move until a restart when
+its answer never came.
 
 The teleport/PvP follow-up requires the matching OpenMU gameplay core and MU Volta plugin,
 with `CooldownMilliseconds = 2000` on the server. Client readiness uses the server's landing
