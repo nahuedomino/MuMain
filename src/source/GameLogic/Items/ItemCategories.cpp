@@ -276,6 +276,11 @@ namespace GameLogic::Items
         return HasTag(pItem, ItemTag::GemJewelry);
     }
 
+    bool IsVipTicket(const ITEM* pItem)
+    {
+        return pItem != nullptr && (pItem->Type == ITEM_VIP_TICKET_15_DAYS || pItem->Type == ITEM_VIP_TICKET_30_DAYS);
+    }
+
     bool IsGambleItem(const ITEM* pItem)
     {
         return HasTag(pItem, ItemTag::GambleItem);

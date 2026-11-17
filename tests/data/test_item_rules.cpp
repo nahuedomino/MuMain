@@ -282,6 +282,15 @@ TEST_CASE("Item categories come from the item data [data][items][rules]")
     CHECK(IsFlyingMount(&fenrir));
     CHECK(HasFlightEquipment(&durableFenrir, &kris));
 
+    // MU Volta: right-clicking a VIP ticket uses it (the server adds its days), it isn't dropped.
+    const ITEM vipTicket15 = MakeItem(ITEM_VIP_TICKET_15_DAYS);
+    const ITEM vipTicket30 = MakeItem(ITEM_VIP_TICKET_30_DAYS);
+    const ITEM rageFighterCard = MakeItem(ITEM_POTION + 169);
+    CHECK(IsVipTicket(&vipTicket15));
+    CHECK(IsVipTicket(&vipTicket30));
+    CHECK_FALSE(IsVipTicket(&rageFighterCard));
+    CHECK_FALSE(IsVipTicket(nullptr));
+
     CHECK(IsSocketSeedOrSphereType(ITEM_SEED_FIRE));
     CHECK_FALSE(IsSocketSeedOrSphereType(KrisType));
 

@@ -699,7 +699,8 @@ bool CInventoryActionController::TryConsumeItem(CInventoryCtrl* targetControl, I
         pItem->Type == ITEM_MEDIUM_ELITE_HEALING_POTION ||
         (pItem->Type >= ITEM_CHERRY_BLOSSOM_WINE && pItem->Type <= ITEM_CHERRY_BLOSSOM_FLOWER_PETAL) ||
         GameLogic::Items::IsBattleOrStrengthScroll(pItem) || pItem->Type == ITEM_TALISMAN_OF_GUARDIAN ||
-        pItem->Type == ITEM_TALISMAN_OF_ITEM_PROTECTION || pItem->Type == ITEM_ELITE_SD_POTION)
+        pItem->Type == ITEM_TALISMAN_OF_ITEM_PROTECTION || pItem->Type == ITEM_ELITE_SD_POTION ||
+        GameLogic::Items::IsVipTicket(pItem))
     {
         SendRequestUse(iIndex, 0);
         if (isApple)

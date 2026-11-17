@@ -87,6 +87,9 @@ options window, with a Close button, its starts rounded to the minute (14:00 sho
 clears a pending item move (`EquipmentItem`), which blocked every move until a restart when its answer never came.
 The start-up file list (`Data/Maps/Files/Shared.json`) has no `config.ini.template`: the S6 player bodies load without
 reading `config.ini`. 3,221 macOS Release tests pass.
+Version 1.44.1: a right-click on a VIP ticket of the shop (14/170, 14/171; `IsVipTicket`) uses it; it was missing
+from `TryConsumeItem`, so the click went on to equipping and dropping ("This item cannot be dropped"). 3,221 macOS
+Release tests pass.
 
 The teleport/PvP follow-up requires the matching OpenMU gameplay core and MU Volta plugin,
 with `CooldownMilliseconds = 2000` on the server. Client readiness uses the server's landing
