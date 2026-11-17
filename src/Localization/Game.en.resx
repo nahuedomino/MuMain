@@ -9711,4 +9711,7 @@ Fullscreen changes the monitor to the chosen resolution.</value>
   <data name="Today (your local time)" xml:space="preserve">
     <value>Today (your local time)</value>
   </data>
+  <data name="HEventSchedule" xml:space="preserve">
+    <value>H : Event Schedule On/Off</value>
+  </data>
 </root>
