@@ -90,6 +90,11 @@ reading `config.ini`. 3,221 macOS Release tests pass.
 Version 1.44.1: a right-click on a VIP ticket of the shop (14/170, 14/171; `IsVipTicket`) uses it; it was missing
 from `TryConsumeItem`, so the click went on to equipping and dropping ("This item cannot be dropped"). 3,221 macOS
 Release tests pass.
+Version 1.44.2: a right-click on a seal (13/43-45, 13/62-63, 13/93-94; `IsSealItem`) uses it, as for the VIP
+tickets; the seals' item and buff tooltips say +10% experience (Wealth also +10% zen per drop, Healing +5% life
+recovery), with the server's new seal values (mu-volta-client `server-sql/seal-effects.sql`); the shared texts only the
+old seal tooltips used are gone and the tests that pinned upstream's seal texts skip them. The buff tooltip shows the
+server's countdown first, so a refreshed or carried-over item buff shows the time left. 3,221 macOS Release tests pass.
 
 The teleport/PvP follow-up requires the matching OpenMU gameplay core and MU Volta plugin,
 with `CooldownMilliseconds = 2000` on the server. Client readiness uses the server's landing
