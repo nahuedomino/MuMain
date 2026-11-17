@@ -1,0 +1,48 @@
+/* MU Volta: the event schedule window (event_schedule.rml) in the shared window frame (window_shell.rcss). As tall as
+   its lines; dp throughout, text in rem (RmlNativeText.h). */
+#panel {
+	width: 320dp;
+	height: auto; /* #panel is the document body, which base.rcss makes full-screen */
+	font-family: "token(font-body)";
+	font-size: 1rem;
+	color: token(text-primary);
+}
+
+/* The shell's content box in flow, so the frame follows the number of lines. */
+#panel .window-shell-content {
+	position: relative;
+	top: auto;
+	bottom: auto;
+	left: auto;
+	right: auto;
+	margin: 20dp 18dp 20dp 18dp;
+	z-index: 1; /* above the shell's absolutely positioned sprite layers */
+}
+#panel .window-shell-content.has-title { margin-top: 4dp; }
+
+.es-lines { display: block; width: 100%; }
+.es-line {
+	display: block;
+	width: 100%;
+	text-align: center;
+	white-space: normal;
+	margin-bottom: 3dp;
+}
+.es-line.heading {
+	font-weight: bold;
+	color: #80b3ff;
+	margin-bottom: 5dp;
+}
+.es-line.spacer { height: 8dp; margin-bottom: 0; }
+
+.es-button-row {
+	display: block;
+	width: 100%;
+	text-align: center;
+	margin-top: 10dp;
+}
+.es-close-btn {
+	display: inline-block;
+	width: 96dp;
+	text-align: center;
+}

@@ -88,7 +88,9 @@ std::optional<EventSchedule> ParseSchedule(std::span<const std::uint8_t> packet,
             std::int32_t seconds = 0;
             if (!reader.Int32(seconds))
                 return std::nullopt;
-            event.starts.push_back(now + std::chrono::seconds(seconds));
+            // The server sends whole seconds until each start and drops the fraction, so a start on the hour arrived
+            // as 13:59:59.x; events start on whole minutes, so the start is rounded to the nearest one.
+            event.starts.push_back(std::chrono::round<std::chrono::minutes>(now + std::chrono::seconds(seconds)));
         }
 
         schedule.events.push_back(std::move(event));
