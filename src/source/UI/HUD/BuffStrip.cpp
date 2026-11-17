@@ -100,14 +100,15 @@ std::vector<UI::RmlBridge::Tooltip::Line> BuildTooltip(eBuffState buff)
     }
 
     std::wstring bufftime;
-    g_BuffStringTime(buff, bufftime);
-    if (bufftime.empty())
+    // MU Volta: the server's countdown first. It's refreshed when an item buff is used again and after a relog, while
+    // the item time below keeps its first value (or the full duration of the item, not what's left).
+    if (const auto left = GameLogic::Buffs::HeroBuffCountdown().RemainingSeconds(buff, std::chrono::steady_clock::now()))
     {
-        // MU Volta: skill buffs have the server's countdown instead of an item time.
-        if (const auto left = GameLogic::Buffs::HeroBuffCountdown().RemainingSeconds(buff, std::chrono::steady_clock::now()))
-        {
-            bufftime = GameLogic::Buffs::BuffCountdown::LongText(*left);
-        }
+        bufftime = GameLogic::Buffs::BuffCountdown::LongText(*left);
+    }
+    else
+    {
+        g_BuffStringTime(buff, bufftime);
     }
 
     if (!bufftime.empty())
