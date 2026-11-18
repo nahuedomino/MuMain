@@ -109,6 +109,10 @@ and 1.44.3 seal tooltips never reached players because they didn't.
 Later the same day (data only, republished as 1.44.4): the Seals of Ascension and Wealth and their master seals can go
 into the vault (`storable` left at its default), matching the server, so a seal bought on the wrong character can move.
 
+Version 1.44.5: login result 9 (`NoChargeInfo`) says the account is reserved until the Open Beta (en/es/pt). Before
+launch the game servers require the "Beta access" attribute (mu-volta-client `tools/beta-gate`), and OpenMU refuses
+accounts without it with that code.
+
 The teleport/PvP follow-up requires the matching OpenMU gameplay core and MU Volta plugin,
 with `CooldownMilliseconds = 2000` on the server. Client readiness uses the server's landing
 packet, not a timer started at the click; ordinary warps, map changes and revival reset it.
