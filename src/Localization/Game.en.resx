@@ -9714,4 +9714,7 @@ Fullscreen changes the monitor to the chosen resolution.</value>
   <data name="HEventSchedule" xml:space="preserve">
     <value>H : Event Schedule On/Off</value>
   </data>
+  <data name="ShopView" xml:space="preserve">
+    <value>View</value>
+  </data>
 </root>

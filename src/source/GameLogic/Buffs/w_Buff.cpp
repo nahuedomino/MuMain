@@ -28,26 +28,8 @@ void GetTokenBufflist(std::list<eBuffState>& outtokenbufflist, const eBuffState 
         outtokenbufflist.push_back(eBuff_CrywolfHeroContracted);
         outtokenbufflist.push_back(eBuff_CrywolfNPCHide);
     }
-    if ((curbufftype >= eBuff_PcRoomSeal1 && curbufftype <= eBuff_PcRoomSeal3) || curbufftype == eBuff_NewWealthSeal)
-    {
-        outtokenbufflist.push_back(eBuff_NewWealthSeal);
-        outtokenbufflist.push_back(eBuff_PcRoomSeal1);
-        outtokenbufflist.push_back(eBuff_PcRoomSeal2);
-        outtokenbufflist.push_back(eBuff_PcRoomSeal3);
-    }
-    // eBuff_Seal_HpRecovery, eBuff_Seal_MpRecovery
-    if ((curbufftype >= eBuff_Seal1 && curbufftype <= eBuff_Seal4) || curbufftype == eBuff_AscensionSealMaster ||
-        curbufftype == eBuff_WealthSealMaster)
-    {
-        outtokenbufflist.push_back(eBuff_Seal1);
-        outtokenbufflist.push_back(eBuff_Seal2);
-        outtokenbufflist.push_back(eBuff_Seal3);
-        outtokenbufflist.push_back(eBuff_Seal4);
-        outtokenbufflist.push_back(eBuff_Seal_HpRecovery);
-        outtokenbufflist.push_back(eBuff_Seal_MpRecovery);
-        outtokenbufflist.push_back(eBuff_AscensionSealMaster);
-        outtokenbufflist.push_back(eBuff_WealthSealMaster);
-    }
+    // MU Volta: no client-side exclusion between seals. The server decides which seals stack (Ascension, Wealth
+    // and Healing do) and removes a replaced one itself; this list used to hide a seal when another one arrived.
 
     if (curbufftype >= eBuff_EliteScroll1 && curbufftype <= eBuff_EliteScroll6)
     {

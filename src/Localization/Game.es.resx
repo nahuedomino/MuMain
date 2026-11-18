@@ -9177,4 +9177,7 @@ Pantalla completa cambia el monitor a la resolución elegida.</value>
   <data name="HEventSchedule" xml:space="preserve">
     <value>H : Horario de eventos</value>
   </data>
+  <data name="ShopView" xml:space="preserve">
+    <value>Ver</value>
+  </data>
 </root>

@@ -11081,7 +11081,11 @@ void UpdatePlayerEffects(CHARACTER* c, OBJECT* o, BMD* b)
     if (g_isCharacterBuff((&c->Object), eBuff_PcRoomSeal1) || g_isCharacterBuff((&c->Object), eBuff_PcRoomSeal2) ||
         g_isCharacterBuff((&c->Object), eBuff_PcRoomSeal3) || g_isCharacterBuff((&c->Object), eBuff_Seal1) ||
         g_isCharacterBuff((&c->Object), eBuff_Seal2) || g_isCharacterBuff((&c->Object), eBuff_Seal3) ||
-        g_isCharacterBuff((&c->Object), eBuff_Seal4))
+        g_isCharacterBuff((&c->Object), eBuff_Seal4) ||
+        // MU Volta: Seal of Healing and the master seals show the seal aura too.
+        g_isCharacterBuff((&c->Object), eBuff_Seal_HpRecovery) ||
+        g_isCharacterBuff((&c->Object), eBuff_AscensionSealMaster) ||
+        g_isCharacterBuff((&c->Object), eBuff_WealthSealMaster))
     {
         if (SearchJoint(MODEL_SPEARSKILL, o, 10) == false && SearchJoint(MODEL_SPEARSKILL, o, 11) == false)
         {

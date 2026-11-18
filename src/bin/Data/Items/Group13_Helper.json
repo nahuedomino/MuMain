@@ -3041,17 +3041,17 @@
       "description": [
         {
           "text": {
-            "en": "Experience +10% for 30 minutes",
-            "es": "Experiencia +10% durante 30 minutos",
-            "pt": "Experiência +10% por 30 minutos"
+            "en": "Experience +10% for 1 hour",
+            "es": "Experiencia +10% durante 1 hora",
+            "pt": "Experiência +10% por 1 hora"
           },
           "color": "blue"
         },
         {
           "text": {
-            "en": "Right-click to use. Only one experience seal works at a time.",
-            "es": "Clic derecho para usarlo. Solo un sello de experiencia a la vez.",
-            "pt": "Clique direito para usar. Apenas um selo de experiência por vez."
+            "en": "Right-click to use. Stacks with the other seals: +30% with all three.",
+            "es": "Clic derecho para usarlo. Se acumula con los otros sellos: +30% con los tres.",
+            "pt": "Clique direito para usar. Acumula com os outros selos: +30% com os três."
           },
           "color": "yellow"
         }
@@ -3090,17 +3090,17 @@
       "description": [
         {
           "text": {
-            "en": "Experience +10% and zen per drop +10% for 30 minutes",
-            "es": "Experiencia +10% y zen por drop +10% durante 30 minutos",
-            "pt": "Experiência +10% e zen por drop +10% por 30 minutos"
+            "en": "Experience +10% and zen per drop +10% for 1 hour",
+            "es": "Experiencia +10% y zen por drop +10% durante 1 hora",
+            "pt": "Experiência +10% e zen por drop +10% por 1 hora"
           },
           "color": "blue"
         },
         {
           "text": {
-            "en": "Right-click to use. Only one experience seal works at a time.",
-            "es": "Clic derecho para usarlo. Solo un sello de experiencia a la vez.",
-            "pt": "Clique direito para usar. Apenas um selo de experiência por vez."
+            "en": "Right-click to use. Stacks with the other seals: +30% with all three.",
+            "es": "Clic derecho para usarlo. Se acumula con los otros sellos: +30% con los tres.",
+            "pt": "Clique direito para usar. Acumula com os outros selos: +30% com os três."
           },
           "color": "yellow"
         }
@@ -3860,17 +3860,17 @@
       "description": [
         {
           "text": {
-            "en": "Experience +10% and automatic life recovery +5% for 30 minutes",
-            "es": "Experiencia +10% y recuperación de vida +5% durante 30 minutos",
-            "pt": "Experiência +10% e recuperação de vida +5% por 30 minutos"
+            "en": "Experience +10% and automatic life recovery +5% for 1 hour",
+            "es": "Experiencia +10% y recuperación de vida +5% durante 1 hora",
+            "pt": "Experiência +10% e recuperação de vida +5% por 1 hora"
           },
           "color": "blue"
         },
         {
           "text": {
-            "en": "Right-click to use. Only one experience seal works at a time.",
-            "es": "Clic derecho para usarlo. Solo un sello de experiencia a la vez.",
-            "pt": "Clique direito para usar. Apenas um selo de experiência por vez."
+            "en": "Right-click to use. Stacks with the other seals: +30% with all three.",
+            "es": "Clic derecho para usarlo. Se acumula con los otros sellos: +30% con los tres.",
+            "pt": "Clique direito para usar. Acumula com os outros selos: +30% com os três."
           },
           "color": "yellow"
         }
@@ -5232,17 +5232,17 @@
       "description": [
         {
           "text": {
-            "en": "Master experience +10% for 30 minutes",
-            "es": "Experiencia maestra +10% durante 30 minutos",
-            "pt": "Experiência mestre +10% por 30 minutos"
+            "en": "Master experience +10% for 1 hour",
+            "es": "Experiencia maestra +10% durante 1 hora",
+            "pt": "Experiência mestre +10% por 1 hora"
           },
           "color": "blue"
         },
         {
           "text": {
-            "en": "Right-click to use. Only one experience seal works at a time.",
-            "es": "Clic derecho para usarlo. Solo un sello de experiencia a la vez.",
-            "pt": "Clique direito para usar. Apenas um selo de experiência por vez."
+            "en": "Right-click to use. Stacks with the other seals: +30% with all three.",
+            "es": "Clic derecho para usarlo. Se acumula con los otros sellos: +30% con los tres.",
+            "pt": "Clique direito para usar. Acumula com os outros selos: +30% com os três."
           },
           "color": "yellow"
         }
@@ -5280,17 +5280,17 @@
       "description": [
         {
           "text": {
-            "en": "Master experience +10% and zen per drop +10% for 30 minutes",
-            "es": "Experiencia maestra +10% y zen por drop +10% durante 30 minutos",
-            "pt": "Experiência mestre +10% e zen por drop +10% por 30 minutos"
+            "en": "Master experience +10% and zen per drop +10% for 1 hour",
+            "es": "Experiencia maestra +10% y zen por drop +10% durante 1 hora",
+            "pt": "Experiência mestre +10% e zen por drop +10% por 1 hora"
           },
           "color": "blue"
         },
         {
           "text": {
-            "en": "Right-click to use. Only one experience seal works at a time.",
-            "es": "Clic derecho para usarlo. Solo un sello de experiencia a la vez.",
-            "pt": "Clique direito para usar. Apenas um selo de experiência por vez."
+            "en": "Right-click to use. Stacks with the other seals: +30% with all three.",
+            "es": "Clic derecho para usarlo. Se acumula con los otros sellos: +30% con los tres.",
+            "pt": "Clique direito para usar. Acumula com os outros selos: +30% com os três."
           },
           "color": "yellow"
         }
