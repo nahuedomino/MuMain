@@ -766,18 +766,9 @@
         "zh-TW": "晉升印章"
       },
       "description": {
-        "en": "EXP gain 150%",
-        "de": "Erfahrungsgewinn 150%",
-        "es": "EXP gana incremento 150%",
-        "id": "Perolehan EXP 150%",
-        "ja": "経験値獲得 150%",
-        "pl": "Zdobywane Exp 150%",
-        "pt": "Aumento de ganho de EXP de 150%",
-        "ru": "Прирост опыта 150%",
-        "tl": "Nakukuhang EXP 150%",
-        "uk": "Збільшення досвіду 150%",
-        "zh-CN": "经验值获得 150%",
-        "zh-TW": "經驗值獲得 150%"
+        "en": "EXP +10%",
+        "es": "EXP +10%",
+        "pt": "EXP +10%"
       },
       "item": {
         "group": 13,
@@ -803,18 +794,9 @@
         "zh-TW": "財富印章"
       },
       "description": {
-        "en": "EXP gain 150%\nItem gain 200%",
-        "de": "Erfahrungsgewinn 150%\nGegenstands-Drop 200%",
-        "es": "EXP gana incremento 150%\nítem gana incremento 200%",
-        "id": "Perolehan EXP 150%\nPerolehan item 200%",
-        "ja": "経験値獲得 150%\nアイテム獲得 200%",
-        "pl": "Zdobywane Exp 150%\nDrop przedmiotów 200%",
-        "pt": "Aumento de ganho de EXP de 150%\naumento de ganho de itens de 200%",
-        "ru": "Прирост опыта 150%\nВыпадение предметов 200%",
-        "tl": "Nakukuhang EXP 150%\nNakukuhang item 200%",
-        "uk": "Збільшення досвіду 150%\nВипадіння предметів 200%",
-        "zh-CN": "经验值获得 150%\n物品获得 200%",
-        "zh-TW": "經驗值獲得 150%\n物品獲得 200%"
+        "en": "EXP +10%\nZen +10%",
+        "es": "EXP +10%\nZen +10%",
+        "pt": "EXP +10%\nZen +10%"
       },
       "item": {
         "group": 13,

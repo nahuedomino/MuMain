@@ -9109,4 +9109,7 @@
   <data name="Critical damage total: +%d" xml:space="preserve">
     <value>Total: +%d</value>
   </data>
+  <data name="ShopView" xml:space="preserve">
+    <value>Ver</value>
+  </data>
 </root>

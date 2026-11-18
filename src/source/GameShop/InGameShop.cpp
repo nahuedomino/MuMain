@@ -298,7 +298,8 @@ void CInGameShop::SyncRmlModel()
     SyncField(binder, &InGameShopRmlModel::storagePage, "storage_page", std::to_string(m_iStorageCurrentPage));
     SyncField(binder, &InGameShopRmlModel::storageTotalPages, "storage_total_pages", std::to_string(m_iStorageTotalPage));
 
-    SyncField(binder, &InGameShopRmlModel::buyLabel, "buy_label", Narrow(I18N::Game::Buy1124));
+    // MU Volta: the button opens the package; its dialog has the Buy button and the confirmations.
+    SyncField(binder, &InGameShopRmlModel::buyLabel, "buy_label", Narrow(I18N::Game::ShopView));
     SyncField(binder, &InGameShopRmlModel::giftHint, "gift_hint", Narrow(I18N::Game::SendWCoin));
     SyncField(binder, &InGameShopRmlModel::chargeHint, "charge_hint", Narrow(I18N::Game::RechargeWCoin));
     SyncField(binder, &InGameShopRmlModel::refreshHint, "refresh_hint", Narrow(I18N::Game::UpdateInformation));

@@ -96,6 +96,11 @@ recovery), with the server's new seal values (mu-volta-client `server-sql/seal-e
 old seal tooltips used are gone and the tests that pinned upstream's seal texts skip them. The buff tooltip shows the
 server's countdown first, so a refreshed or carried-over item buff shows the time left. 3,221 macOS Release tests pass.
 
+Version 1.44.3: the seals stack (the server gives Ascension, Wealth and Healing their own sub types, +10% each), so
+`Buff::TokenBuff` no longer hides one seal when another arrives; the buff tooltips of 29/30 (the seal effects OpenMU
+sends) say +10%; Seal of Healing and the master seals show the seal aura; the seal texts say 1 hour and that they stack;
+the in-game shop's package button says View (`ShopView`), since its dialog has Buy and the confirmations.
+
 The teleport/PvP follow-up requires the matching OpenMU gameplay core and MU Volta plugin,
 with `CooldownMilliseconds = 2000` on the server. Client readiness uses the server's landing
 packet, not a timer started at the click; ordinary warps, map changes and revival reset it.
