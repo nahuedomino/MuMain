@@ -53,7 +53,7 @@
 		</div>
 		<div id="igs_page_next" class="igs-page-btn" data-event-click="igs_page(1)"></div>
 
-		<!-- The player: name, balances, and the gift, charge and refresh buttons. -->
+		<!-- The player: name, balances, and the refresh button (MU Volta: no gift or charge buttons, the shop has no gifts or charging). -->
 		<div id="igs_character">
 			<span class="sharp-text sharp-centre" data-style-font-size="text_px + 'px'">{{character_name}}</span>
 		</div>
@@ -63,8 +63,6 @@
 				<span class="sharp-text sharp-right igs-wallet-value" data-style-font-size="text_px + 'px'">{{w.value}}</span>
 			</div>
 		</div>
-		<div id="igs_gift" class="igs-icon-btn" data-event-click="igs_gift" data-attr-data-hint="gift_hint"></div>
-		<div id="igs_charge" class="igs-icon-btn" data-event-click="igs_charge" data-attr-data-hint="charge_hint"></div>
 		<div id="igs_refresh" class="igs-icon-btn" data-event-click="igs_refresh" data-attr-data-hint="refresh_hint"></div>
 
 		<!-- RenderImage() drew the banner's top-left 153 x 63 texels, not the whole texture. -->

@@ -101,6 +101,12 @@ Version 1.44.3: the seals stack (the server gives Ascension, Wealth and Healing 
 sends) say +10%; Seal of Healing and the master seals show the seal aura; the seal texts say 1 hour and that they stack;
 the in-game shop's package button says View (`ShopView`), since its dialog has Buy and the confirmations.
 
+Version 1.44.4: the in-game shop has no Gift button, gift inventory tab, or gift and charge icons (they only said
+"not supported"), and no developer lines (`FOR_WORK` is defined in our builds; the shop's are now behind
+`MUVOLTA_IGS_DEBUG`); the seal tooltips name the seals each one combines with, and Seal of Healing also gives master
+experience. These data files ship through mu-volta-client `client-data/` (its `tools/check-fork-data.sh`): the 1.44.2
+and 1.44.3 seal tooltips never reached players because they didn't.
+
 The teleport/PvP follow-up requires the matching OpenMU gameplay core and MU Volta plugin,
 with `CooldownMilliseconds = 2000` on the server. Client readiness uses the server's landing
 packet, not a timer started at the click; ordinary warps, map changes and revival reset it.

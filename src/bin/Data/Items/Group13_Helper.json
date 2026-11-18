@@ -2967,9 +2967,9 @@
         },
         {
           "text": {
-            "en": "Right-click to use. Stacks with the other seals: +30% with all three.",
-            "es": "Clic derecho para usarlo. Se acumula con los otros sellos: +30% con los tres.",
-            "pt": "Clique direito para usar. Acumula com os outros selos: +30% com os três."
+            "en": "Right-click to use. Combine it with Seal of Wealth and Seal of Healing (+30% max). Not for master level characters.",
+            "es": "Clic derecho para usarlo. Combínalo con el Sello de Riqueza y el Sello de Curación (+30% máx.). No para personajes de nivel maestro.",
+            "pt": "Clique direito para usar. Combine com o Selo da Riqueza e o Selo da Cura (+30% máx.). Não para personagens de nível mestre."
           },
           "color": "yellow"
         }
@@ -3016,9 +3016,9 @@
         },
         {
           "text": {
-            "en": "Right-click to use. Stacks with the other seals: +30% with all three.",
-            "es": "Clic derecho para usarlo. Se acumula con los otros sellos: +30% con los tres.",
-            "pt": "Clique direito para usar. Acumula com os outros selos: +30% com os três."
+            "en": "Right-click to use. Combine it with Seal of Ascension and Seal of Healing (+30% max). Not for master level characters.",
+            "es": "Clic derecho para usarlo. Combínalo con el Sello de Ascensión y el Sello de Curación (+30% máx.). No para personajes de nivel maestro.",
+            "pt": "Clique direito para usar. Combine com o Selo da Ascensão e o Selo da Cura (+30% máx.). Não para personagens de nível mestre."
           },
           "color": "yellow"
         }
@@ -3778,17 +3778,17 @@
       "description": [
         {
           "text": {
-            "en": "Experience +10% and automatic life recovery +5% for 1 hour",
-            "es": "Experiencia +10% y recuperación de vida +5% durante 1 hora",
-            "pt": "Experiência +10% e recuperação de vida +5% por 1 hora"
+            "en": "Experience and master experience +10%, automatic life recovery +5% for 1 hour",
+            "es": "Experiencia y experiencia maestra +10%, recuperación de vida +5% durante 1 hora",
+            "pt": "Experiência e experiência mestre +10%, recuperação de vida +5% por 1 hora"
           },
           "color": "blue"
         },
         {
           "text": {
-            "en": "Right-click to use. Stacks with the other seals: +30% with all three.",
-            "es": "Clic derecho para usarlo. Se acumula con los otros sellos: +30% con los tres.",
-            "pt": "Clique direito para usar. Acumula com os outros selos: +30% com os três."
+            "en": "Right-click to use. Combine it with the Seals of Ascension and Wealth, normal or master (+30% max).",
+            "es": "Clic derecho para usarlo. Combínalo con los Sellos de Ascensión y Riqueza, normales o maestros (+30% máx.).",
+            "pt": "Clique direito para usar. Combine com os Selos da Ascensão e da Riqueza, normais ou mestres (+30% máx.)."
           },
           "color": "yellow"
         }
@@ -5158,9 +5158,9 @@
         },
         {
           "text": {
-            "en": "Right-click to use. Stacks with the other seals: +30% with all three.",
-            "es": "Clic derecho para usarlo. Se acumula con los otros sellos: +30% con los tres.",
-            "pt": "Clique direito para usar. Acumula com os outros selos: +30% com os três."
+            "en": "Right-click to use. Combine it with Master Seal of Wealth and Seal of Healing (+30% max). Master level characters only.",
+            "es": "Clic derecho para usarlo. Combínalo con el Sello Maestro de Riqueza y el Sello de Curación (+30% máx.). Solo personajes de nivel maestro.",
+            "pt": "Clique direito para usar. Combine com o Selo Mestre da Riqueza e o Selo da Cura (+30% máx.). Somente personagens de nível mestre."
           },
           "color": "yellow"
         }
@@ -5206,9 +5206,9 @@
         },
         {
           "text": {
-            "en": "Right-click to use. Stacks with the other seals: +30% with all three.",
-            "es": "Clic derecho para usarlo. Se acumula con los otros sellos: +30% con los tres.",
-            "pt": "Clique direito para usar. Acumula com os outros selos: +30% com os três."
+            "en": "Right-click to use. Combine it with Master Seal of Ascension and Seal of Healing (+30% max). Master level characters only.",
+            "es": "Clic derecho para usarlo. Combínalo con el Sello Maestro de Ascensión y el Sello de Curación (+30% máx.). Solo personajes de nivel maestro.",
+            "pt": "Clique direito para usar. Combine com o Selo Mestre da Ascensão e o Selo da Cura (+30% máx.). Somente personagens de nível mestre."
           },
           "color": "yellow"
         }
