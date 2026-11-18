@@ -181,7 +181,7 @@ private:
         std::vector<StorageRow> storageRows;
         Rml::String storagePage, storageTotalPages;
         Rml::String buyLabel, useLabel, itemNameLabel, durationLabel;
-        Rml::String giftHint, chargeHint, refreshHint, closeHint;
+        Rml::String refreshHint, closeHint; // MU Volta: no gift or charge buttons.
         Rml::String bannerSrc;
         bool bannerLinked = false;
         Rml::String scriptVersion, bannerVersion;

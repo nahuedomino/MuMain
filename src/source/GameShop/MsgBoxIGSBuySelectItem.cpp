@@ -93,11 +93,10 @@ void CMsgBoxIGSBuySelectItem::Release()
 
 bool CMsgBoxIGSBuySelectItem::Update()
 {
-    // Buy, Gift, Cancel: the events the native buttons sent.
-    static constexpr DWORD kButtonEvents[] = {MSGBOX_EVENT_USER_COMMON_OK, MSGBOX_EVENT_USER_CUSTOM_INGAMESHOP_PRESENT,
-                                              MSGBOX_EVENT_USER_COMMON_CANCEL};
+    // Buy, Cancel: the events the native buttons sent. MU Volta: no Gift button, the shop sells no gifts.
+    static constexpr DWORD kButtonEvents[] = {MSGBOX_EVENT_USER_COMMON_OK, MSGBOX_EVENT_USER_COMMON_CANCEL};
     const int pressed = std::exchange(m_PressedButton, -1);
-    if (pressed >= 0 && pressed < static_cast<int>(std::size(kButtonEvents)) && (pressed != 1 || m_bGiftEnabled))
+    if (pressed >= 0 && pressed < static_cast<int>(std::size(kButtonEvents)))
     {
         g_MessageBox->SendEvent(this, kButtonEvents[pressed]);
         return true;
@@ -167,11 +166,10 @@ void CMsgBoxIGSBuySelectItem::SyncRmlModel()
 
     SyncField(binder, &BuySelectRmlModel::buttons, "buttons",
               std::vector<GameShop::DialogButton>{{StringUtils::WideToNarrow(I18N::Game::Buy1124), true},
-                                                  {StringUtils::WideToNarrow(I18N::Game::Gift), m_bGiftEnabled},
                                                   {StringUtils::WideToNarrow(I18N::Game::Cancel), true}});
 
     std::vector<Rml::String> debugLines;
-#ifdef FOR_WORK
+#if defined(FOR_WORK) && defined(MUVOLTA_IGS_DEBUG) // MU Volta: no developer lines for players
     wchar_t szText[256] = { 0, };
     if (m_wItemCode == 65535)
         mu_swprintf(szText, L"Bad item index.");

@@ -153,8 +153,6 @@ void CInGameShop::BindRmlModel(Rml::DataModelConstructor& c, InGameShopRmlModel&
     c.Bind("storage_page", &model.storagePage);
     c.Bind("storage_total_pages", &model.storageTotalPages);
     c.Bind("buy_label", &model.buyLabel);
-    c.Bind("gift_hint", &model.giftHint);
-    c.Bind("charge_hint", &model.chargeHint);
     c.Bind("refresh_hint", &model.refreshHint);
     c.Bind("close_hint", &model.closeHint);
     c.Bind("use_label", &model.useLabel);
@@ -193,16 +191,6 @@ void CInGameShop::BindRmlModel(Rml::DataModelConstructor& c, InGameShopRmlModel&
                                 return;
                             const bool next = args[0].Get<int>(0) > 0;
                             queue([this, next] { next ? StorageNextPage() : StoragePrevPage(); });
-                        });
-    c.BindEventCallback("igs_gift",
-                        [queue](Rml::DataModelHandle, Rml::Event&, const Rml::VariantList&)
-                        {
-                            queue([] { CreateOkMessageBoxWithTitle(I18N::Game::RestrictedFunction, I18N::Game::ThisFunctionIsNotSupportedIn); });
-                        });
-    c.BindEventCallback("igs_charge",
-                        [queue](Rml::DataModelHandle, Rml::Event&, const Rml::VariantList&)
-                        {
-                            queue([] { CreateOkMessageBoxWithTitle(I18N::Game::RestrictedFunction, I18N::Game::ThisFunctionIsNotSupportedIn); });
                         });
     c.BindEventCallback("igs_refresh",
                         [this, queue](Rml::DataModelHandle, Rml::Event&, const Rml::VariantList&)
@@ -292,16 +280,14 @@ void CInGameShop::SyncRmlModel()
     SyncField(binder, &InGameShopRmlModel::page, "page", std::to_string(g_InGameShopSystem->GetSelectPage()));
     SyncField(binder, &InGameShopRmlModel::totalPages, "total_pages", std::to_string(g_InGameShopSystem->GetTotalPages()));
 
-    SyncField(binder, &InGameShopRmlModel::storageTabs, "storage_tabs",
-              radio({Narrow(I18N::Game::Storage), Narrow(I18N::Game::GiftInventory)}, m_StorageBox));
+    // MU Volta: only the storage tab; the shop sells no gifts.
+    SyncField(binder, &InGameShopRmlModel::storageTabs, "storage_tabs", radio({Narrow(I18N::Game::Storage)}, m_StorageBox));
     SyncStorageRows();
     SyncField(binder, &InGameShopRmlModel::storagePage, "storage_page", std::to_string(m_iStorageCurrentPage));
     SyncField(binder, &InGameShopRmlModel::storageTotalPages, "storage_total_pages", std::to_string(m_iStorageTotalPage));
 
     // MU Volta: the button opens the package; its dialog has the Buy button and the confirmations.
     SyncField(binder, &InGameShopRmlModel::buyLabel, "buy_label", Narrow(I18N::Game::ShopView));
-    SyncField(binder, &InGameShopRmlModel::giftHint, "gift_hint", Narrow(I18N::Game::SendWCoin));
-    SyncField(binder, &InGameShopRmlModel::chargeHint, "charge_hint", Narrow(I18N::Game::RechargeWCoin));
     SyncField(binder, &InGameShopRmlModel::refreshHint, "refresh_hint", Narrow(I18N::Game::UpdateInformation));
     SyncField(binder, &InGameShopRmlModel::closeHint, "close_hint", Narrow(I18N::Game::Close388));
     SyncField(binder, &InGameShopRmlModel::useLabel, "use_label", Narrow(I18N::Game::Use));
@@ -310,7 +296,7 @@ void CInGameShop::SyncRmlModel()
     SyncField(binder, &InGameShopRmlModel::bannerSrc, "banner_src", Rml::String(m_BannerSource));
     SyncField(binder, &InGameShopRmlModel::bannerLinked, "banner_linked", m_bBannerLink);
 
-#ifdef FOR_WORK
+#if defined(FOR_WORK) && defined(MUVOLTA_IGS_DEBUG) // MU Volta: no developer lines for players
     wchar_t text[MAX_TEXT_LENGTH] = {};
     CListVersionInfo version = g_InGameShopSystem->GetCurrentScriptVer();
     mu_swprintf(text, L"Script Ver. %d.%d.%d", version.Zone, version.year, version.yearId);

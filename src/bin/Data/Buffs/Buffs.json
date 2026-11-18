@@ -3092,9 +3092,9 @@
         "zh-TW": "治癒印章"
       },
       "description": {
-        "en": "EXP +10%\nLife recovery +5%",
-        "es": "EXP +10%\nRecuperación de vida +5%",
-        "pt": "EXP +10%\nRecuperação de vida +5%"
+        "en": "EXP +10%\nMaster EXP +10%\nLife recovery +5%",
+        "es": "EXP +10%\nEXP maestra +10%\nRecuperación de vida +5%",
+        "pt": "EXP +10%\nEXP mestre +10%\nRecuperação de vida +5%"
       },
       "item": {
         "group": 13,
