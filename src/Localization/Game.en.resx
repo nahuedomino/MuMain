@@ -2436,6 +2436,9 @@ Fullscreen changes the monitor to the chosen resolution.</value>
   <data name="Cannot be traded." xml:space="preserve">
     <value>Cannot be traded.</value>
   </data>
+  <data name="Equipped items cannot be sold. Take the item off first." xml:space="preserve">
+    <value>Equipped items cannot be sold. Take the item off first.</value>
+  </data>
   <data name="Cannot be sold." xml:space="preserve">
     <value>Cannot be sold.</value>
   </data>

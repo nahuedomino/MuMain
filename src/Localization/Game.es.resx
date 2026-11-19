@@ -2007,6 +2007,9 @@ Pantalla completa cambia el monitor a la resolución elegida.</value>
   <data name="Cannot be traded." xml:space="preserve">
     <value>No se puede negociar.</value>
   </data>
+  <data name="Equipped items cannot be sold. Take the item off first." xml:space="preserve">
+    <value>No puedes vender objetos equipados. Quítate el objeto primero.</value>
+  </data>
   <data name="Cannot be sold." xml:space="preserve">
     <value>No se puede vender.</value>
   </data>

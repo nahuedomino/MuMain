@@ -2007,6 +2007,9 @@ Tela cheia muda o monitor para a resolução escolhida.</value>
   <data name="Cannot be traded." xml:space="preserve">
     <value>Não pode ser negociado.</value>
   </data>
+  <data name="Equipped items cannot be sold. Take the item off first." xml:space="preserve">
+    <value>Itens equipados não podem ser vendidos. Remova o item primeiro.</value>
+  </data>
   <data name="Cannot be sold." xml:space="preserve">
     <value>Não pode ser vendido.</value>
   </data>
