@@ -106,7 +106,7 @@
 			<div id="cb_pick_excellent" class="mh-check"><div class="checkbox-box" data-class-checked="checks.pick_excellent" data-event-click="muhelper_toggle('pick_excellent')"></div><span class="sharp-text mh-text marquee checkbox-label" data-style-font-size="text_px + 'px'">{{labels.pick_excellent}}</span></div>
 			<div id="cb_pick_extra" class="mh-check"><div class="checkbox-box" data-class-checked="checks.pick_extra" data-event-click="muhelper_toggle('pick_extra')"></div><span class="sharp-text mh-text marquee checkbox-label" data-style-font-size="text_px + 'px'">{{labels.pick_extra}}</span></div>
 			<div id="item_plate" class="mh-string-plate"></div>
-			<input id="item_name" type="text" class="sharp-text text-field mh-field" data-value="item_name" data-style-font-size="text_px + 'px'"/>
+			<input id="item_name" type="text" maxlength="14" class="sharp-text text-field mh-field" data-value="item_name" data-style-font-size="text_px + 'px'"/>
 			<div id="btn_add_item" class="mh-btn-setting" data-event-click="muhelper_button('add_item')"></div><span id="btn_add_item_label" class="sharp-text mh-text marquee mh-center mh-btn-label mh-btn-label-setting" data-style-font-size="text_px + 'px'">{{labels.add}}</span>
 			<div id="extra_list" class="sharp-text scroll-pane" data-style-font-size="text_px + 'px'">
 				<div class="mh-extra-row" data-for="it : extra_items" data-class-selected="it.selected" data-event-click="muhelper_extra_select(it.index)">{{it.name}}</div>
