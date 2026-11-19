@@ -1,4 +1,6 @@
 #include "stdafx.h"
+#include "GameLogic/Automation/Repair.h"
+#include "GameLogic/Items/ItemCategories.h"
 #include "GameLogic/Automation/Attack.h"
 #include "GameLogic/Automation/HelperPickupFilter.h"
 #include "GameLogic/Automation/Movement.h"
@@ -828,7 +830,7 @@ namespace MUHelper
             for (int i = 0; i < MAX_EQUIPMENT; i++)
             {
                 ITEM* pItem = &CharacterMachine->Equipment[i];
-                if (!pItem || pItem->Type == -1 || GameLogic::Items::IsRepairBan(pItem))
+                if (!pItem || pItem->Type == -1)
                 {
                     continue;
                 }
@@ -847,9 +849,9 @@ namespace MUHelper
                     continue;
                 }
 
-                int64_t iHealth = (iDurability * 100 + iMaxDurability - 1) / iMaxDurability;
-
-                if (iHealth <= DEFAULT_DURABILITY_THRESHOLD)
+                if (GameLogic::Automation::ShouldRepairEquipment(GameLogic::Items::IsRepairBan(pItem),
+                                                                 GameLogic::Items::IsAmmunition(pItem), iDurability,
+                                                                 iMaxDurability, DEFAULT_DURABILITY_THRESHOLD))
                 {
                     int64_t iGoldCost = CalcSelfRepairCost(ItemValue(pItem, 2), iDurability, iMaxDurability, pItem->Type);
                     if (iGoldCost <= CharacterMachine->Gold)
