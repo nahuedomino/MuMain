@@ -365,6 +365,15 @@ bool mu::ui::window::CNPCShop::InventoryProcess()
 
     if (mu::ui::window::IsRelease(VK_LBUTTON) == true && m_pNewInventoryCtrl->ContainsPointer() == true && m_bSellingItem == false)
     {
+        // An item taken from an equipment slot can't be sold; say so instead of ignoring the drop (sven-n/MuMain#392).
+        if (pPickedItem->GetSourceStorageType() == STORAGE_TYPE::INVENTORY && pPickedItem->GetSourceLinealPos() >= 0
+            && pPickedItem->GetSourceLinealPos() < MAX_EQUIPMENT_INDEX)
+        {
+            g_pSystemLogBox->AddText(I18N::Game::EquippedItemsCannotBeSoldTakeTheItemOffFirst, mu::ui::window::TYPE_ERROR_MESSAGE);
+            m_pNewInventoryCtrl->BackupPickedItem();
+            return true;
+        }
+
         if (CharacterMachine->Gold + ItemValue(pItem) > GameLogic::Items::kMaxInventoryZen)
         {
             g_pSystemLogBox->AddText(I18N::Game::ExceededMaximumAmountOfZenYouCanPossess, mu::ui::window::TYPE_SYSTEM_MESSAGE);
