@@ -2859,6 +2859,9 @@ Tela cheia muda o monitor para a resolução escolhida.</value>
   <data name="Either the receiver does not exist or there is no mail box." xml:space="preserve">
     <value>O destinatário não existe ou não há caixa de correio.</value>
   </data>
+  <data name="You cannot add yourself as a friend." xml:space="preserve">
+    <value>Você não pode adicionar a si mesmo como amigo.</value>
+  </data>
   <data name="You cannot send a letter to yourself." xml:space="preserve">
     <value>Você não pode enviar uma carta para si mesmo.</value>
   </data>

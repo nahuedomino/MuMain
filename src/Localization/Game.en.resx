@@ -3288,6 +3288,9 @@ Fullscreen changes the monitor to the chosen resolution.</value>
   <data name="Either the receiver does not exist or there is no mail box." xml:space="preserve">
     <value>Either the receiver does not exist or there is no mail box.</value>
   </data>
+  <data name="You cannot add yourself as a friend." xml:space="preserve">
+    <value>You cannot add yourself as a friend.</value>
+  </data>
   <data name="You cannot send a letter to yourself." xml:space="preserve">
     <value>You cannot send a letter to yourself.</value>
   </data>

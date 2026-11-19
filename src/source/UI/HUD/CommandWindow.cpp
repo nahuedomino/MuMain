@@ -1,5 +1,6 @@
 
 #include "stdafx.h"
+#include "GameLogic/Social/FriendRules.h"
 #include "I18N/All.h"
 
 #include "UI/HUD/CommandWindow.h"
@@ -566,6 +567,12 @@ bool mu::ui::window::CCommandWindow::CommandAddFriend(CHARACTER* pSelectedCha)
 {
     if (g_pWindowMgr->IsServerEnable() == TRUE && pSelectedCha != nullptr)
     {
+        if (Hero != nullptr && GameLogic::Social::IsOwnCharacterName(pSelectedCha->ID, Hero->ID))
+        {
+            g_pSystemLogBox->AddText(I18N::Game::YouCannotAddYourselfAsAFriend, mu::ui::window::TYPE_ERROR_MESSAGE);
+            return true;
+        }
+
         SocketClient->ToGameServer()->SendFriendAddRequest(MU_C16(pSelectedCha->ID));
         return true;
     }
