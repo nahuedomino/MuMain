@@ -6,6 +6,7 @@
 #include "Engine/Object/ZzzInventory.h"
 #include "Engine/Object/ZzzObject.h"
 #include "GameLogic/Automation/Pickup.h"
+#include "GameLogic/Automation/Repair.h"
 #include "GameLogic/Automation/Skill.h"
 #include "GameLogic/Skills/SkillManager.h"
 #include "MUHelper/MuHelper.h"
@@ -552,4 +553,17 @@ TEST_CASE("A member who joins the party is buffed right away, not at the next ca
 
     g_CharacterUnRegisterBuff((&fixture.characters[1].Object), eBuff_Attack);
     g_CharacterUnRegisterBuff((&fixture.characters[2].Object), eBuff_Attack);
+}
+
+TEST_CASE("the helper repairs worn equipment, but never arrows or bolts [gamelogic][helper][repair]")
+{
+    using GameLogic::Automation::ShouldRepairEquipment;
+    // A worn weapon at 20 of 100 with a 50 % threshold is repaired; a quiver with 20 of 100 arrows is not (#913).
+    CHECK(ShouldRepairEquipment(false, false, 20, 100, 50));
+    CHECK_FALSE(ShouldRepairEquipment(false, true, 20, 100, 50));
+    CHECK_FALSE(ShouldRepairEquipment(true, false, 20, 100, 50));
+    // Health is rounded up: 50 of 99 is 51 %, above a 50 % threshold.
+    CHECK_FALSE(ShouldRepairEquipment(false, false, 50, 99, 50));
+    CHECK(ShouldRepairEquipment(false, false, 49, 99, 50));
+    CHECK_FALSE(ShouldRepairEquipment(false, false, 0, 0, 50));
 }
