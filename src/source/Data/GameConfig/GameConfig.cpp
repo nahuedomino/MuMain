@@ -120,6 +120,8 @@ void GameConfig::Load()
         mu::log::Get("core")->error(
             "config.ini: Relay is not a ws:// or wss:// address with a host; connecting over TCP");
     }
+    m_chatServerPort = GameConfigValidation::ValidateServerPort(
+        ReadInt(CfgSectionConnectionSettings, CfgKeyChatServerPort, CfgDefaultChatServerPort), CfgDefaultChatServerPort);
 
     m_chatCommandFavourites = ReadStringList(L"ChatCommands", L"Favourite");
     m_chatCommandTemplates = ReadStringList(L"ChatCommands", L"Template");

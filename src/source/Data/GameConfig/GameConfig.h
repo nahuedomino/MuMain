@@ -70,6 +70,7 @@ public:
     {
         return m_relay;
     }
+    int GetChatServerPort() const { return m_chatServerPort; }
 
     void SetServerIP(const std::wstring& ip);
     void SetServerPort(int port);
@@ -277,6 +278,7 @@ private:
     std::wstring m_serverIP;
     int m_serverPort;
     std::wstring m_relay;
+    int m_chatServerPort;
 
     std::wstring m_uiLocale;
     bool m_translateItemNames;
