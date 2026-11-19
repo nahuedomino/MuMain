@@ -2,6 +2,7 @@
 ///////////////////////////////////////////////////////////////////////////////
 
 #include "stdafx.h"
+#include "Data/GameConfig/GameConfig.h"
 #include "UI/Social/SocialWindowManager.h"
 #include "UI/Social/FriendWindowViews.h"
 #include "UI/Social/SocialWorkspace.h"
@@ -998,7 +999,8 @@ void CUIChatWindow::ConnectToChatServer(const wchar_t* pszIP, DWORD dwRoomNumber
 {
     m_dwRoomNumber = dwRoomNumber;
 
-    _connection = new Connection(MU_C16(pszIP), 55980, true, &HandlePacketS);
+    // The chat room connection info carries only the IP; the port is the configured one (ChatServerPort).
+    _connection = new Connection(MU_C16(pszIP), GameConfig::GetInstance().GetChatServerPort(), true, &HandlePacketS);
 
     // Only a connect that couldn't start fails here; the authentication below waits until the connection opens.
     if (_connection->State() == Network::ConnectionState::Closed)

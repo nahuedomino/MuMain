@@ -12,6 +12,7 @@
 #include "doctest.h"
 #include <string>
 
+#include "Data/GameConfig/GameConfigConstants.h"
 #include "Data/GameConfig/GameConfigValidation.h"
 
 // =============================================================================
@@ -191,4 +192,12 @@ TEST_CASE("the config file is the one beside the executable unless MU_CONFIG_PAT
     CHECK(GameConfigValidation::ResolveConfigPath(directory, "") == directory / "config.ini");
     CHECK(GameConfigValidation::ResolveConfigPath(directory, "runs/viewer-config.ini") ==
           std::filesystem::path("runs/viewer-config.ini"));
+}
+
+TEST_CASE("the chat server port defaults to OpenMU's 45980 and keeps a configured port [network][server-config][chat]")
+{
+    // OpenMU's chat server left the dynamic port range: 55980 became 45980 (sven-n/MuMain#853).
+    CHECK(CfgDefaults::CfgDefaultChatServerPort == 45980);
+    CHECK(GameConfigValidation::ValidateServerPort(55980, CfgDefaults::CfgDefaultChatServerPort) == 55980);
+    CHECK(GameConfigValidation::ValidateServerPort(0, CfgDefaults::CfgDefaultChatServerPort) == 45980);
 }

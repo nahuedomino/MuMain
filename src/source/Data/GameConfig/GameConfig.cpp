@@ -112,6 +112,8 @@ void GameConfig::Load()
         ReadString(CfgSectionConnectionSettings, CfgKeyServerIP, CfgDefaultServerIP), CfgDefaultServerIP);
     m_serverPort = GameConfigValidation::ValidateServerPort(
         ReadInt(CfgSectionConnectionSettings, CfgKeyServerPort, CfgDefaultServerPort), CfgDefaultServerPort);
+    m_chatServerPort = GameConfigValidation::ValidateServerPort(
+        ReadInt(CfgSectionConnectionSettings, CfgKeyChatServerPort, CfgDefaultChatServerPort), CfgDefaultChatServerPort);
 
     m_chatCommandFavourites = ReadStringList(L"ChatCommands", L"Favourite");
     m_chatCommandTemplates = ReadStringList(L"ChatCommands", L"Template");

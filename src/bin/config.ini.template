@@ -19,6 +19,8 @@ MusicVolume=5
 [CONNECTION SETTINGS]
 ServerIP=localhost
 ServerPort=44406
+; The chat server (friend messenger and chat rooms). OpenMU: 45980; older OpenMU databases and Webzen: 55980.
+ChatServerPort=45980
 [UI]
 Locale=en
 TranslateItemNames=1

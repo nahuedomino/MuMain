@@ -62,6 +62,7 @@ public:
     // Connection
     std::wstring GetServerIP() const { return m_serverIP; }
     int GetServerPort() const { return m_serverPort; }
+    int GetChatServerPort() const { return m_chatServerPort; }
 
     void SetServerIP(const std::wstring& ip);
     void SetServerPort(int port);
@@ -245,6 +246,7 @@ private:
 
     std::wstring m_serverIP;
     int m_serverPort;
+    int m_chatServerPort;
 
     std::wstring m_uiLocale;
     bool m_translateItemNames;
