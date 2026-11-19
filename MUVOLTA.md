@@ -113,6 +113,16 @@ Version 1.44.5: login result 9 (`NoChargeInfo`) says the account is reserved unt
 launch the game servers require the "Beta access" attribute (mu-volta-client `tools/beta-gate`), and OpenMU refuses
 accounts without it with that code.
 
+Version 1.45.0 rebases the MU Volta patches onto upstream `v1.45.0` (Item Options in the editor, later seasons' map
+files, the defense aura ends when its player is cloaked, our "swirling aura for Greater Defense only", which upstream
+now ships, so our patch is dropped). Fixes from the upstream issue list, early game first:
+the friend messenger and chat rooms connect to `ChatServerPort` (default 45980, OpenMU's chat server; was a
+hard-coded 55980, so chat never connected: sven-n/MuMain#853); the MU Helper doesn't try to repair arrows and bolts
+(#913); its extra item field stops at the 14 characters it can save (#585, `mu_helper_config.rml` of both themes, in
+mu-volta-client `client-data/`); the own character can't be added as a friend (#887) and selling an equipped item says
+why it isn't sold (#392), both with new en/es/pt texts; and sven-n/MuMain#1053 (open upstream PR, 5 commits): an item
+dropped in the inventory lands on the cell under its first cell (was one cell up or left, #922).
+
 The teleport/PvP follow-up requires the matching OpenMU gameplay core and MU Volta plugin,
 with `CooldownMilliseconds = 2000` on the server. Client readiness uses the server's landing
 packet, not a timer started at the click; ordinary warps, map changes and revival reset it.
@@ -151,12 +161,12 @@ Deploy with the matching MU Volta server balance update; copy `chat_input.rml` i
 `mu-volta-client/client-data/Interface/RmlUi/` because release runtimes contain no game data.
 
 ```sh
-git tag muvolta-v1.44.0 && git push --force-with-lease fork muvolta muvolta-v1.44.0
+git tag muvolta-v1.45.0 && git push --force-with-lease fork muvolta muvolta-v1.45.0
 ```
 
 The `MU Volta Release` workflow builds the Windows runtime (about 35 minutes) and attaches it to the
-`muvolta-v1.44.0` release. Build the macOS runtime locally and upload it to the same release with
-`gh release upload muvolta-v1.44.0 MuMain-macos-native-arm64-release-editor-off-no-data.tar.gz --repo nahuedomino/MuMain`.
+`muvolta-v1.45.0` release. Build the macOS runtime locally and upload it to the same release with
+`gh release upload muvolta-v1.45.0 MuMain-macos-native-arm64-release-editor-off-no-data.tar.gz --repo nahuedomino/MuMain`.
 The game data still comes from the upstream release.
 
 To ship new patches for the same upstream version, release a fork-only patch version (e.g. `v1.36.1`
@@ -177,10 +187,10 @@ When syncing with a new upstream release, rebase from the upstream tag (not the 
 ```sh
 git fetch --no-recurse-submodules origin --tags
 git switch muvolta
-git branch muvolta-pre-1.44.0
-git rebase --onto v1.44.0 v1.42.1      # replay our patches on the new tag
+git branch muvolta-pre-1.45.0
+git rebase --onto v1.45.0 v1.44.0      # replay our patches on the new tag
 ```
 
 Drop a patch when upstream ships its own fix. Compare the `build-windows` job of
 `.github/workflows/ci.yml` with `muvolta-release.yml` and copy any changes. Then tag
-`muvolta-v1.44.0` and push with `--force-with-lease` for the rebased branch.
+`muvolta-v1.45.0` and push with `--force-with-lease` for the rebased branch.
