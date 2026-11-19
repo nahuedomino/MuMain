@@ -1,4 +1,7 @@
 #include "stdafx.h"
+#include "GameLogic/Social/FriendRules.h"
+#include "Engine/Object/ZzzCharacter.h"
+#include "I18N/All.h"
 #include "UI/Social/FriendWindow.h"
 #include "UI/Social/FriendShell.h"
 #include "UI/Core/WindowCommon.h"
@@ -47,7 +50,9 @@ BOOL CUIFriendWindow::HandleMessage()
     if (m_WorkMessage.m_iMessage == UI_MESSAGE_TXTRETURN)
     {
         const auto name = TakeReturnText();
-        if (!name.empty())
+        if (Hero != nullptr && GameLogic::Social::IsOwnCharacterName(name, Hero->ID))
+            g_pSystemLogBox->AddText(I18N::Game::YouCannotAddYourselfAsAFriend, mu::ui::window::TYPE_ERROR_MESSAGE);
+        else if (!name.empty())
             SocketClient->ToGameServer()->SendFriendAddRequest(MU_C16(name.c_str()));
     }
     else if (m_WorkMessage.m_iMessage == UI_MESSAGE_SELECTED)

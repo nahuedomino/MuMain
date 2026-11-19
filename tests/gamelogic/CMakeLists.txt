@@ -247,6 +247,14 @@ mu_add_test(
 
 # MU Volta: the health bar over party members' heads.
 mu_add_test(
+    NAME test_friend_rules
+    SOURCES
+        test_friend_rules.cpp
+    LINK_LIBS
+        MuClient
+)
+
+mu_add_test(
     NAME test_party_health_bar
     SOURCES
         test_party_health_bar.cpp
