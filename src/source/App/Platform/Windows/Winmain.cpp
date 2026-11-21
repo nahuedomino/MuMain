@@ -2332,7 +2332,8 @@ bool StartClient(char* szCmdLine)
     I18N::RegisterLocaleObserver(&LogUiLanguageChange, nullptr);
     g_MonsterDataHandler.SetNamesChangedCallback(&GameLogic::Monsters::Names::RefreshShownNames);
     g_MonsterDataHandler.SetMonstersChangedCallback(&World::Monsters::ApplyLiveSetup);
-    Engine::Characters::SetEnhancedMovementEnabled(GameConfig::GetInstance().GetEnhancedMovement());
+    // MU Volta: Enhanced Movement stays off and its option is hidden (it doesn't work well), whatever config.ini says.
+    Engine::Characters::SetEnhancedMovementEnabled(false);
 
 #ifdef _EDITOR
     // Initialize MU Editor with the live SDL GPU window.

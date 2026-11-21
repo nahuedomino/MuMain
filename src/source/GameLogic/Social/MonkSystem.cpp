@@ -488,6 +488,7 @@ bool CMonkSystem::SetRageSkillAni(int _nSkill, OBJECT* _pObj)
         return true;
     case AT_SKILL_DRAGON_ROAR:
     case AT_SKILL_DRAGON_ROAR_STR:
+    case AT_SKILL_PHOENIX_SHOT: // MU Volta: the Season 6 client has no Phoenix Shot animation; Dragon Roar's fits.
         SetAction(_pObj, PLAYER_SKILL_DRAGONLORE);
         return true;
     case AT_SKILL_DRAGON_KICK:

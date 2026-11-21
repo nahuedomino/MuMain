@@ -5626,6 +5626,7 @@ BOOL ReceiveMagicContinue(const BYTE* ReceiveBuffer, int Size, BOOL bEncrypted)
                 break;
             case AT_SKILL_DRAGON_ROAR:
             case AT_SKILL_DRAGON_ROAR_STR:
+            case AT_SKILL_PHOENIX_SHOT: // MU Volta: others see the cast like Dragon Roar's, with the phoenix effect.
             {
                 if (sc != Hero)
                     g_CMonkSystem.RageCreateEffect(so, MagicNumber);
