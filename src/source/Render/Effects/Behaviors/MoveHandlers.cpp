@@ -19,7 +19,7 @@
 #include "UI/Core/WindowSystem.h"
 #include "Engine/Object/ZzzInterface.h"
 #include "MoveHandlers.h"
-
+#include "PhoenixShotMoves.h"
 
 namespace Render::Effects::Behaviors
 {
@@ -5797,6 +5797,10 @@ namespace Render::Effects::Behaviors
                         o->Light[2] = o->EyeRight[2] * (o->PKKey * 0.1f);
                     }
                 }
+                else if (o->SubType == 4)
+                {
+                    MoveStrikeSpiral(o);
+                }
     }
         return true;
     }
@@ -9627,68 +9631,6 @@ namespace Render::Effects::Behaviors
         return true;
     }
 
-    // MODEL_PHOENIX_SHOT (MU Volta)
-    // The Season 6 source creates this effect on the target but never moves or draws it, so Phoenix Shot showed
-    // nothing. Its model has no meshes: two arms of bones (R0-R03 and L0-L03) that spin once around the target at
-    // chest height, open to about two tiles and close again over 19 keys. The vortex is drawn along the arms: dark
-    // smoke trails and violet light at the arm ends, and a violet burst when the arms close.
-    bool Move_MODEL_PHOENIX_SHOT(OBJECT* o, int index, float Luminosity)
-    {
-        BMD* pModel = &Models[o->Type];
-        const float lastKey = (float)(pModel->NumActions > 0 ? pModel->Actions[0].NumAnimationKeys - 1 : 0);
-        if (pModel->NumBones < 8 || lastKey <= 0.f)
-        {
-            o->LifeTime = 0;
-            return true;
-        }
-
-        constexpr float KeysPerFrame = 0.5f;
-        if (o->AttackPoint[0] == 0)
-        {
-            // First frame (CreateEffect clears AttackPoint): the creation sets no life time or frame, as its catalogue
-            // row is empty like the old case.
-            o->AttackPoint[0] = 1;
-            o->LifeTime = 40;
-            o->AnimationFrame = 0.f;
-        }
-
-        const bool wasOpen = o->AnimationFrame < lastKey - 2.f;
-        o->AnimationFrame = std::min(o->AnimationFrame + KeysPerFrame * FPS_ANIMATION_FACTOR, lastKey);
-        o->PriorAnimationFrame = o->AnimationFrame;
-
-        pModel->CurrentAction = 0;
-        pModel->BodyScale = o->Scale;
-        pModel->Animation(BoneTransform, o->AnimationFrame, o->PriorAnimationFrame, 0, o->Angle, o->HeadAngle, false, false,
-                          nullptr, 0);
-
-        vec3_t vSmoke, vGlow, vPos;
-        Vector(0.45f, 0.7f, 0.35f, vSmoke); // subtracted: leaves a dark violet
-        Vector(0.6f, 0.25f, 1.0f, vGlow);
-        constexpr int ArmBones[] = { 2, 3, 6, 7 }; // R2, R03, L2, L03
-        for (const int bone : ArmBones)
-        {
-            pModel->TransformByObjectBone(vPos, o, bone);
-            CreateParticleFpsChecked(BITMAP_CLUD64, vPos, o->Angle, vSmoke, 5, 0.5f * o->Scale);
-            if (bone == 3 || bone == 7)
-            {
-                CreateSprite(BITMAP_LIGHT, vPos, 2.0f * o->Scale, vGlow, o);
-                CreateParticleFpsChecked(BITMAP_SPARK + 1, vPos, o->Angle, vGlow, 3, 0.8f);
-            }
-        }
-
-        if (wasOpen && o->AnimationFrame >= lastKey - 2.f)
-        {
-            Vector(0.85f, 0.2f, 1.0f, vPos);
-            CreateEffect(MODEL_WINDFOCE, o->Position, o->Angle, vPos, 4, nullptr, -1, 0, 0, 0, 1.0f);
-            vec3_t vCenter;
-            VectorCopy(o->Position, vCenter);
-            vCenter[2] += 100.f * o->Scale;
-            for (int i = 0; i < 6; ++i)
-                CreateParticle(BITMAP_CLUD64, vCenter, o->Angle, vSmoke, 5, 1.2f * o->Scale);
-        }
-        return true;
-    }
-
     // MODEL_WINDFOCE
     bool Move_MODEL_WINDFOCE(OBJECT* o, int index, float Luminosity)
     {
@@ -10668,7 +10610,6 @@ namespace Render::Effects::Behaviors
             { MODEL_SHOCKWAVE_SPIN01, &Move_MODEL_SHOCKWAVE_SPIN01 },
             { BITMAP_EVENT_CLOUD, &Move_BITMAP_EVENT_CLOUD },
             { MODEL_WINDFOCE, &Move_MODEL_WINDFOCE },
-            { MODEL_PHOENIX_SHOT, &Move_MODEL_PHOENIX_SHOT }, // MU Volta
             { BITMAP_LIGHT_RED, &Move_BITMAP_LIGHT_RED },
             { MODEL_WINDFOCE_MIRROR, &Move_MODEL_WINDFOCE_MIRROR },
             { BITMAP_SWORD_EFFECT_MONO, &Move_BITMAP_SWORD_EFFECT_MONO },
@@ -10680,6 +10621,8 @@ namespace Render::Effects::Behaviors
             { MODEL_TARGETMON_EFFECT, &Move_MODEL_TARGETMON_EFFECT },
             { MODEL_VOLCANO_OF_MONK, &Move_MODEL_VOLCANO_OF_MONK },
             { MODEL_VOLCANO_STONE, &Move_MODEL_VOLCANO_STONE },
+            { MODEL_PHOENIX_SHOT, &Move_MODEL_PHOENIX_SHOT },
+            { MODEL_WINDSPIN03, &Move_MODEL_WINDSPIN03 },
         };
         // clang-format on
         return handlers;

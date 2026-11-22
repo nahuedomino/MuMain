@@ -203,7 +203,6 @@ namespace Render::Effects::Behaviors
     bool Move_BITMAP_DAMAGE1(OBJECT* o, int index, float Luminosity);
     bool Move_MODEL_SHOCKWAVE_SPIN01(OBJECT* o, int index, float Luminosity);
     bool Move_BITMAP_EVENT_CLOUD(OBJECT* o, int index, float Luminosity);
-    bool Move_MODEL_PHOENIX_SHOT(OBJECT* o, int index, float Luminosity);
     bool Move_MODEL_WINDFOCE(OBJECT* o, int index, float Luminosity);
     bool Move_BITMAP_LIGHT_RED(OBJECT* o, int index, float Luminosity);
     bool Move_MODEL_WINDFOCE_MIRROR(OBJECT* o, int index, float Luminosity);
