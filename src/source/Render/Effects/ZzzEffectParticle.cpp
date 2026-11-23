@@ -9353,7 +9353,7 @@ void DescribeParticle(const PARTICLE& particle, int i, float Width, float Height
 
 void RenderParticles(BYTE byRenderOneMore)
 {
-    if (!g_pOption->GetRenderAllEffects())
+    if (g_pOption && !g_pOption->GetRenderAllEffects())
     {
         return;
     }
