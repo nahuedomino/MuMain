@@ -131,6 +131,12 @@ Version 1.45.2: Phoenix Shot plays its own animation (`PLAYER_SKILL_PHOENIX_SHOT
 frames, as later clients do) instead of 1.45.1's Dragon Roar animation; its speed follows attack speed like the other
 Rage Fighter skills (0.4 + attack speed x 0.002).
 
+Version 1.45.3: Phoenix Shot draws its vortex. The Season 6 source creates `MODEL_PHOENIX_SHOT` on the target but
+never moves or draws it, and its model (`phoenix_shot_effect.bmd`) has no meshes, only two arms of bones that spin
+around the target. `Move_MODEL_PHOENIX_SHOT` plays those bones and draws dark violet smoke, light and sparks along
+the arms, and a violet burst when they close; its life time is set on the first frame so the creation catalogue
+stays as recorded.
+
 The teleport/PvP follow-up requires the matching OpenMU gameplay core and MU Volta plugin,
 with `CooldownMilliseconds = 2000` on the server. Client readiness uses the server's landing
 packet, not a timer started at the click; ordinary warps, map changes and revival reset it.
