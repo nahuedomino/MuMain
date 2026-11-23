@@ -8,6 +8,7 @@
 #include "stdafx.h"
 #include "Render/Effects/AuraJointLifecycle.h"
 #include "Core/Utilities/Random.h"
+#include "Core/Utilities/Log/MuLogger.h"
 #include <execution>
 #include <optional>
 #include <algorithm>
@@ -1075,7 +1076,7 @@ void SetAttackSpeed()
     Models[MODEL_PLAYER].Actions[PLAYER_SKILL_DARKSIDE_ATTACK].PlaySpeed = 0.3f + RageAttackSpeed;
     Models[MODEL_PLAYER].Actions[PLAYER_SKILL_DRAGONKICK].PlaySpeed = 0.4f + RageAttackSpeed;
     Models[MODEL_PLAYER].Actions[PLAYER_SKILL_DRAGONLORE].PlaySpeed = 0.3f + RageAttackSpeed;
-    Models[MODEL_PLAYER].Actions[PLAYER_SKILL_PHOENIX_SHOT].PlaySpeed = 0.4f + RageAttackSpeed;
+    Models[MODEL_PLAYER].Actions[PLAYER_SKILL_PHOENIX_SHOT].PlaySpeed = 0.4f + RageAttackSpeed; // MU Volta
     Models[MODEL_PLAYER].Actions[PLAYER_SKILL_ATT_UP_OURFORCES].PlaySpeed = 0.35f;
     Models[MODEL_PLAYER].Actions[PLAYER_SKILL_HP_UP_OURFORCES].PlaySpeed = 0.35f;
     Models[MODEL_PLAYER].Actions[PLAYER_RAGE_FENRIR_ATTACK_RIGHT].PlaySpeed = 0.25f + RageAttackSpeed;
@@ -6498,9 +6499,37 @@ void MoveMonsterClient(CHARACTER* c, OBJECT* o)
     }
 }
 
+bool RecoverRemoteTeleportVisibility(CHARACTER* c, std::chrono::steady_clock::time_point now)
+{
+    auto& o = c->Object;
+    const bool fadingOut = o.Teleport == TELEPORT_BEGIN || o.Teleport == TELEPORT;
+    if (c == Hero || !o.Live || c->Dead > 0 || o.Kind != KIND_PLAYER
+        || !fadingOut || o.AlphaTarget != 0.f)
+    {
+        RemoteTeleportFade::Clear(c);
+        return false;
+    }
+
+    // Takeoff normally ends with removal/recreation after 1.8 s. A missing completion
+    // must not leave a still-present player at zero opacity indefinitely.
+    const auto startedAt = RemoteTeleportFade::StartedAt(c);
+    if (!startedAt)
+        RemoteTeleportFade::Set(c, now);
+    if (now - startedAt.value_or(now) < std::chrono::seconds(5)
+        || g_isCharacterBuff((&o), eBuff_Cloaking))
+        return false;
+
+    o.Teleport = TELEPORT_NONE;
+    o.AlphaTarget = 1.f;
+    RemoteTeleportFade::Clear(c);
+    mu::log::Get("gameplay")->warn("Recovered stalled remote teleport visibility for character key {}", c->Key);
+    return true;
+}
+
 void MoveCharacterClient(CHARACTER* cc)
 {
     OBJECT* co = &cc->Object;
+    RecoverRemoteTeleportVisibility(cc);
     if (co->Live)
     {
         co->Visible = TestFrustrum2D(co->Position[0] * 0.01f, co->Position[1] * 0.01f, -20.f);
@@ -11135,7 +11164,11 @@ void UpdatePlayerEffects(CHARACTER* c, OBJECT* o, BMD* b)
     if (g_isCharacterBuff((&c->Object), eBuff_PcRoomSeal1) || g_isCharacterBuff((&c->Object), eBuff_PcRoomSeal2) ||
         g_isCharacterBuff((&c->Object), eBuff_PcRoomSeal3) || g_isCharacterBuff((&c->Object), eBuff_Seal1) ||
         g_isCharacterBuff((&c->Object), eBuff_Seal2) || g_isCharacterBuff((&c->Object), eBuff_Seal3) ||
-        g_isCharacterBuff((&c->Object), eBuff_Seal4))
+        g_isCharacterBuff((&c->Object), eBuff_Seal4) ||
+        // MU Volta: Seal of Healing and the master seals show the seal aura too.
+        g_isCharacterBuff((&c->Object), eBuff_Seal_HpRecovery) ||
+        g_isCharacterBuff((&c->Object), eBuff_AscensionSealMaster) ||
+        g_isCharacterBuff((&c->Object), eBuff_WealthSealMaster))
     {
         if (SearchJoint(MODEL_SPEARSKILL, o, 10) == false && SearchJoint(MODEL_SPEARSKILL, o, 11) == false)
         {
@@ -12745,6 +12778,7 @@ void CreateCharacterPointer(CHARACTER* c, int Type, unsigned char PositionX, uns
     g_CharacterClearBuff(o);
 
     o->Teleport = TELEPORT_NONE;
+    RemoteTeleportFade::Clear(c);
     o->Kind = KIND_PLAYER;
     c->Change = false;
     o->SubType = 0;

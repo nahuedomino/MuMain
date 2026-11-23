@@ -911,6 +911,8 @@ void UseSkillRagefighter(CHARACTER* pCha, OBJECT* pObj)
     break;
     case AT_SKILL_DRAGON_ROAR:
     case AT_SKILL_DRAGON_ROAR_STR:
+    // MU Volta: Phoenix Shot was never sent (the Season 6 client only drew it); it's an explicit-target area skill
+    // like Dragon Roar on the server (OpenMU's AreaSkillExplicitTarget), so it's sent the same way.
     case AT_SKILL_PHOENIX_SHOT:
     {
         BYTE angle = (BYTE)((((pObj->Angle[2] + 180.f) / 360.f) * 255.f));

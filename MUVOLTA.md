@@ -137,6 +137,11 @@ around the target. `Move_MODEL_PHOENIX_SHOT` plays those bones and draws dark vi
 the arms, and a violet burst when they close; its life time is set on the first frame so the creation catalogue
 stays as recorded.
 
+Version 1.45.4: Phoenix Shot as the Season 6 client draws it, from upstream (sven-n/MuMain f1f4404dd, 4eb583e84,
+cc7b95fcb, cc9d689c9, not yet in an upstream release): the rig's arms lay bands of light, three spinning blades
+(`wind_spin03`) fly at the target, sparks, ground spirals and bursts on it, and its cast and hit sounds. It replaces
+1.45.3's own violet vortex. When syncing with an upstream release that has these commits, they're already here.
+
 The teleport/PvP follow-up requires the matching OpenMU gameplay core and MU Volta plugin,
 with `CooldownMilliseconds = 2000` on the server. Client readiness uses the server's landing
 packet, not a timer started at the click; ordinary warps, map changes and revival reset it.
