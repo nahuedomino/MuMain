@@ -127,6 +127,18 @@ Version 1.45.1: Enhanced Movement stays off and its option row is hidden in both
 well), like the S6 player models row. Other players see a Phoenix Shot cast (270) with its animation and effect
 (upstream v1.48.0 ships the skill itself: sent like Dragon Roar, its own animation and the Season 6 effect).
 
+Versions 1.45.2 to 1.45.4 gave Phoenix Shot its own animation, then a vortex of our own, then upstream's Season 6
+drawing ported ahead of its release.
+
+Version 1.48.0 rebases the MU Volta patches onto upstream `v1.48.0`, which ships Phoenix Shot (sven-n/MuMain#1174, so
+our port and the 1.45.2/1.45.3 commits are dropped; only "others see the cast" stays) and sven-n/MuMain#1053 (the
+inventory drop cell, our five commits dropped). Upstream also brings `$ping`, rented items that expire, map changes
+that load across frames and map content packs, borderless fullscreen (Display Mode), anti-aliasing, a WebSocket relay
+option (`Relay` in config.ini, empty by default), the Command window's stat breakdown, buff values in skill tooltips,
+a trade change warning and a pick-up reply that can't be read no longer blocks pick-ups. The duel window's close on
+leaving the arena moved into the new after-map-load steps of revival and teleport. `muvolta-release.yml` allows
+`ncrypt.dll` like upstream's `ci.yml`.
+
 The teleport/PvP follow-up requires the matching OpenMU gameplay core and MU Volta plugin,
 with `CooldownMilliseconds = 2000` on the server. Client readiness uses the server's landing
 packet, not a timer started at the click; ordinary warps, map changes and revival reset it.
@@ -191,10 +203,10 @@ When syncing with a new upstream release, rebase from the upstream tag (not the 
 ```sh
 git fetch --no-recurse-submodules origin --tags
 git switch muvolta
-git branch muvolta-pre-1.45.0
-git rebase --onto v1.45.0 v1.44.0      # replay our patches on the new tag
+git branch muvolta-pre-1.48.0
+git rebase --onto v1.48.0 v1.45.0      # replay our patches on the new tag
 ```
 
 Drop a patch when upstream ships its own fix. Compare the `build-windows` job of
 `.github/workflows/ci.yml` with `muvolta-release.yml` and copy any changes. Then tag
-`muvolta-v1.45.0` and push with `--force-with-lease` for the rebased branch.
+`muvolta-v1.48.0` and push with `--force-with-lease` for the rebased branch.
