@@ -2341,7 +2341,7 @@ int GetTeleportStage(const PRECEIVE_TELEPORT_POSITION& packet)
 
 static void TeleportAfterMapLoad(OBJECT* o, int OldWorld);
 static void TeleportIntoView(OBJECT* o);
-static void FinishTeleport(BYTE flag, int iEtcPart);
+static void FinishTeleport(BYTE flag, int iEtcPart, bool skillLanding);
 
 BOOL ReceiveTeleport(const BYTE* ReceiveBuffer, BOOL bEncrypted)
 {
@@ -2410,18 +2410,18 @@ BOOL ReceiveTeleport(const BYTE* ReceiveBuffer, BOOL bEncrypted)
             gMapManager.WorldActive = Data->Map;
             World::MapLoad::Begin(World::MapLoad::PackOf(gMapManager.WorldActive),
                                   gMapManager.LoadWorldSteps(gMapManager.WorldActive),
-                                  [o, OldWorld, flag, iEtcPart]
+                                  [o, OldWorld, flag, iEtcPart, skillLanding]
                                   {
                                       TeleportAfterMapLoad(o, OldWorld);
                                       TeleportIntoView(o);
-                                      FinishTeleport(flag, iEtcPart);
+                                      FinishTeleport(flag, iEtcPart, skillLanding);
                                   });
             return TRUE;
         }
         TeleportIntoView(o);
     }
 
-    FinishTeleport(Data->Flag, iEtcPart);
+    FinishTeleport(Data->Flag, iEtcPart, skillLanding);
     return TRUE;
 }
 
@@ -2523,7 +2523,7 @@ static void TeleportIntoView(OBJECT* o)
 }
 
 // The end of ReceiveTeleport, on its map.
-static void FinishTeleport(BYTE flag, int iEtcPart)
+static void FinishTeleport(BYTE flag, int iEtcPart, bool skillLanding)
 {
     MUHelper::g_MuHelper.TriggerStop();
 
