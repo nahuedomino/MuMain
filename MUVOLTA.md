@@ -123,6 +123,10 @@ mu-volta-client `client-data/`); the own character can't be added as a friend (#
 why it isn't sold (#392), both with new en/es/pt texts; and sven-n/MuMain#1053 (open upstream PR, 5 commits): an item
 dropped in the inventory lands on the cell under its first cell (was one cell up or left, #922).
 
+Version 1.45.1: Enhanced Movement stays off and its option row is hidden in both option layouts (it doesn't work
+well), like the S6 player models row. Other players see a Phoenix Shot cast (270) with its animation and effect
+(upstream v1.48.0 ships the skill itself: sent like Dragon Roar, its own animation and the Season 6 effect).
+
 The teleport/PvP follow-up requires the matching OpenMU gameplay core and MU Volta plugin,
 with `CooldownMilliseconds = 2000` on the server. Client readiness uses the server's landing
 packet, not a timer started at the click; ordinary warps, map changes and revival reset it.
