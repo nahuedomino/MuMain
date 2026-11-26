@@ -21,6 +21,7 @@ The `muvolta` branch is an upstream MuMain release tag plus the MU Volta patches
 - `fix(follow)`: the Command window's Follow runs wherever the mouse is; a background client's last cursor position over the HUD stopped its follower.
 - `fix(macos)`: `NSAppSleepDisabled` in Info.plist, so macOS doesn't nap a background client.
 - `fix(render)`: a covered or minimized window skips the swapchain wait and the drawing and runs the game at 25 fps; on macOS such a window waited up to a second per frame, so a follower in another client crawled.
+- `fix(chat)`: the chat field stops taking characters (typed or pasted) once the message would not fit the chat log's two lines after the hero's name; the log clipped the rest of the second line for every reader. Applies to normal, party, guild, gens and whisper input (the 60-character cap stays as the upper bound).
 
 Upstream `v1.40.0` ships seven former MU Volta patches (sven-n/MuMain#1027 to #1036: Metal bitmap rows,
 party card support skills, walk vs. position glide, cash shop item models, the E5 guild request, the skinned
@@ -138,6 +139,9 @@ option (`Relay` in config.ini, empty by default), the Command window's stat brea
 a trade change warning and a pick-up reply that can't be read no longer blocks pick-ups. The duel window's close on
 leaving the arena moved into the new after-map-load steps of revival and teleport. `muvolta-release.yml` allows
 `ncrypt.dll` like upstream's `ci.yml`.
+
+Unreleased (on `muvolta` after 1.48.0): `fix(chat)` above (2026-11-26, user: long messages lost their end in the
+chat window). No game data or server change; ship with the next client release.
 
 The teleport/PvP follow-up requires the matching OpenMU gameplay core and MU Volta plugin,
 with `CooldownMilliseconds = 2000` on the server. Client readiness uses the server's landing
