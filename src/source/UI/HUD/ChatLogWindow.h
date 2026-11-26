@@ -264,11 +264,15 @@ namespace mu::ui::window
         void UpdateWndSize();
         void UpdateScrollPos();
 
+        // Whether a message from strID shows whole in the log: ProcessAddText() gives a message at
+        // most two lines, and a second line wider than the log is clipped (MU Volta).
+        static bool FitsInLog(const type_string& strID, const type_string& strText);
+
     protected:
         type_vector_msgs* GetMsgs(MESSAGE_TYPE MsgType);
         void ProcessAddText(const type_string& strID, const type_string& strText, MESSAGE_TYPE MsgType, MESSAGE_TYPE ErrMsgType);
 
-        void SeparateText(IN const type_string& strID, IN const type_string& strText, MESSAGE_TYPE MsgType,
+        static void SeparateText(IN const type_string& strID, IN const type_string& strText, MESSAGE_TYPE MsgType,
                           OUT type_string& strText1, OUT type_string& strText2);
 
         bool CheckFilterText(const type_string& strTestText);

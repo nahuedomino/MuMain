@@ -98,6 +98,11 @@ namespace mu::ui::window
         Rml::Element* GetField(const char* id) const;
         bool IsFieldFocused(const char* id) const;
         void SetFieldText(const char* id, const type_string& text);
+        // Drops the characters typed or pasted past what one message shows in the chat log (two
+        // lines after the hero's name), because the log would clip them for every reader (MU Volta).
+        void KeepChatTextWithinLog();
+        // The chat field text KeepChatTextWithinLog() last checked, so it measures only after a change.
+        Rml::String m_checkedChatText;
         void FocusField(const char* id);
 
         void BindRmlModel(Rml::DataModelConstructor& c, ChatInputRmlModel& model);

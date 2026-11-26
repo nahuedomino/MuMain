@@ -977,6 +977,16 @@ void mu::ui::window::CChatLogWindow::SeparateText(IN const type_string& strID, I
     strText2 = strText.substr(iLocToken, strText.length() - iLocToken);
 }
 
+bool mu::ui::window::CChatLogWindow::FitsInLog(const type_string& strID, const type_string& strText)
+{
+    type_string strText1, strText2;
+    SeparateText(strID, strText, TYPE_CHAT_MESSAGE, strText1, strText2);
+    if (strText2.empty())
+        return true;
+
+    return g_pRenderText->MeasureText(strText2.c_str(), static_cast<int>(strText2.length())).cx <= CLIENT_WIDTH;
+}
+
 bool mu::ui::window::CChatLogWindow::CheckFilterText(const type_string& strTestText)
 {
     auto vi_filters = m_vecFilters.begin();

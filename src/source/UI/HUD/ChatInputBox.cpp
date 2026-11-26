@@ -602,6 +602,8 @@ void mu::ui::window::CChatInputBox::SyncRmlModel()
         FocusField("chat_field");
     }
 
+    KeepChatTextWithinLog();
+
     ChatInputRmlModel& model = m_RmlView.GetModel();
 
     auto syncBool = [&](bool ChatInputRmlModel::* field, const char* name, bool value)
@@ -664,6 +666,28 @@ void mu::ui::window::CChatInputBox::SetFieldText(const char* id, const type_stri
         model.whisperId = narrow;
         m_RmlView.MarkDirty("whisper_id");
     }
+}
+
+void mu::ui::window::CChatInputBox::KeepChatTextWithinLog()
+{
+    const Rml::String& chatText = m_RmlView.GetModel().chatText;
+    if (chatText == m_checkedChatText || Hero == nullptr)
+        return;
+
+    type_string text = StringUtils::NarrowToWide(chatText);
+    const type_string sender = Hero->ID;
+    const size_t typedLength = text.length();
+    while (!text.empty() && !CChatLogWindow::FitsInLog(sender, text))
+    {
+        text.pop_back();
+        // A UTF-16 wchar_t (Windows) keeps a character outside the BMP in two units: never half of one.
+        if (!text.empty() && text.back() >= 0xD800 && text.back() <= 0xDBFF)
+            text.pop_back();
+    }
+
+    if (text.length() != typedLength)
+        SetFieldText("chat_field", text);
+    m_checkedChatText = m_RmlView.GetModel().chatText;
 }
 
 void mu::ui::window::CChatInputBox::FocusField(const char* id)
