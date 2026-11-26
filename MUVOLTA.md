@@ -140,8 +140,9 @@ a trade change warning and a pick-up reply that can't be read no longer blocks p
 leaving the arena moved into the new after-map-load steps of revival and teleport. `muvolta-release.yml` allows
 `ncrypt.dll` like upstream's `ci.yml`.
 
-Unreleased (on `muvolta` after 1.48.0): `fix(chat)` above (2026-11-26, user: long messages lost their end in the
-chat window). No game data or server change; ship with the next client release.
+Version 1.48.1 (fork-only, on upstream `v1.48.0`) adds `fix(chat)` above (2026-11-26, user: long messages lost their
+end in the chat window). No game data or server change. The same release ships the Midgard-only server-select text
+(mu-volta-client `client.conf`).
 
 The teleport/PvP follow-up requires the matching OpenMU gameplay core and MU Volta plugin,
 with `CooldownMilliseconds = 2000` on the server. Client readiness uses the server's landing
