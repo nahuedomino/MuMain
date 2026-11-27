@@ -146,10 +146,10 @@ Version 1.48.1 (fork-only, on upstream `v1.48.0`) adds `fix(chat)` above (2026-1
 end in the chat window). No game data or server change. The same release ships the Midgard-only server-select text
 (mu-volta-client `client.conf`).
 
-Unreleased (on `muvolta` after 1.48.1): `feat(bosses)` above (2026-11-27, user: boss health bars for everyone near a
-boss). Needs mu-volta-plugins "boss health bars" on the server; no game data change. Ship with the next client release.
-`fix(reflect)` above (2026-11-27, a friend's report: Reflect castable on party members). Pair with
-mu-volta-client `server-sql/reflect-party.sql` + a game restart; no game data change.
+Version 1.48.2 (fork-only, on upstream `v1.48.0`) adds `feat(bosses)` and `fix(reflect)` above (2026-11-27/28):
+boss health bars for everyone near a boss (needs mu-volta-plugins "boss health bars", live since 2026-11-27 23:37 CET)
+and Reflect castable on party members (pairs with `server-sql/reflect-party.sql`, live since 2026-11-28 00:11 CET). No
+game data change.
 
 The teleport/PvP follow-up requires the matching OpenMU gameplay core and MU Volta plugin,
 with `CooldownMilliseconds = 2000` on the server. Client readiness uses the server's landing
