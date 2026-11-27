@@ -22,6 +22,7 @@ The `muvolta` branch is an upstream MuMain release tag plus the MU Volta patches
 - `fix(macos)`: `NSAppSleepDisabled` in Info.plist, so macOS doesn't nap a background client.
 - `fix(render)`: a covered or minimized window skips the swapchain wait and the drawing and runs the game at 25 fps; on macOS such a window waited up to a second per frame, so a follower in another client crawled.
 - `fix(chat)`: the chat field stops taking characters (typed or pasted) once the message would not fit the chat log's two lines after the hero's name; the log clipped the rest of the second line for every reader. Applies to normal, party, guild, gens and whisper input (the 60-character cap stays as the upper bound).
+- `feat(bosses)`: a health bar over every boss in view, seen by every nearby player and not only the attacker, in the party bars' style (80 px): the remaining health over it rounded down (850, 8.5k, 35k, 1.2M), the fill green, amber below half and red below a quarter, eased between updates. Data from the MU Volta server's C1 0E FA 03 (mu-volta-plugins "boss health bars": object id, current and maximum health; after hits at most 4 a second, and every 2 s); hidden 6 s after the last update. The selected boss's bar at the top follows the same updates. Old servers send nothing and nothing changes.
 
 Upstream `v1.40.0` ships seven former MU Volta patches (sven-n/MuMain#1027 to #1036: Metal bitmap rows,
 party card support skills, walk vs. position glide, cash shop item models, the E5 guild request, the skinned
@@ -143,6 +144,9 @@ leaving the arena moved into the new after-map-load steps of revival and telepor
 Version 1.48.1 (fork-only, on upstream `v1.48.0`) adds `fix(chat)` above (2026-11-26, user: long messages lost their
 end in the chat window). No game data or server change. The same release ships the Midgard-only server-select text
 (mu-volta-client `client.conf`).
+
+Unreleased (on `muvolta` after 1.48.1): `feat(bosses)` above (2026-11-27, user: boss health bars for everyone near a
+boss). Needs mu-volta-plugins "boss health bars" on the server; no game data change. Ship with the next client release.
 
 The teleport/PvP follow-up requires the matching OpenMU gameplay core and MU Volta plugin,
 with `CooldownMilliseconds = 2000` on the server. Client readiness uses the server's landing
