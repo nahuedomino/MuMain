@@ -226,6 +226,7 @@ void mu::ui::window::CNameWindow::PrepareFrame()
         if (g_Camera.TopViewEnable == false)
         {
             RenderPartyHP();
+            RenderBossHP();
             battleCastle::RenderBuildTimes();
             M39Kanturu3rd::RenderKanturu3rdinterface();
         }

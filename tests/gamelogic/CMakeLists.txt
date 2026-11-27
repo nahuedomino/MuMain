@@ -292,3 +292,11 @@ mu_add_test(
     LINK_LIBS
         MuClient
 )
+
+mu_add_test(
+    NAME test_boss_health_bar
+    SOURCES
+        test_boss_health_bar.cpp
+    LINK_LIBS
+        MuClient
+)

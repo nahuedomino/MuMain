@@ -88,6 +88,7 @@
 #include "Engine/Object/Movement/SlopeLean.h"
 #include "Engine/Object/Movement/TurnLag.h"
 #include "GameLogic/Social/PartyHealthBar.h"
+#include "GameLogic/Monsters/BossHealthBar.h"
 
 #include <iterator>
 
@@ -3828,6 +3829,7 @@ void RenderInterface(bool Render)
     if (!overlaysRecorded)
     {
         RenderPartyHP();
+        RenderBossHP();
         battleCastle::RenderBuildTimes();
     }
 
@@ -4032,6 +4034,83 @@ void RenderPartyHP()
     DisableAlphaBlend();
 }
 
+
+// MU Volta: the health bar over every boss in view, seen by every nearby player (mu-volta-plugins "boss health bars"),
+// in the party bars' style: wider, with the remaining health over it (35k, 1.2M) and the fill green, amber or red.
+void RenderBossHP()
+{
+    namespace Bar = GameLogic::PartyHealthBar;
+    namespace Boss = GameLogic::BossHealthBar;
+
+    static uint64_t lastTick = 0;
+    const uint64_t now = GetTickCount64();
+    const float elapsedSeconds = lastTick == 0 ? 0.f : std::min(0.25f, (now - lastTick) / 1000.f);
+    lastTick = now;
+
+    auto& table = Boss::Current();
+    table.Prune(now);
+    if (table.Size() == 0) return;
+
+    constexpr float Width = 80.f;
+    constexpr float Height = 7.f;
+
+    const DWORD previousBackground = g_pRenderText->GetBgColor();
+    const DWORD previousText = g_pRenderText->GetTextColor();
+    for (int i = 0; i < MAX_CHARACTERS_CLIENT; ++i)
+    {
+        const CHARACTER* c = &CharactersClient[i];
+        const OBJECT* o = &c->Object;
+        if (!o->Live || !o->Visible || o->Alpha <= 0.f || c->Dead > 0 || o->Kind != KIND_MONSTER)
+            continue;
+
+        Boss::Entry* entry = table.Find(static_cast<uint16_t>(c->Key), static_cast<int>(c->MonsterIndex), now);
+        if (entry == nullptr || entry->current == 0)
+            continue;
+
+        vec3_t Position;
+        Vector(o->Position[0], o->Position[1], o->Position[2] + o->BoundingBoxMax[2] + 100.f, Position);
+        vec3_t transformed;
+        VectorTransform(Position, g_Camera.Matrix, transformed);
+        if (transformed[2] >= 0)
+            continue; // behind the camera
+
+        int ScreenX, ScreenY;
+        CameraProjection::WorldToScreen(g_Camera, Position, &ScreenX, &ScreenY);
+        const float x = static_cast<float>(ScreenX) - Width / 2.f;
+        const float y = static_cast<float>(ScreenY);
+
+        const float reported = Boss::Fraction(entry->current, entry->maximum);
+        entry->shown = entry->fresh ? reported : Bar::EaseToward(entry->shown, reported, elapsedSeconds);
+        entry->fresh = false;
+
+        const float fill = entry->shown;
+        const uint32_t color = Bar::FillColor(reported);
+        const float innerWidth = Width - 2.f;
+        const float fillWidth = innerWidth * fill;
+
+        // Normal alpha blending: EnableAlphaBlend() is additive and would wash the dark frame out.
+        EnableAlphaTest();
+        RenderColorQuadARGB(x + 1.f, y + 1.f, Width, Height, 0x60000000u);            // drop shadow
+        RenderColorQuadARGB(x, y, Width, Height, 0xE0101010u);                        // frame
+        RenderColorQuadARGB(x + 1.f, y + 1.f, innerWidth, Height - 2.f, 0xFF3A2A22u); // empty track
+        if (fillWidth > 0.f)
+        {
+            RenderColorQuadARGB(x + 1.f, y + 1.f, fillWidth, Height - 2.f, color);
+            RenderColorQuadARGB(x + 1.f, y + 1.f, fillWidth, 1.f, Bar::Highlight(color, 0.45f));
+        }
+
+        const uint32_t textColor = Bar::Highlight(color, 0.6f);
+        const std::wstring text = Boss::FormatCompact(entry->current);
+        g_pRenderText->SetBgColor(0, 0, 0, 0);
+        g_pRenderText->SetTextColor(static_cast<BYTE>((textColor >> 16) & 0xFF), static_cast<BYTE>((textColor >> 8) & 0xFF),
+                                    static_cast<BYTE>(textColor & 0xFF), 255);
+        g_pRenderText->RenderText(static_cast<int>(x), ScreenY - 11, text.c_str(), static_cast<int>(Width), 0,
+                                  RT3_SORT_CENTER);
+        DisableAlphaBlend();
+    }
+    g_pRenderText->SetBgColor(previousBackground);
+    g_pRenderText->SetTextColor(previousText);
+}
 
 bool MacroCooldownFraction(float& fraction)
 {

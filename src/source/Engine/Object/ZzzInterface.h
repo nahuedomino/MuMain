@@ -92,6 +92,7 @@ void RenderOutSides();
 // While a chat macro cools down: true, and how much of the cooldown is left (1 to 0).
 bool MacroCooldownFraction(float& fraction);
 void RenderPartyHP();
+void RenderBossHP();
 
 void SendMove(CHARACTER* c, OBJECT* o);
 void SetCharacterPos(CHARACTER* c, BYTE posX, BYTE posY, vec3_t position);

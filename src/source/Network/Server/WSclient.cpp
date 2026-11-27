@@ -141,6 +141,7 @@ using namespace mu::ui::window;
 #include "Network/RoundTripMeter.h"
 #include "GameLogic/Buffs/BuffCountdown.h"
 #include "GameLogic/Events/EventSchedule.h"
+#include "GameLogic/Monsters/BossHealthBar.h"
 
 #define MAX_DEBUG_MAX 10
 
@@ -10253,6 +10254,28 @@ void ReceiveMagicEffectDuration(const BYTE* ReceiveBuffer, int Size)
     GameLogic::Buffs::HeroBuffCountdown().Start(ReceiveBuffer[4], seconds, std::chrono::steady_clock::now());
 }
 
+// MU Volta: C1 0E FA 03, the health of a boss for every player who sees it (GameLogic/Monsters/BossHealthBar.h).
+void ReceiveBossHealth(std::span<const BYTE> packet)
+{
+    const auto update = GameLogic::BossHealthBar::ParsePacket(packet);
+    if (!update)
+    {
+        return;
+    }
+
+    int monsterType = -1;
+    const int index = FindCharacterIndex(update->key);
+    if (index < MAX_CHARACTERS_CLIENT)
+    {
+        CHARACTER* c = &CharactersClient[index];
+        monsterType = static_cast<int>(c->MonsterIndex);
+        // The selected monster's bar at the top follows it too, not only the attacker's hits.
+        c->HealthStatus = GameLogic::BossHealthBar::Fraction(update->current, update->maximum);
+    }
+
+    GameLogic::BossHealthBar::Current().Apply(*update, GetTickCount64(), monsterType);
+}
+
 void ReceiveBuffState(const BYTE* ReceiveBuffer)
 {
     auto Data = (LPPMSG_ITEMEFFECTCANCEL)ReceiveBuffer;
@@ -14256,6 +14279,9 @@ static void ProcessPacket(const BYTE* ReceiveBuffer, int32_t Size)
             {
                 GameLogic::Events::CurrentSchedule() = std::move(*schedule);
             }
+            break;
+        case GameLogic::BossHealthBar::SubCode:
+            ReceiveBossHealth(received_span);
             break;
         }
     }
