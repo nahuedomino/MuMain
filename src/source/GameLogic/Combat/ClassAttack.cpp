@@ -3,6 +3,7 @@
 #include "GameLogic/Combat/ClassAttack.h"
 #include "GameLogic/Combat/CombatTarget.h"
 #include "GameLogic/Combat/SkillCast.h"
+#include "GameLogic/Party/PartyMemberSkill.h"
 #include "Character/CharacterManager.h" // gCharacterManager
 #include "GameLogic/Buffs/w_Buff.h"     // UnRegisterBuff
 
@@ -1612,7 +1613,20 @@ void AttackWizard(CHARACTER* c, int Skill, float Distance)
         {
         case AT_SKILL_ALICE_THORNS:
         {
-            if (SelectedCharacter == -1 || CharactersClient[SelectedCharacter].Object.Kind != KIND_PLAYER)
+            // A party member is not attackable, so CheckAttack() above left no target and the cast never left the
+            // client: Reflect only ever went on the Summoner. It goes on the selected party member (or the hero).
+            GameLogic::Party::ReflectSelection selection;
+            if (SelectedCharacter >= 0 && SelectedCharacter < MAX_CHARACTERS_CLIENT)
+            {
+                CHARACTER* selected = &CharactersClient[SelectedCharacter];
+                selection.index = SelectedCharacter;
+                selection.isLivePlayer = selected->Object.Kind == KIND_PLAYER && selected->Dead == 0;
+                selection.isHero = selected == Hero;
+                selection.isPartyMember = g_pPartyManager->IsPartyMember(SelectedCharacter);
+            }
+
+            g_MovementSkill.m_iTarget = GameLogic::Party::ReflectTarget(selection);
+            if (g_MovementSkill.m_iTarget == -1)
             {
                 LetHeroStop();
 
@@ -1634,7 +1648,7 @@ void AttackWizard(CHARACTER* c, int Skill, float Distance)
                 SendRequestMagic(Skill, HeroKey);
             }
 
-            else if (0 == CharactersClient[SelectedCharacter].Dead && CharactersClient[SelectedCharacter].Object.Kind == KIND_PLAYER)
+            else
             {
                 TargetX = (int)(CharactersClient[g_MovementSkill.m_iTarget].Object.Position[0] / TERRAIN_SCALE);
                 TargetY = (int)(CharactersClient[g_MovementSkill.m_iTarget].Object.Position[1] / TERRAIN_SCALE);

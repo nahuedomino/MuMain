@@ -660,8 +660,10 @@ namespace MUHelper
         case AT_SKILL_ALICE_BERSERKER_STR:
             return CastIfMissing(g_isCharacterBuff(obj, eBuff_Berserker), false, false);
 
+        // Damage Reflection goes on the member it is checked on, as Soul Barrier does: untargeted, it always went on
+        // the Summoner, so a member without it was cast at again on every round.
         case AT_SKILL_ALICE_THORNS:
-            return CastIfMissing(g_isCharacterBuff(obj, eBuff_Thorns), false, false);
+            return CastIfMissing(g_isCharacterBuff(obj, eBuff_Thorns), false, true);
 
         // Rage Fighter party buffs — self/party AoE, no explicit target needed.
         case AT_SKILL_ATT_UP_OURFORCES:

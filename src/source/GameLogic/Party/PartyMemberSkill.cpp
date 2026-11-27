@@ -32,4 +32,14 @@ bool IsPartyMemberSkill(CLASS_TYPE heroBaseClass, ActionSkillType skill)
         return false;
     }
 }
+
+int ReflectTarget(const ReflectSelection& selection)
+{
+    if (selection.index < 0 || !selection.isLivePlayer)
+    {
+        return -1;
+    }
+
+    return selection.isHero || selection.isPartyMember ? selection.index : -1;
+}
 } // namespace GameLogic::Party

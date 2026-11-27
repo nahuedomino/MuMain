@@ -30,3 +30,24 @@ TEST_CASE("other classes never target a party card [gamelogic][party]")
     CHECK_FALSE(IsPartyMemberSkill(CLASS_DARK_LORD, AT_SKILL_DEFENSE));
     CHECK_FALSE(IsPartyMemberSkill(CLASS_RAGEFIGHTER, AT_SKILL_ATTACK));
 }
+
+using GameLogic::Party::ReflectSelection;
+using GameLogic::Party::ReflectTarget;
+
+TEST_CASE("Damage Reflection goes on a selected party member [gamelogic][party]")
+{
+    CHECK(ReflectTarget({.index = 12, .isLivePlayer = true, .isPartyMember = true}) == 12);
+}
+
+TEST_CASE("Damage Reflection goes on the hero when the hero is selected [gamelogic][party]")
+{
+    CHECK(ReflectTarget({.index = 3, .isLivePlayer = true, .isHero = true}) == 3);
+}
+
+TEST_CASE("Damage Reflection falls back to the hero for anyone else [gamelogic][party]")
+{
+    CHECK(ReflectTarget({}) == -1);                                                             // nothing selected
+    CHECK(ReflectTarget({.index = 40, .isLivePlayer = false}) == -1);                           // a monster
+    CHECK(ReflectTarget({.index = 12, .isLivePlayer = false, .isPartyMember = true}) == -1);    // a dead member
+    CHECK(ReflectTarget({.index = 20, .isLivePlayer = true, .isPartyMember = false}) == -1);    // a stranger
+}
